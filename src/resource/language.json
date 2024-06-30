@@ -1,0 +1,109 @@
+{
+  "en": {
+    "title": "Welcome to the world of the future",
+
+    "registration": [
+      {
+        "firstNameLbl": "First Name",
+        "lastNameLbl": "Last Name",
+        "emailLbl": "Email",
+        "phoneNumberLbl": "Phone number",
+        "addressLbl": "Phisical Address"
+      },
+      {
+        "firstNameLbl": "First Name",
+        "lastNameLbl": "Last Name",
+        "emailLbl": "Email",
+        "phoneNumberLbl": "Phone number",
+        "addressLbl": "Phisical Address"
+      }
+    ]
+  },
+  "sin": {
+    "title": "",
+
+    "registration": [
+      {
+        "ui": {
+          "title": "ඔබේ මුලික තොරතුරු",
+          "topWarningLbl": "ව්‍යාජ අධාර්මික පුද්ගලයින් ගෙන් අනෙකුත් පරිශීලකයන්ට සිදුවන හානි සහ හිරිහැර වැළක්වීමේ අරමුණින් ඔබ ඇතුලක් කරන තොරතුරු අපගේ නියෝජිතයන් හා පරිගණක වැඩසටහන් මගින් තහවුරු කරන බවට අප සහතික වන්නෙමු. එබැවින් සත්‍ය තොරතුරු පමණක් ඇතුලත් කරන ලෙස කාරුණිකව ඉල්ලා සිටිමු. එක් පුද්ගලයෙකුට එක ගිණුමක් පමණක් පවත්වාගෙන යාමට ඉඩ ලබාදෙන අතර ඔබේ අවංක භාවය ඉතා ඉහලින් අගය කරමු. ",
+          "addressWarningLbl" : "යම් අවස්ථා වලදී ඔබේ ලිපිනය කේතයක් සහිත ලිපියක් මගින් තහවුරු කිරීමට සිදුවනු හැක. එමනිසා ලිපිනය දෙවරක් පරික්ෂා කරන්න."
+          
+        },
+        "field": {
+          "firstNameLbl": "ඔබේ නම",
+          "lastNameLbl": "වාසගම",
+          "dateOfbirthLbl": "උපන් දිනය",
+          "emailLbl": "විදුත් තැපෑල",
+          "phoneNumberLbl": "දුරකථන අංකය",
+          "addressLbl": "ලිපිනය",
+          "provinceLbl": "පළාත",
+          "districtLbl": "දිස්ත්‍රිකකය",
+          "nearestTownLbl": "ලඟම නගරය"
+        }
+      },
+      {
+        "generalInfoLbl": "ඔබේ බෞද්ධ පසුබිම",
+        "originLbl": "මුලාරම්භය",
+        "deedCategoryTitle": "ඔබ කරන පුණ්‍ය ක්‍රියා වර්ග",
+        "deedCategoryDanaLbl":"දාන",
+        "deedCategorySeelaLbl":"සීල",
+        "deedCategoryBhavanaLbl":"භාවනා",
+        "deedCategoryOtherLbl":"වෙනත්(ධර්ම ශ්‍රවනය ආදී..",
+
+        "meditationTimePerWeekLbl":"භාවනා කාලය ( මාසයට පැය )",
+        "meditationAnaPanaSathiTimeLbl":"ආනාපානසති භාවනා කාලය ",
+        "meditationMayithreeTimeLbl":"මෛත්‍රි භාවනා කාලය",
+        "bodyAwarenessTimeLbl":"සතර ඉරියවුවේ සිහිය පිහිටුවන කාලය",
+        "meditationOtherTimeLbl":"වෙනත් භාවනා ( කසිණ ආදී ..",
+        "meditationTeacher":"කර්මස්ථාන ආචාර්ය වරයාගේ නම ( සිටී නම් )",
+
+        "seelaTimePerWeekLbl":"සීල කාලය ( මාසයට පැය )",
+        "seelaPansilTimeLbl":"පන්සිල්",
+        "seelaAtaSilTimeLbl":"දස සිල්",
+        "seelaOtherTimeLbl":"පහට අඩු සිල්පද ප්‍රමාණයක්",
+
+        "danaAmountPerWeekTitleLbl":"දාන ප්‍රමාණ ( මුදල් වලින් )",
+        "daanaAmountAnimals":"සතුන්ට දානය",
+        "danaAmountPeopleLbl":"මිනිසුන්ට දානය",
+        "danaAmountSangha":"සංඝයාට දානය",
+
+        "sermonListnTimePerWeekTitle":"ධර්ම ශ්‍රවණ කාලය",
+        "sermonListenTimeLbl":"මාසයට පැය ගණන",
+        "sermonSpeakersDetails":"ඔබ සවන් දෙන ධර්ම කථිකයන්/ දේශක වරුන්",
+
+        "descriptionOfYourSelfLbl":"ඔබ ගැන හා ඔබ කරන පුණ්‍ය කටයුතු ගැන විස්තර"
+
+      },
+      {
+        "socialStatusLbl" : "සමාජ තත්වය",
+        "highestEducationQulifiLbl" : "ලබා ඇති ඉහලම අධ්‍යාපනය",
+        "jobOrProffesionLbl" : "වර්තමාන රැකියාව",
+        "monthlyIncomeLbl" : "දල මාසික ආදායම",
+        "houseOwnershipLbl" : "නිවාස හිමිකාරිත්වය",
+        "vehicleOwnershipLbl" : "වාහන හිමිකාරීත්වය",
+        "assetsOwnershipLbl" : "අනෙකුත් වත්කම් හිමිකාරිත්වය",
+        "marriageStatusLbl" : "අවිවාහක තත්වය",
+
+        "phisicalStatusLbl" : "ශාරීරික තත්වය",
+        "heightLbl" : "උස (අඩි'අඟල්)",
+        "weightLbl" : "බර (කිලෝග්රෑම්)",
+        "phisicalAttractiveness":"ඔබේ ආකර්ශනීය බව",
+        "skinTone":"සමේ පැහැපත් බව",
+        "kidsExpectancyLbl" : "බලාපොරොත්තු වන දරුවන් ගණන",
+        "smokingLbl" : "දුම් පානය",
+        "drinkingLbl" : "මත් ද්‍රව්‍ය පාවිච්චිය",
+        "healthConditionLbl" : "සැලකිය යුතු ශාරීරික රෝග",
+        "disabilityLbl" : "සැලකිය යුතු ශාරීරික අකර්මන්‍යතා",
+        "mentalHealthLbl" : "සැලකිය යුතු මානසික රොගී තත්ත්ව",
+        "geneticRisks" : "සැලකිය යුතු ජානමය රෝග"
+
+        
+
+
+
+
+      }
+    ]
+  }
+}

@@ -11,8 +11,8 @@ export default {
     primary: '#F5c000', // primary button and link color
     secondary: '#30c', // secondary color - can be used for hover states
     muted: '#7B8188', // muted color
-    accent: '#609', // a contrast color for emphasizing UI
-    dark: '#10132D',
+    accent: '#6095', // a contrast color for emphasizing UI
+    dark: '#10132C',
 
     // highlight	a background color for highlighting text
     modes: {

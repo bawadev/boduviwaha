@@ -3,6 +3,7 @@ import { jsx, Link as A } from "theme-ui";
 import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import { Link as ScrollLink } from "react-scroll";
+import Link from "next/link";
 
 
 export function NavLink({ path, isScroll,label, children, ...rest }) {
@@ -17,16 +18,15 @@ export function NavLink({ path, isScroll,label, children, ...rest }) {
           offset={-70}
           smooth={true}
           duration={500}
-          className="nav-item"
           activeClass="active"
           {...rest}
         >
           {label}
         </ScrollLink>
       ) : (
-        <NextLink href={path} passHref className="nav-item">
+        <Link href={path} passHref>
           {label}
-        </NextLink>
+        </Link>
       )}
     </div>
   );

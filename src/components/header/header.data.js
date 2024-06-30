@@ -13,7 +13,7 @@ export default [
   },
   {
     path: 'pricing',
-    label: 'අපව සම්බන්ද කරගන්න',
+    label: 'අපගේ සේවාවන්',
   },
   {
     path: 'blog',

@@ -44,9 +44,9 @@ export default function Header() {
                   sx={styles.navList}
                   className={mobileMenu ? "active" : ""}
                 >
-                  <div className="nav-items-wrapper"></div>
+                  
                   {menuItems.map(({ path, label }, i) => (
-                    <li key={i}>
+                    <li key={i}  className="nav-item">
                       <NavLink
                         path={path}
                         label={label}
