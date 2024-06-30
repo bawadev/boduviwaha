@@ -88,7 +88,7 @@ const FeaturedSpace = () => {
   }
 
   useEffect(() => {
-    startProgressbar();
+    //startProgressbar();
   }, []);
 
   const handleToggle = () => {
