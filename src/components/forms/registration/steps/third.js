@@ -152,7 +152,7 @@ export default function AdditionalInfo({ data, onSubmit }) {
 
         <Box sx={styles.row}>
           <Box sx={styles.field}>
-            <Label htmlFor="height">උස (අඩි'අඟල්, උදා 5.4, 5.6)</Label>
+            <Label htmlFor="height">උස (අඩි.අඟල්, උදා අඩි 5යි අඟල් 4 = 5.4)</Label>
             <Input
               type="number"
               id="height"
