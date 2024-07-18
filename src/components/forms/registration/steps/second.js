@@ -21,10 +21,6 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
     defaultValues: data,
   });
 
-  const onFormSubmit = (formData) => {
-    console.log(JSON.stringify(formData));
-  };
-
   const scrollToTop = () => {
     // Find the element with id 'topBox' and scroll to it
     const topBoxElement = document.getElementById("topBox");
@@ -36,7 +32,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
   // Use useEffect to scroll to top on component mount
   useEffect(() => {
     scrollToTop();
-  }, []); 
+  }, []);
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
@@ -48,8 +44,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           <Box sx={styles.field}>
             <Label htmlFor="origin">මුලාරම්භය</Label>
             <Select id="origin" {...register("origin")} sx={styles.select}>
-              <option value="sinceBirth">උපන් දා සිට බෞද්ධ</option>
-              <option value="converted">පසු කාලීනව වැළඳගත්</option>
+              <option value="SINCE_BIRTH">උපන් දා සිට බෞද්ධ</option>
+              <option value="CONVERTED">පසු කාලීනව වැළඳගත්</option>
             </Select>
           </Box>
           <Box sx={styles.field}>
@@ -57,16 +53,16 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Select
               id="timeInvestedOvarall"
               {...register("timeInvestedOvarall")}
-              defaultValue="more50"
+              defaultValue="MORE_50"
               sx={styles.select}
             >
-              <option value="more50">වසර 50ට වැඩි</option>
-              <option value="more40">වසර 40ට වැඩි</option>
-              <option value="more30">වසර 30ට වැඩි</option>
-              <option value="more20">වසර 20ට වැඩි</option>
-              <option value="more10">වසර 10ට වැඩි</option>
-              <option value="more5">වසර 5ට වැඩි</option>
-              <option value="less5">වසර 5ට අඩු</option>
+              <option value="MORE_50">වසර 50ට වැඩි</option>
+              <option value="MORE_40">වසර 40ට වැඩි</option>
+              <option value="MORE_30">වසර 30ට වැඩි</option>
+              <option value="MORE_20">වසර 20ට වැඩි</option>
+              <option value="MORE_10">වසර 10ට වැඩි</option>
+              <option value="MORE_5">වසර 5ට වැඩි</option>
+              <option value="LESS_5">වසර 5ට අඩු</option>
             </Select>
           </Box>
         </Box>
@@ -76,12 +72,12 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Select
               id="deedCategoryDana"
               {...register("deedCategoryDana")}
-              defaultValue="no"
+              defaultValue="NO"
               sx={styles.select}
             >
-              <option value="no">නොයෙදෙමි</option>
-              <option value="smallTime">සුළුවෙන් යෙදෙමි</option>
-              <option value="bigTime">මහත් වශයෙන් යෙදෙමි</option>
+              <option value="NO">නොයෙදෙමි</option>
+              <option value="SMALL_TIME">සුළුවෙන් යෙදෙමි</option>
+              <option value="BIG_TIME">මහත් වශයෙන් යෙදෙමි</option>
             </Select>
           </Box>
           <Box sx={styles.field}>
@@ -89,12 +85,12 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Select
               id="deedCategorySeela"
               {...register("deedCategorySeela")}
-              defaultValue="no"
+              defaultValue="NO"
               sx={styles.select}
             >
-              <option value="no">නොයෙදෙමි</option>
-              <option value="smallTime">සුළු වශයෙන් යෙදෙමි</option>
-              <option value="bigtime">මහත් වශයෙන් යෙදෙමි</option>
+              <option value="NO">නොයෙදෙමි</option>
+              <option value="SMALL_TIME">සුළු වශයෙන් යෙදෙමි</option>
+              <option value="BIG_TIME">මහත් වශයෙන් යෙදෙමි</option>
             </Select>
             {errors.deedCategorySeela && (
               <Text sx={styles.error}>{errors.deedCategorySeela.message}</Text>
@@ -105,12 +101,12 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Select
               id="deedCategoryBhavana"
               {...register("deedCategoryBhavana")}
-              defaultValue="no"
+              defaultValue="NO"
               sx={styles.select}
             >
-              <option value="no">නොයෙදෙමි</option>
-              <option value="smallTime">සුළු වශයෙන් යෙදෙමි</option>
-              <option value="bigTime">මහත් වශයෙන් යෙදෙමි</option>
+              <option value="NO">නොයෙදෙමි</option>
+              <option value="SMALL_TIME">සුළු වශයෙන් යෙදෙමි</option>
+              <option value="BIG_TIME">මහත් වශයෙන් යෙදෙමි</option>
             </Select>
           </Box>
           <Box sx={styles.field}>
@@ -118,12 +114,12 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Select
               id="deedCategoryOther"
               {...register("deedCategoryOther")}
-              defaultValue="no"
+              defaultValue="NO"
               sx={styles.select}
             >
-              <option value="no">නොයෙදෙමි</option>
-              <option value="smallTime">සුළු වශයෙන් යෙදෙමි</option>
-              <option value="bigTime">මහත් වශයෙන් යෙදෙමි</option>
+              <option value="NO">නොයෙදෙමි</option>
+              <option value="SMALL_TIME">සුළු වශයෙන් යෙදෙමි</option>
+              <option value="BIG_TIME">මහත් වශයෙන් යෙදෙමි</option>
             </Select>
           </Box>
         </Box>
@@ -194,7 +190,10 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           </Box>
         </Box>
         <Box sx={styles.field}>
-          <Label htmlFor="meditationTeacher">භාවනා උපදේශක / අචාර්ය (කර්මස්ථාන අචාර්ය වරයෙකු සිටි නම්, ඔබට අවශ්‍ය නම් අවශ්‍යයි ලෙස සඳහන් කරන්න)</Label>
+          <Label htmlFor="meditationTeacher">
+            භාවනා උපදේශක / අචාර්ය (කර්මස්ථාන අචාර්ය වරයෙකු සිටි නම්, ඔබට අවශ්‍ය
+            නම් අවශ්‍යයි ලෙස සඳහන් කරන්න)
+          </Label>
           <Input
             id="meditationTeacher"
             type="text"
@@ -318,20 +317,22 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           </Box>
         </Box>
         <Box sx={styles.field}>
-            <Label htmlFor="sermonSpeakersDetails">ඔබ සවන් දෙන ධර්ම කථිකයන් පිලිබඳ විස්තර මෙහි ඇතුලත් කරන්න</Label>
-            <Textarea
-              rows={8}
-              id="sermonSpeakersDetails"
-              type="text"
-              {...register("sermonSpeakersDetails")}
-              sx={styles.textArea}
-            />
-            {errors.sermonSpeakersDetails && (
-              <Text sx={styles.error}>
-                {errors.sermonSpeakersDetails.message}
-              </Text>
-            )}
-          </Box>
+          <Label htmlFor="sermonSpeakersDetails">
+            ඔබ සවන් දෙන ධර්ම කථිකයන් පිලිබඳ විස්තර මෙහි ඇතුලත් කරන්න
+          </Label>
+          <Textarea
+            rows={8}
+            id="sermonSpeakersDetails"
+            type="text"
+            {...register("sermonSpeakersDetails")}
+            sx={styles.textArea}
+          />
+          {errors.sermonSpeakersDetails && (
+            <Text sx={styles.error}>
+              {errors.sermonSpeakersDetails.message}
+            </Text>
+          )}
+        </Box>
       </Box>
       <Box sx={styles.card}>
         <Heading as="h2" sx={styles.heading}>
@@ -342,13 +343,13 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           <Select
             id="knowledgeAbhiDhamma"
             {...register("knowledgeAbhiDhamma")}
-            defaultValue="no"
+            defaultValue="NO"
             sx={styles.select}
           >
-            <option value="no">නැත</option>
-            <option value="smallTime">සුළු වශයෙන් හදාරමි</option>
-            <option value="bigtime">තරඟ විභාග සඳහා හදාරා ඇත</option>
-            <option value="bigtimePracticle">
+            <option value="NO">නැත</option>
+            <option value="SMALL_TIME">සුළු වශයෙන් හදාරමි</option>
+            <option value="BIG_TIME">තරඟ විභාග සඳහා හදාරා ඇත</option>
+            <option value="BIG_TIME_PRACTICAL">
               සංකල්ප ප්‍රයෝගිකව භාවිතා කරමි
             </option>
           </Select>
@@ -358,9 +359,11 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
         </Box>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
-            <Label htmlFor="descriptionOfYourSelf">ඔබ ගැන විස්තර ඇතුලත් කරන්න</Label>
+            <Label htmlFor="descriptionOfYourSelf">
+              ඔබ ගැන විස්තර ඇතුලත් කරන්න
+            </Label>
             <Textarea
-            rows={8}
+              rows={8}
               id="descriptionOfYourSelf"
               type="text"
               {...register("descriptionOfYourSelf")}
@@ -380,12 +383,12 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           <Select
             id="enterToHardPractice"
             {...register("enterToHardPractice")}
-            defaultValue="no"
+            defaultValue="NO"
             sx={styles.select}
           >
-            <option value="no">නොමැත</option>
-            <option value="smallTime">ස්ථිර අදහසක් නොමැත</option>
-            <option value="bigtime">ඉලක්කයක් ලෙස සලකමි</option>
+            <option value="NO">නොමැත</option>
+            <option value="SMALL_TIME">ස්ථිර අදහසක් නොමැත</option>
+            <option value="BIG_TIME">ඉලක්කයක් ලෙස සලකමි</option>
           </Select>
           {errors.deedCategorySeela && (
             <Text sx={styles.error}>{errors.deedCategorySeela.message}</Text>
@@ -393,14 +396,10 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
         </Box>
       </Box>
       <Box sx={styles.buttonRow}>
-        <Button
-          type="button"
-          onClick={onBack}
-          sx={styles.button}
-        >
+        <Button type="button" onClick={onBack} sx={styles.button}>
           ආපසු
         </Button>
-        <Button type="submit" sx={styles.button} >
+        <Button type="submit" sx={styles.button}>
           ඊළඟ
         </Button>
       </Box>
@@ -410,22 +409,22 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
 
 const styles = {
   textArea: {
-    width: '100%',
-    padding: '12px',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#f8f8f8',
-    resize: 'vertical',
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    lineHeight: 'inherit',
-    boxSizing: 'border-box',
-    transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
-    '&:focus': {
-      borderColor: '#5b9dd9',
-      outline: 'none',
-      boxShadow: '0 0 0 2px rgba(91, 157, 217, 0.3)',
+    width: "100%",
+    padding: "12px",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#f8f8f8",
+    resize: "vertical",
+    fontFamily: "inherit",
+    fontSize: "inherit",
+    lineHeight: "inherit",
+    boxSizing: "border-box",
+    transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
+    "&:focus": {
+      borderColor: "#5b9dd9",
+      outline: "none",
+      boxShadow: "0 0 0 2px rgba(91, 157, 217, 0.3)",
     },
   },
   description: {
@@ -433,12 +432,12 @@ const styles = {
   },
   card: {
     padding: 20,
-    display: 'flex',
-    flexDirection: 'column',
-    border: '1px solid #ddd',
+    display: "flex",
+    flexDirection: "column",
+    border: "1px solid #ddd",
     borderRadius: 8,
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#f9f9f9',
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#f9f9f9",
     marginBottom: 20,
   },
   form: {
@@ -446,17 +445,17 @@ const styles = {
   },
   select: {
     borderRadius: 4,
-    height: '2.5em',
+    height: "2.5em",
     fontSize: 16,
-    padding: '0 1em',
-    border: '1px solid #ccc',
-    '@media screen and (max-width: 768px)': {
+    padding: "0 1em",
+    border: "1px solid #ccc",
+    "@media screen and (max-width: 768px)": {
       fontSize: 14, // Adjust font size for smaller screens
     },
-    '&:focus': {
-      borderColor: '#5b9dd9',
-      outline: 'none',
-      boxShadow: '0 0 0 2px rgba(91, 157, 217, 0.3)',
+    "&:focus": {
+      borderColor: "#5b9dd9",
+      outline: "none",
+      boxShadow: "0 0 0 2px rgba(91, 157, 217, 0.3)",
     },
   },
   heading: {
@@ -466,11 +465,11 @@ const styles = {
   subHeading: {
     mb: 3,
     fontSize: 2,
-    color: '#555',
+    color: "#555",
   },
   row: {
-    display: 'flex',
-    flexDirection: ['column', 'row'], // Stack columns on small screens, row on larger screens
+    display: "flex",
+    flexDirection: ["column", "row"], // Stack columns on small screens, row on larger screens
     gap: 3,
     mb: 3,
   },
@@ -478,27 +477,27 @@ const styles = {
     flex: 1,
     minWidth: 0, // Ensure fields can shrink properly on smaller screens
     marginRight: [0, 3], // Add right margin only on larger screens
-    marginBottom: 20
+    marginBottom: 20,
   },
   input: {
-    width: '100%',
-    height: '2.5em',
+    width: "100%",
+    height: "2.5em",
     mb: 2,
-    padding: '0.5em',
+    padding: "0.5em",
     fontSize: 16,
     borderRadius: 4,
-    border: '1px solid #ccc',
-    '@media screen and (max-width: 768px)': {
+    border: "1px solid #ccc",
+    "@media screen and (max-width: 768px)": {
       fontSize: 14, // Adjust font size for smaller screens
     },
-    '&:focus': {
-      borderColor: '#5b9dd9',
-      outline: 'none',
-      boxShadow: '0 0 0 2px rgba(91, 157, 217, 0.3)',
+    "&:focus": {
+      borderColor: "#5b9dd9",
+      outline: "none",
+      boxShadow: "0 0 0 2px rgba(91, 157, 217, 0.3)",
     },
   },
   error: {
-    color: 'red',
+    color: "red",
     fontSize: 1,
   },
   button: {
@@ -507,15 +506,15 @@ const styles = {
     py: 2,
     fontSize: 2,
     borderRadius: 20,
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
-    '&:hover': {
-      backgroundColor: 'darkblue',
+    border: "none",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+    "&:hover": {
+      backgroundColor: "darkblue",
     },
   },
   buttonRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
+    display: "flex",
+    justifyContent: "space-between",
   },
 };

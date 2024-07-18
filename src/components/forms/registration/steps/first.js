@@ -21,6 +21,7 @@ const PersonalInfoSchema = z.object({
   dateOfBirth: z.date({ required_error: "උපන් දිනය අත්‍යවශ්‍යයි" }),
   email: z.string().email("වලංගු විදුත් තැපෑලක් නොවේ"),
   phoneNumber: z.string().min(1, "දුරකථන අංකය අත්‍යවශ්‍යයි"),
+  gender: z.string().min(1, "ස්ත්‍රී/පුරුෂ භාවය අත්‍යවශ්‍යයි"),
   address: z.string().min(1, "ලිපිනය අත්‍යවශ්‍යයි"),
   province: z.string().min(1, "පළාත අත්‍යවශ්‍යයි"),
   district: z.string().min(1, "දිස්ත්‍රිකකය අත්‍යවශ්‍යයි"),
@@ -94,8 +95,8 @@ export default function PersonalInfo({ data, onSubmit }) {
           <Box sx={styles.field}>
             <Label htmlFor="gender">ස්ත්‍රී/පුරුෂ භාවය</Label>
             <Select id="gender" {...register("gender")} sx={styles.select}>
-              <option value="male">පුරුෂ</option>
-              <option value="female">ස්ත්‍රී</option>
+              <option value="MALE">පුරුෂ</option>
+              <option value="FEMALE">ස්ත්‍රී</option>
             </Select>
             {errors.gender && (
               <Text sx={styles.error}>{errors.gender.message}</Text>
