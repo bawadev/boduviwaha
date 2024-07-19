@@ -13,7 +13,7 @@ const steps = [
   { component: SubmissionSuccess, title: "ස්තුතියි" },
 ];
 
-const baseUrl = "ec2-16-171-153-216.eu-north-1.compute.amazonaws.com"
+const backendBaseUrl = "https://ec2-16-171-153-216.eu-north-1.compute.amazonaws.com"
 // const baseUrl = "http://localhost:8080"
 
 export default function RegisterMultiStepForm() {
@@ -57,7 +57,7 @@ export default function RegisterMultiStepForm() {
   const submitPersonalInfo = async (data) => {
     console.log("Submitting personal info...");
     // First API call to create a Buddhist user
-    const userResponse = await fetch(`${baseUrl}/api/buddhist-users`, {
+    const userResponse = await fetch(`${backendBaseUrl}/api/buddhist-users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export default function RegisterMultiStepForm() {
     console.log("User data submitted successfully:", updatedData);
 
     // Second API call to create an address
-    const addressResponse = await fetch(`${baseUrl}/api/addresses`, {
+    const addressResponse = await fetch(`${backendBaseUrl}/api/addresses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export default function RegisterMultiStepForm() {
 
   const submitSpiritualInfo = async (data) => {
     console.log("Submitting spiritual info...");
-    const practiceResponse = await fetch(`${baseUrl}/api/buddhist-practices`, {
+    const practiceResponse = await fetch(`${backendBaseUrl}/api/buddhist-practices`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -149,7 +149,7 @@ export default function RegisterMultiStepForm() {
 
   const submitAdditionalInfo = async (data) => {
     console.log("Submitting additional info...");
-    const socialInfoResponse = await fetch(`${baseUrl}/api/social-information`, {
+    const socialInfoResponse = await fetch(`${backendBaseUrl}/api/social-information`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -174,7 +174,7 @@ export default function RegisterMultiStepForm() {
     const socialInfoData = await socialInfoResponse.json();
     console.log("Social info data submitted successfully:", socialInfoData);
 
-    const healthInfoResponse = await fetch(`${baseUrl}/api/health-information`, {
+    const healthInfoResponse = await fetch(`${backendBaseUrl}/api/health-information`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
