@@ -20,7 +20,7 @@ const styles = {
     textAlign: ['center', null, null, null, 'left'],
     h3: {
       lineHeight: 2.5,
-      fontWeight: 500,
+      fontWeight: 600,
       letterSpacing: 'heading',
       fontSize: [18, null, null, null, null, 20],
     },

@@ -111,7 +111,7 @@ const styles = {
   },
   desc: {
     fontSize: [16, 17, 16, 20],
-    lineHeight: [1, 1, 1, 1.6, 2, 1, 1.5],
+    lineHeight: [1.5, 1.5, 1.5, 1.6, 2, 1, 1.5],
     maxWidth: 440,
     marginTop: [15, 15, 15, null, null, null, 30],
     '@media only screen and (min-height: 720px) and (max-height: 760px), (min-width: 1501px) and (max-width: 1560px)': {

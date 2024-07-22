@@ -16,7 +16,7 @@ export default function IndexPage() {
       <Banner />
       <Clients />
       <FeaturedSpace />
-      <Gallery />
+      {/* <Gallery /> */}
       <Pricing />
       <OurCustomer />
       <Blog />

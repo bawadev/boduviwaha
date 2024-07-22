@@ -45,7 +45,7 @@ const PriceCard = ({ price }) => {
           </Text>
           <Text as="span" className="price-value">
             {price?.amount?.toFixed(2)}
-            /mo
+            /ඇරයුමකට
           </Text>
         </Box>
         <BsArrowRightShort

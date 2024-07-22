@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { jsx, Grid, Box, Container, Flex, Button } from 'theme-ui';
@@ -8,64 +7,62 @@ import { rgba } from 'polished';
 import { keyframes } from '@emotion/react';
 import siteImages from '../resource/images';
 
-
-
 const monthlyPricing = [
   {
     id: 1,
     icon: siteImages.userIcon.src,
-    title: 'Starter Pack',
-    amount: 49.99,
+    title: 'නොමිලයේ',
+    amount: 0.00,
     isRecommended: false,
     features: [
       {
         id: 1,
         isAvailable: true,
-        title: 'Ultimate access to all course, exercises and assessments',
+        title: 'සීමා නොමැති පරිශීලක සෙවීම නොමිලයේ.',
       },
       {
         id: 2,
         isAvailable: true,
-        title: `Free access for all kind of exercise corrections with downloads.`,
+        title: 'අනෙකුත් පරිශීලකයන් වෙත ඇරයුම් යොමු කිරීම නොමිලයේ.',
       },
       {
         id: 3,
         isAvailable: true,
-        title: `Total assessment corrections with free download access system`,
+        title: 'පිළිගත් යෝජනා වල පරිශීලකයන් පිලිබඳ තොරතුරු ලබාගැනීම නොමිලයේ.',
       },
       {
         id: 4,
-        isAvailable: false,
-        title: `Unlimited download of courses on the mobile app contents`,
+        isAvailable: true,
+        title: 'පරිශීලකයන් අවහිර කිරීම හා පැමිණිලි කිරීම නොමිලයේ.',
       },
     ],
   },
   {
     id: 2,
     icon: siteImages.userIcon2.src,
-    title: 'Family Pack',
-    amount: 89.99,
+    title: 'රිදී පැකේජය',
+    amount: 100.00,
     isRecommended: true,
     features: [
       {
         id: 1,
         isAvailable: true,
-        title: 'Ultimate access to all course, exercises and assessments',
+        title: 'නොමිලයේ ලබා දෙන සියලු සේවාවන් ලැබේ.',
       },
       {
         id: 2,
         isAvailable: true,
-        title: `Free access for all kind of exercise corrections with downloads.`,
+        title: 'අමතර ඇරයුමක් යැවීම රුපියල් සියයක් (+ tax ) මගින් සිදු කල හැකිය.',
       },
       {
         id: 3,
         isAvailable: true,
-        title: `Total assessment corrections with free download access system`,
+        title: 'තෝරාගත් මාසික සේවාවන් සඳහා ඉල්ලුම් කල හැකි වීම.',
       },
       {
         id: 4,
         isAvailable: true,
-        title: `Unlimited download of courses on the mobile app contents`,
+        title: 'යවන ඇරයුම් ප්‍රමාණය මත ලැබෙන බෝනස් ඇරයුම් සඳහා සුදුසු වීම.',
       },
     ],
   },
@@ -93,7 +90,6 @@ const annualPricing = [
     ],
   },
 ];
-
 
 const Pricing = () => {
   const [plan, setPlan] = useState({
@@ -123,8 +119,8 @@ const Pricing = () => {
       <Container>
         <SectionHeading
           sx={styles.heading}
-          slogan="Pricing plan"
-          title="What deal suit you perfect"
+          slogan="අපගේ සේවාවන්"
+          title="බොදු විවාහ සේවාව නොමිලයේ ලබා දෙන සේවාවකි."
         />
         <Flex sx={styles.priceSwitcher}>
           <Button
@@ -132,14 +128,14 @@ const Pricing = () => {
             className={plan?.active === 'monthly' ? 'active' : ''}
             onClick={() => handlePlan('monthly')}
           >
-            Monthly Plan
+            ඇරයුම් මත පදනම
           </Button>
           <Button
             variant="text"
             className={plan?.active === 'yearly' ? 'active' : ''}
             onClick={() => handlePlan('yearly')}
           >
-            Annual Plan
+            මාසික පදනම
           </Button>
         </Flex>
         <Grid sx={styles.grid}>
@@ -175,20 +171,20 @@ const fadeIn2 = keyframes`
 
 const styles = {
   section: {
-    backgroundColor: '#020718',
+    backgroundColor: '#F9FAFB',
     pt: [60],
     pb: [100, 100, 100, 80],
   },
   heading: {
-    color: '#fff',
+    color: '#0F0F0F',
     mb: 20,
     p: {
-      color: '#fff',
+      color: '#f5c000',
     },
   },
   priceSwitcher: {
     borderRadius: '5px',
-    border: `1px solid ${rgba('#FFFFFF', 0.2)}`,
+    border: `1px solid ${rgba('#0F0F0F', 0.2)}`,
     margin: ['0 auto 30px', '0 auto 30px', '0 auto 30px', '0 auto 60px'],
     maxWidth: [255, 255, 255, 300],
     p: 2,
@@ -197,10 +193,10 @@ const styles = {
       px: ['18px', '18px', '18px', '25px'],
       fontSize: [14, 14, 14, 16],
       fontWeight: 500,
-      color: 'white',
+      color: '#0F0F0F',
       '&.active': {
-        backgroundColor: '#fff',
-        color: 'text',
+        backgroundColor: '#0F0F0F',
+        color: '#FFFFFF',
       },
       ':focus': {
         outline: '0 none',

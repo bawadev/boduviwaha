@@ -4,34 +4,6 @@ import Slider from 'react-slick';
 import SectionHeading from '../components/section-heading';
 import siteImages from '../resource/images'; // Assuming siteImages is correctly imported from your resource folder
 
-// Update clients array to use image paths from siteImages
-const clients = [
-  {
-    id: 1,
-    name: 'Uber',
-    logo: siteImages.uber.src, // Using siteImages for Uber logo
-  },
-  {
-    id: 2,
-    name: 'Google',
-    logo: siteImages.google.src, // Using siteImages for Google logo
-  },
-  {
-    id: 3,
-    name: 'PayPal',
-    logo: siteImages.paypal.src, // Using siteImages for PayPal logo
-  },
-  {
-    id: 4,
-    name: 'Microsoft',
-    logo: siteImages.microsoft.src, // Using siteImages for Microsoft logo
-  },
-  {
-    id: 5,
-    name: 'Dribbble',
-    logo: siteImages.dribbble.src, // Using siteImages for Dribbble logo
-  },
-];
 
 function SlickArrow({ className, onClick, control }) {
   return (
@@ -93,16 +65,9 @@ const Clients = () => {
     <Box id="clients" as="section" sx={styles.section}>
       <Container>
         <SectionHeading
-          slogan="Meet Our Clients"
-          title="These clients are using our service and they're more than happier than ever."
+          slogan="අපේ දැක්ම"
+          title="~ සම ශ්‍රද්ධා, සම ප්‍රඥා, සම ජීවිකතා යන ගුණාංග ~ සහකරු හෝ සහකාරියගේ සුදුසුම ගුණාංග වන්නේය"
         />
-        <Slider sx={styles.clients} {...settings}>
-          {clients?.map((client) => (
-            <Box key={client.id} as="figure" sx={styles.logo}>
-              <Image loading="lazy" src={client.logo} alt={client.name} />
-            </Box>
-          ))}
-        </Slider>
       </Container>
     </Box>
   );
@@ -112,8 +77,9 @@ export default Clients;
 
 const styles = {
   section: {
-    pt: [50, 50, 50, 70, 60, 80],
-    pb: [30, 40, 50, 60, 50, 80],
+    pt: [10, 30, 40, 60, 50, 70],
+    pb: [10, 30, 40, 50, 40, 70],
+    background: 'radial-gradient( farthest-corner at center, #f5f5f5 0%, #f5f5f5 30%, #f5c00096 70%, #f5c000 100%)', // Improved gradient style
   },
   clients: {
     display: 'flex',

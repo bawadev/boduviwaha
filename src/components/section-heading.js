@@ -1,4 +1,5 @@
 
+import { border } from 'polished';
 import { jsx, Box, Heading, Text } from 'theme-ui';
 
 const SectionHeading = ({ slogan, title, description, ...props }) => {
@@ -22,6 +23,7 @@ const SectionHeading = ({ slogan, title, description, ...props }) => {
 export default SectionHeading;
 
 const styles = {
+  
   headingWrapper: {
     maxWidth: 584,
     margin: '0 auto 60px',
@@ -29,7 +31,7 @@ const styles = {
   },
   slogan: {
     color: (theme) => theme.colors.primary,
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 700,
     lineHeight: 2.22,
     mb: ['12px'],

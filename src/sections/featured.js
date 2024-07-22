@@ -17,21 +17,21 @@ const data = {
   feature: [
     {
       id: 1,
-      icon: siteImages.expand.src, // Using siteImages for expand icon
-      title: '1000 ft2',
-      description: 'You will get 1000ft square space facility here.',
+      icon: siteImages.expand.src, 
+      title: 'විශ්වාසය',
+      description: 'අපගේ පරිශීලකයන් මනා තහවුරු කිරීමකින් පසුව පමණක් ඇතුලත් කරගන්නා බැවින් බියවීමකින් තොරව පහසුවෙන් යෝජනා සොයාගන්න.',
     },
     {
       id: 2,
-      icon: siteImages.users.src, // Using siteImages for users icon
-      title: '80 Members',
-      description: 'You will get advantage to have 80+ members here.',
+      icon: siteImages.users.src, 
+      title: 'ගුණාත්මක බව',
+      description: 'නොමිලයේ ලබා දෙන මූලික සේවාවට අමතරව තවත් අතිරේක සේවා රැසක් සමග ඔබේ සියලු මංගල අවශ්‍යතා ඉටු කරගන්න. කාලය ඉතිරි කරගන්න.',
     },
     {
       id: 3,
-      icon: siteImages.wifi.src, // Using siteImages for wifi icon
-      title: '100 mbps',
-      description: 'Internet speed is much better than others.',
+      icon: siteImages.wifi.src, 
+      title: 'මනා ගැලපීම',
+      description: 'ධාර්මික විවාහ දිවියක් සඳහා පරිශීලකයන් සමබන්ධ කිරීමේ ලංකාවේ ප්‍රථම හා විශිෂ්ටතම ක්‍රම උපාය ඔබේ විවාහ දිවියේ සාර්ථකත්වයට ශක්තිමත්ම ආරම්භය කරගන්න.',
     },
   ],
   gallery: [
@@ -88,7 +88,7 @@ const FeaturedSpace = () => {
   }
 
   useEffect(() => {
-    //startProgressbar();
+    startProgressbar();
   }, []);
 
   const handleToggle = () => {
@@ -103,8 +103,11 @@ const FeaturedSpace = () => {
           <Box sx={styles.leftContent}>
             <SectionHeading
               sx={styles.heading}
-              title="Some good places where you can build your startup business"
-              description="Co-working offers beautifully crafted workspaces where people can create, connect, and grow their businesses at prime locations in multiple cities."
+              title="අපේ සුවිශේෂී බව"
+              description="ශ්‍රී ලාංකික තරුණ බෞද්ධ පරපුර වෙනුවෙන්ම කැප වුනු මංගල සේවාවක් වන්නෙමු.
+               යහපත් මානසික දැක්මක් සහිතව යුග දිවියකට පැමිණ යහපත් සමාජයක් සඳහා දායක වන නව පරපුරක් බිහි කිරීම අපගේ අරමුණයි.
+                නිරවුල් හා නිදහස් මනසක් යහපත් සමජයක මෙන්ම සාර්ථක යුග දිවියක ආරම්භය බව අප තරයේ විශ්වාස කරන්නෙමු.
+                 එම නිසා ශ්‍රී ලංකාවේ ප්‍රථම වරට දහමට අනුව සහකරු/සහකාරියන් තෝරාගැනීමේ ක්‍රමයක් අප විසින් සංවර්ධනය කර මෙසේ පරිශීලකයන්ට මුදා හරිමු."
             />
             <Box sx={styles.featureWrapper}>
               {data?.feature?.map((feature) => (
@@ -141,6 +144,7 @@ const FeaturedSpace = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
+            
           </Box>
         </Box>
       </Container>
@@ -154,6 +158,7 @@ const styles = {
   section: {
     pt: [30, null, null, null, 60],
     pb: [30, null, null, 50, 60],
+    background: 'radial-gradient(farthest-corner at center, #f5f5f5 0%, #f5f5f5 30%, #f5c00096 70%, #f5c000 100%)', // Improved gradient style
   },
   contentWrapper: {
     gap: [null, null, null, null, '30px'],
@@ -170,13 +175,14 @@ const styles = {
     maxWidth: 490,
     margin: ['0 auto 40px', null, null, null, '0 0 80px'],
     h2: {
-      fontSize: [22, null, null, 30, null, 36, 46],
+      fontSize: [22, null, null, 30, null, 36, 36],
       lineHeight: [1.6, null, null, 1.41],
-      fontWeight: [500, null, null, 400],
+      fontWeight: [500, null, null, 800],
     },
     p: {
-      fontSize: ['15px', null, null, '17px'],
-      mt: [3, null, null, 5],
+      fontSize: ['15px', null, null, '22px'],
+      lineHeight: 1.5,
+      mt: [3, null, null, 4],
     },
   },
   featureWrapper: {
