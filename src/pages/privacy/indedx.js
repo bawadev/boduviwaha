@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
         <Text sx={styles.date}>Effective date: January 01, 2019</Text>
 
         <Text sx={styles.paragraph}>
-          Mindada.lk Matrimony Service (pvt) Ltd ("us", "we", or "our") operates the https://mindada.lk/ website and the Mindada (මින්දද) - Marriage proposals in Sri Lanka mobile application (the "Service").
+          boduviwaha.lk Matrimony Service (pvt) Ltd (&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;) operates the https://boduviwaha.lk/ website and the Mindada (මින්දද) - Marriage proposals in Sri Lanka mobile application (the &quot;Service&quot;).
         </Text>
 
         <Text sx={styles.paragraph}>
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
         <Heading as="h3" sx={styles.subHeading}>Types of Data Collected</Heading>
         <Heading as="h4" sx={styles.subSubHeading}>Personal Data</Heading>
         <Text sx={styles.paragraph}>
-          While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you ("Personal Data"). Personally identifiable information may include, but is not limited to:
+          While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you (&quot;Personal Data&quot;). Personally identifiable information may include, but is not limited to:
         </Text>
         <ul>
           <li>Phone number</li>
@@ -33,14 +33,14 @@ const PrivacyPolicy = () => {
 
         <Heading as="h4" sx={styles.subSubHeading}>Usage Data</Heading>
         <Text sx={styles.paragraph}>
-          We may also collect information that your browser sends whenever you visit our Service or when you access the Service by or through a mobile device ("Usage Data").
+          We may also collect information that your browser sends whenever you visit our Service or when you access the Service by or through a mobile device (&quot;Usage Data&quot;).
         </Text>
 
         {/* Add more sections here following the same pattern */}
 
         <Heading as="h2" sx={styles.sectionHeading}>Contact Us</Heading>
         <Text sx={styles.paragraph}>
-          If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <Link href="mailto:support@mindada.lk">support@mindada.lk</Link>
+          If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <Link href="mailto:support@boduviwaha.lk">support@boduviwaha.lk</Link>
         </Text>
       </Container>
     </Box>
