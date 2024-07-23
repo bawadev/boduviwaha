@@ -8,6 +8,7 @@ import Gallery from '../sections/gallery';
 import Pricing from '../sections/pricing';
 import Blog from '../sections/blog';
 import Subscription from '../sections/subscription';
+import ContactFeedback from '../sections/connect-feedback';
 
 export default function IndexPage() {
   return (
@@ -18,9 +19,10 @@ export default function IndexPage() {
       <FeaturedSpace />
       {/* <Gallery /> */}
       <Pricing />
-      <OurCustomer />
-      <Blog />
-      <Subscription />
+      {/* <OurCustomer /> */}
+      {/* <Blog /> */}
+      <ContactFeedback/>
+      {/* <Subscription /> */}
     </>
   );
 }

@@ -16,7 +16,7 @@ export default [
     label: 'අපගේ සේවාවන්',
   },
   {
-    path: 'blog',
-    label: 'ලිපි',
+    path: 'contact-feedback',
+    label: 'සම්බන්ධ වන්න',
   }
 ];

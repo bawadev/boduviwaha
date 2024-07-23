@@ -13,7 +13,7 @@ const monthlyPricing = [
     icon: siteImages.userIcon.src,
     title: 'නොමිලයේ',
     amount: 0.00,
-    isRecommended: false,
+    isRecommended: true,
     features: [
       {
         id: 1,
@@ -42,7 +42,7 @@ const monthlyPricing = [
     icon: siteImages.userIcon2.src,
     title: 'රිදී පැකේජය',
     amount: 100.00,
-    isRecommended: true,
+    isRecommended: false,
     features: [
       {
         id: 1,
@@ -72,21 +72,59 @@ const annualPricing = [
   {
     id: 1,
     icon: siteImages.userIcon.src,
-    title: 'Starter Pack',
-    amount: 49.99 * 12 - 10,
-    isRecommended: false,
+    title: 'නොමිලයේ',
+    amount: 0.00,
+    isRecommended: true,
     features: [
-      // features array
+      {
+        id: 1,
+        isAvailable: true,
+        title: 'සීමා නොමැති පරිශීලක සෙවීම නොමිලයේ.',
+      },
+      {
+        id: 2,
+        isAvailable: true,
+        title: 'අනෙකුත් පරිශීලකයන් වෙත ඇරයුම් යොමු කිරීම නොමිලයේ.',
+      },
+      {
+        id: 3,
+        isAvailable: true,
+        title: 'පිළිගත් යෝජනා වල පරිශීලකයන් පිලිබඳ තොරතුරු ලබාගැනීම නොමිලයේ.',
+      },
+      {
+        id: 4,
+        isAvailable: true,
+        title: 'පරිශීලකයන් අවහිර කිරීම හා පැමිණිලි කිරීම නොමිලයේ.',
+      },
     ],
   },
   {
     id: 2,
     icon: siteImages.userIcon2.src,
-    title: 'Family Pack',
-    amount: 89.99 * 12 - 10,
-    isRecommended: true,
+    title: 'රිදී පැකේජය',
+    amount: 1000.00,
+    isRecommended: false,
     features: [
-      // features array
+      {
+        id: 1,
+        isAvailable: true,
+        title: 'නොමිලයේ ලබා දෙන සියලු සේවාවන් ලැබේ.',
+      },
+      {
+        id: 2,
+        isAvailable: true,
+        title: 'අතිරේක ඇරයුම් 20ක් දක්වා නොමිලයේ යැවීමේ හැකියාව.',
+      },
+      {
+        id: 3,
+        isAvailable: true,
+        title: 'පරිශීලක තොරතුරු වට්සැප් හෝ ලිපි මගින් ලැබීමට සැලැස්වීම.',
+      },
+      {
+        id: 4,
+        isAvailable: true,
+        title: 'පරිශීලක තොරතුරු ඔබ වෙනුවෙන් අප නියෝජිතයන් මගින් තහවුරු කිරීම.',
+      },
     ],
   },
 ];

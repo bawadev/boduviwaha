@@ -41,11 +41,11 @@ const PriceCard = ({ price }) => {
       <Box as="footer" className="priceAmount" sx={styles.footer}>
         <Box>
           <Text as="span" className="price-label">
-            Starting from
+            ශ්‍රී ලංකා රුපියල්
           </Text>
           <Text as="span" className="price-value">
             {price?.amount?.toFixed(2)}
-            /ඇරයුමකට
+            /{price.amount<1000?"ඇරයුමකට":"මසකට"}
           </Text>
         </Box>
         <BsArrowRightShort
@@ -61,17 +61,17 @@ export default PriceCard;
 
 const styles = {
   priceTable: {
-    backgroundColor: '#020718',
+    backgroundColor: '#F5C000',
     border: `1px solid ${rgba('#F3F4F5', 0.15)}`,
     color: '#fff',
     borderRadius: 10,
     position: 'relative',
     '&.recommended': {
-      backgroundColor: '#fff',
+      backgroundColor: '#e4f1fe',
       borderColor: '#F0F0F5',
       color: 'text',
       footer: {
-        backgroundColor: '#F0F0F5',
+        backgroundColor: '#e4f1fe',
         borderRadius: '0 0 10px 10px',
         '.price-label': {
           color: 'text',
@@ -86,7 +86,7 @@ const styles = {
     },
   },
   recommended: {
-    backgroundColor: 'primary',
+    backgroundColor: '#020718',
     position: 'absolute',
     top: '-16px',
     minHeight: '31px',

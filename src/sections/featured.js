@@ -38,20 +38,20 @@ const data = {
     {
       id: 1,
       image: siteImages.slider1.src, // Using siteImages for gallery image 1
-      title: 'Kin Co-working Space',
-      desc: '442 Broadway, New York',
+      title: 'එකට පින් කිරීම',
+      desc: 'එකිනෙකාගේ කුසලය දියුණු කරගැනීමට උපකාර කරන්න',
     },
     {
       id: 2,
       image: siteImages.slider2.src, // Using siteImages for gallery image 2
-      title: 'Kin Co-working Space',
-      desc: '212 Broadway, Jamaica',
+      title: 'සමානාත්ම තාවය',
+      desc: 'තමන් උපමා කර අන් කෙනා ගැන සැලකිලිමත් වන්න',
     },
     {
       id: 3,
       image: siteImages.slider3.src, // Using siteImages for gallery image 3
-      title: 'Kin Co-working Space',
-      desc: '212 Broadway, Houston',
+      title: 'අනොන්‍ය ගරුත්වය',
+      desc: 'දෙදෙනාගේම අදහස් වලට ඉහලින් ගරු කරන්න',
     },
   ],
 };
