@@ -1,16 +1,17 @@
-/** @jsxImportSource theme-ui */
 import { jsx, Box, Container, Heading, Text, Button, Input, Select } from 'theme-ui';
 import { rgba } from 'polished';
 import siteImages from '../resource/images';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 export default function Banner() {
+  const login = useSelector((state) => state.homepage.login);
+  const router = useRouter();
+
   const handlePhoneChange = (e) => {
     const phoneInput = e.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
     e.target.value = phoneInput; // Update the input value
   };
-
-  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,47 +30,84 @@ export default function Banner() {
 
     console.log('submitting...');
     // Redirect to the registration page with the phone number
-    router.push(`/registration?phone=${phoneInput}`);
+    // router.push(`/registration?phone=${phoneInput}`);
+    router.push(`/profile/not-verified`);
   };
-
 
   return (
     <Box as="section" id="home" sx={styles.section}>
       <Container>
         <Box sx={styles.contentWrapper}>
           <Box sx={styles.bannerContent}>
-            <Heading as="h2" sx={styles.heroTitle}>
-              දෙවියෙක් හා දිව්‍යාංගනාවක් සම වන විවාහය..
-            </Heading>
-            <Text as="p" sx={styles.desc}>
-              &nbsp;&nbsp;&nbsp;&nbsp;ශ්‍රී ලංකාවේ ප්‍රථම බොදු ධාර්මික මංගල සේවය. දැහැමි දිවි පෙවෙතක් සඳහා
-              ලාංකික තරුණ තරුණියන් සඳහා කාරුණික අත්වලක් වීමට අප සූදානම්. ඔබේ සංසාරගත ප්‍රේමය
-              හිමිකර ගැනීමට අදම ලියාපදිංචි වන්න.
-            </Text>
-            <Box as="form" onSubmit={handleSubmit} sx={styles.form}>
-              <Box sx={styles.inputGroup}>
-                <Select sx={styles.select} defaultValue="+94">
-                  <option value="" disabled>
-                    රටෙහි කේතය
-                  </option>
-                  <option value="+1">+1 (US)</option>
-                  <option value="+44">+44 (UK)</option>
-                  <option value="+94">+94 (SL)</option>
-                  {/* Add more country codes as needed */}
-                </Select>
-                <Input
-                  onChange={handlePhoneChange}
-                  sx={styles.input}
-                  type="text"
-                  id="phone"
-                  name="phone"
-                  placeholder="&nbsp;&nbsp;&nbsp;&nbsp;ඔබේ දුරකථන අංකය"
-                />
-              </Box>
-              <Button type="submit" sx={styles.button} variant="primary">
-                ලියාපදිංචි වන්න
-              </Button>
-            </Box>
+            {!login ? (
+              <>
+                <Heading as="h2" sx={styles.heroTitle}>
+                  සාදරයෙන් නැවත පිළිගමු !
+                </Heading>
+                <Text as="p" sx={styles.desc}>
+                  කරුණා කර ගිණුමට ඇතුල් වන්න.
+                </Text>
+                <Box as="form" onSubmit={handleSubmit} sx={styles.form}>
+                  <Box sx={styles.inputGroup}>
+                    <Select sx={styles.select} defaultValue="+94">
+                      <option value="" disabled>
+                        Country Code
+                      </option>
+                      <option value="+1">+1 (US)</option>
+                      <option value="+44">+44 (UK)</option>
+                      <option value="+94">+94 (SL)</option>
+                      {/* Add more country codes as needed */}
+                    </Select>
+                    <Input
+                      onChange={handlePhoneChange}
+                      sx={styles.input}
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      placeholder="ඔබේ දුරකථන අංකය"
+                    />
+                  </Box>
+                  <Button type="submit" sx={styles.button} variant="primary">
+                    ඇතුල් වන්න
+                  </Button>
+                </Box>
+              </>
+            ) : (
+              <>
+                <Heading as="h2" sx={styles.heroTitle}>
+                  දෙවියෙක් හා දිව්‍යාංගනාවක් සම වන විවාහය..
+                </Heading>
+                <Text as="p" sx={styles.desc}>
+                  &nbsp;&nbsp;&nbsp;&nbsp;ශ්‍රී ලංකාවේ ප්‍රථම බොදු ධාර්මික මංගල සේවය. දැහැමි දිවි පෙවෙතක් සඳහා
+                  ලාංකික තරුණ තරුණියන් සඳහා කාරුණික අත්වලක් වීමට අප සූදානම්. ඔබේ සංසාරගත ප්‍රේමය
+                  හිමිකර ගැනීමට අදම ලියාපදිංචි වන්න.
+                </Text>
+                <Box as="form" onSubmit={handleSubmit} sx={styles.form}>
+                  <Box sx={styles.inputGroup}>
+                    <Select sx={styles.select} defaultValue="+94">
+                      <option value="" disabled>
+                        රටෙහි කේතය
+                      </option>
+                      <option value="+1">+1 (US)</option>
+                      <option value="+44">+44 (UK)</option>
+                      <option value="+94">+94 (SL)</option>
+                      {/* Add more country codes as needed */}
+                    </Select>
+                    <Input
+                      onChange={handlePhoneChange}
+                      sx={styles.input}
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      placeholder="&nbsp;&nbsp;&nbsp;&nbsp;ඔබේ දුරකථන අංකය"
+                    />
+                  </Box>
+                  <Button type="submit" sx={styles.button} variant="primary">
+                    ලියාපදිංචි වන්න
+                  </Button>
+                </Box>
+              </>
+            )}
           </Box>
         </Box>
       </Container>

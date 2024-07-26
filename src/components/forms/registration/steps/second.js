@@ -134,7 +134,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
         <Box sx={styles.row}>
           <Box sx={styles.field}>
             <Label htmlFor="meditationAnaPanaSathiTime">
-              ආනාපානසති භාවනා කාලය
+              ආනාපානසති භාවනා කාලය (මසකට පැය)
             </Label>
             <Input
               id="meditationAnaPanaSathiTime"
@@ -149,7 +149,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="meditationMayithreeTime">මෛත්‍රි භාවනා කාලය</Label>
+            <Label htmlFor="meditationMayithreeTime">මෛත්‍රි භාවනා කාලය (මසකට පැය)</Label>
             <Input
               id="meditationMayithreeTime"
               type="number"
@@ -163,7 +163,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="bodyAwarenessTime">සතර ඉරියවුවේ සිහිය කාලය</Label>
+            <Label htmlFor="bodyAwarenessTime">සතර ඉරියවුවේ සිහිය කාලය (මසකට පැය)</Label>
             <Input
               id="bodyAwarenessTime"
               type="number"
@@ -175,7 +175,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="meditationOtherTime">වෙනත් භාවනා කාලය</Label>
+            <Label htmlFor="meditationOtherTime">වෙනත් භාවනා කාලය (මසකට පැය)</Label>
             <Input
               id="meditationOtherTime"
               type="number"
@@ -207,12 +207,12 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           සීල පුණ්‍ය කටයුතු
         </Heading>
         <Label htmlFor="seelaTimePerWeek" style={styles.description}>
-          සීල පුණ්‍ය කටයුතු ලෙස මාසයකට පැය කීයක් සීලය වලින් පින බස්සේද යන්න
+          සීල පුණ්‍ය කටයුතු ලෙස මාසයකට පැය කීයක් සීලයෙන් හැසුරුනේද යන්න
           ඇතුලත් කරන්න
         </Label>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
-            <Label htmlFor="seelaPansilTime">පන්සිල් කාලය</Label>
+            <Label htmlFor="seelaPansilTime">පන්සිල් කාලය (මසකට පැය)</Label>
             <Input
               id="seelaPansilTime"
               type="number"
@@ -224,7 +224,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="seelaAtaSilTime">අට සිල් කාලය</Label>
+            <Label htmlFor="seelaAtaSilTime">අට සිල් කාලය (මසකට පැය)</Label>
             <Input
               id="seelaAtaSilTime"
               type="number"
@@ -236,7 +236,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="seelaOtherTime">වෙනත් සිල් කාලය</Label>
+            <Label htmlFor="seelaOtherTime">වෙනත් සිල් කාලය (මසකට පැය)</Label>
             <Input
               id="seelaOtherTime"
               type="number"
@@ -254,11 +254,11 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           ධර්ම දාන
         </Heading>
         <Label htmlFor="danaAmountAnimals" style={styles.description}>
-          ධර්ම දාන ලෙස සතුන්ට වාගේ ගෙන දී ඇති දානය ප්‍රමාණ ඇතුලත් කරන්න
+          ධර්ම දාන ලෙස මාසයක් තුල සතුන්ට දී ඇති දානය ප්‍රමාණ රුපියල් වලින් ඇතුලත් කරන්න 
         </Label>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
-            <Label htmlFor="danaAmountAnimals">සතුන්ට</Label>
+            <Label htmlFor="danaAmountAnimals">සතුන්ට (මසකට රුපියල්)</Label>
             <Input
               id="danaAmountAnimals"
               type="number"
@@ -270,7 +270,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="danaAmountPeople">මිනිසුන්ට</Label>
+            <Label htmlFor="danaAmountPeople">මිනිසුන්ට (මසකට රුපියල්)</Label>
             <Input
               id="danaAmountPeople"
               type="number"
@@ -282,7 +282,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="danaAmountSangha">සංඝයාට</Label>
+            <Label htmlFor="danaAmountSangha">සංඝයාට (මසකට රුපියල්)</Label>
             <Input
               id="danaAmountSangha"
               type="number"
@@ -300,11 +300,11 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           ධර්ම ශ්‍රවණය
         </Heading>
         <Label htmlFor="sermonListenTime" style={styles.description}>
-          ධර්ම ශ්‍රවණ කාලය ඇතුලත් කරන්න
+          මාසයක් තුල පැය කිහිපයක් ධර්ම ශ්‍රවණය සඳහා වැය කලේද යන්න ඇතුලත් කරන්න 
         </Label>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
-            <Label htmlFor="sermonListenTime">ධර්ම ශ්‍රවණ කාලය</Label>
+            <Label htmlFor="sermonListenTime">ධර්ම ශ්‍රවණ කාලය (මසකට පැය)</Label>
             <Input
               id="sermonListenTime"
               type="number"

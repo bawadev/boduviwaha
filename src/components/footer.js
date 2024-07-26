@@ -1,4 +1,3 @@
-
 import { jsx, Box, Flex, Text, Container } from 'theme-ui';
 import { NormalLink } from './link';
 import Logo from './logo';
@@ -7,7 +6,7 @@ import { rgba } from 'polished';
 const navItems = [
   {
     id: 1,
-    link: '#!',
+    link: '/',
     title: 'Home',
   },
   {
@@ -17,8 +16,8 @@ const navItems = [
   },
   {
     id: 3,
-    link: '#!',
-    title: 'Supports',
+    link: '/privacy',
+    title: 'Privacy and Policy',
   },
   {
     id: 4,
@@ -37,23 +36,19 @@ export default function Footer() {
     <Box as="footer" sx={styles.footer}>
       <Container sx={styles.container}>
         <Flex sx={styles.content}>
-          <Flex sx={styles.copyright}>
-            <Logo white />
-            {/* <Text as="span">
-             Todo: Developed by PBM Tech
-            </Text> */}
-            
-            <Text as="span" sx = {styles.developerDescription}>
-              බොදු විවාහ සේවාව , ශ්‍රී ලංකාව - සියලුම හිමිකම් ඇවිරිණි
-            </Text>
-          </Flex>
-
-          <Flex as="ul" sx={styles.nav}>
+          {/* <Flex sx={styles.nav}>
             {navItems?.map((item) => (
               <li key={item.id}>
                 <NormalLink path={item.link}>{item.title}</NormalLink>
               </li>
             ))}
+          </Flex> */}
+          <Flex sx={styles.copyright}>
+            <Logo white />
+            <br/>
+            <Text as="span" sx={styles.developerDescription}>
+              බොදු විවාහ සේවාව , ශ්‍රී ලංකාව - සියලුම හිමිකම් ඇවිරිණි
+            </Text>
           </Flex>
         </Flex>
       </Container>
@@ -65,25 +60,31 @@ const styles = {
   footer: {
     backgroundColor: '#6e6d6d',
   },
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
   content: {
     alignItems: 'center',
     borderTop: `1px solid ${rgba('#fff', 0.15)}`,
-    display: ['block', null, null, null, 'flex'],
-    justifyContent: 'space-between',
+    display: 'flex',
+    justifyContent: 'center',
     paddingTop: '20px',
     paddingBottom: '60px',
-    textAlign: ['center', null, null, null],
+    textAlign: 'center',
     '@media only screen and (max-width: 400px)': {
       pb: 50,
     },
   },
-  developerDescription:{
-    marginLeft:10
+  developerDescription: {
+    marginLeft: 10,
   },
   copyright: {
-    display: ['block', 'flex'],
+    display: 'flex',
     alignItems: 'center',
-    justifyContent: ['center', null, null, null],
+    justifyContent: 'center',
     span: {
       fontSize: '14px',
       lineHeight: [1.8, null, null, 1.29],
@@ -96,9 +97,8 @@ const styles = {
     listStyle: 'none',
     alignItems: 'center',
     padding: 0,
-    // display: ['flex'],
-    flexWrap: ['wrap', null, null, 'unset'],
-    justifyContent: ['center', null, null, null],
+    display: 'flex',
+    justifyContent: 'center',
     mt: [5, null, null, null, 0],
     li: {
       '+ li': {
@@ -110,7 +110,7 @@ const styles = {
       a: {
         color: 'white',
         display: 'inline-flex',
-        textAlign: 'right',
+        textAlign: 'center',
         textDecoration: 'none',
       },
     },

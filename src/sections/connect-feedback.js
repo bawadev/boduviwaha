@@ -16,19 +16,23 @@ const ContactFeedback = () => {
   return (
     <Box id="contact-feedback" as="section" sx={styles.section}>
       <Container>
-      <SectionHeading
-            sx={styles.heading}
-            slogan="අපට ඔබේ අදහස් යොමු කරන්න"
-            title=""
-          />
-          <Text sx={styles.supportInfo}>
-              <br />
-              ඔබේ වටිනා අදහස් අප ඉතා ඉහලින් අගය කරන්නෙමු. මෙම සේවාව වඩාත් ඵලදායී ලෙස ලබා දීමට දියුණු කිරීමට ඔබේ අදහස් වලට අනුව අප කටයුතු කරමු. එසේම විමසීම සඳහා විද්‍යුත් තැපෑල හෝ වෙනත් ඕනෑම සමාජ මාද්‍යක් හරහා ඔබේ තොරතුරු යොමු කරන්න. විශාල පරිශීලක සංක්‍යාවක් අතරින් ඔබට අවශ්‍ය තොරතුරු අප ලබා දෙන්නෙමු. සමාජ සත්කාරක සේවාවක් ලෙස සලකා මෙය සමාජ මාද්‍ය ඔස්සේ ප්‍රචාරය කිරීම සඳහා අප ඔබේ සහයෝගය බලාපොරොත්තු වෙමු.
-            </Text>
-            <br />
-            <br />
+        <SectionHeading
+          sx={styles.heading}
+          slogan="අපට ඔබේ අදහස් යොමු කරන්න"
+          title=""
+        />
+        <Text sx={styles.supportInfo}>
+          <br />
+          ඔබේ වටිනා අදහස් අප ඉතා ඉහලින් අගය කරන්නෙමු. මෙම සේවාව වඩාත් ඵලදායී ලෙස
+          ලබා දීමට දියුණු කිරීමට ඔබේ අදහස් වලට අනුව අප කටයුතු කරමු. එසේම විමසීම
+          සඳහා විද්‍යුත් තැපෑල හෝ වෙනත් ඕනෑම සමාජ මාද්‍යක් හරහා ඔබේ තොරතුරු යොමු
+          කරන්න. විශාල පරිශීලක සංක්‍යාවක් අතරින් ඔබට අවශ්‍ය තොරතුරු අප ලබා
+          දෙන්නෙමු. සමාජ සත්කාරක සේවාවක් ලෙස සලකා මෙය සමාජ මාද්‍ය ඔස්සේ ප්‍රචාරය
+          කිරීම සඳහා අප ඔබේ සහයෝගය බලාපොරොත්තු වෙමු.
+        </Text>
+        <br />
+        <br />
         <Flex sx={styles.content}>
-          
           <Box as="form" sx={styles.form}>
             <Heading as="h2" sx={styles.formHeading}>
               ඔබේ අදහස් යොමු කරන්න
@@ -36,7 +40,7 @@ const ContactFeedback = () => {
             <Flex sx={styles.emailInput}>
               <Input
                 type="email"
-                placeholder="උදා:- example@gmail.com"
+                placeholder="ඔබේ ලිපිනය, උදා:- example@gmail.com"
                 sx={styles.input}
               />
             </Flex>
@@ -81,6 +85,12 @@ const ContactFeedback = () => {
                 <FaYoutube />
                 <Text>Youtube</Text>
               </a>
+              {/* Add the second row of social links here */}
+              <a href="#" style={{ display: "flex", alignItems: "center" }}>
+                {/* Your second social icon */}
+                <Text>{/* Your second social platform name */}</Text>
+              </a>
+              {/* Add more social links as needed */}
             </Flex>
           </Box>
         </Flex>
@@ -142,6 +152,7 @@ const styles = {
   textarea: {
     borderColor: "border",
     borderRadius: "4px",
+    fontSize:16,
     p: 2,
     mb: 3,
   },
@@ -178,10 +189,16 @@ const styles = {
     mb: 3,
   },
   socialLinks: {
+    display: "grid",
+    gridTemplateColumns: ["1fr", "1fr", "repeat(2, 1fr)"],
+    gap: 2,
     "& > a": {
+      display: "flex",
+      alignItems: "center",
       mr: 5,
       color: "text",
       textDecoration: "none",
     },
   },
 };
+

@@ -5,10 +5,13 @@ import Sticky from "react-stickynode";
 import Logo from "../logo";
 import { NormalLink, NavLink } from "../link";
 import menuItems from "./header.data";
-import { borderRadius, padding, rgba } from "polished";
+import { useDispatch, useSelector } from "react-redux";
+import { markLogin } from "../../store/slice/homePageSclice";
 
 export default function Header() {
   const [mobileMenu, setMobileMenu] = useState(false);
+  const dispatch = useDispatch();
+  const registerBanner = useSelector((state) => state.homepage.login);
 
   const toggleMobileMenu = () => {
     setMobileMenu(!mobileMenu);
@@ -44,9 +47,8 @@ export default function Header() {
                   sx={styles.navList}
                   className={mobileMenu ? "active" : ""}
                 >
-                  
                   {menuItems.map(({ path, label }, i) => (
-                    <li key={i}  className="nav-item">
+                    <li key={i} className="nav-item">
                       <NavLink
                         path={path}
                         label={label}
@@ -56,8 +58,12 @@ export default function Header() {
                     </li>
                   ))}
                 </Box>
-                <Button sx={styles.joinNow} variant="primaryMd">
-                  ගිණුමට පිවිසෙන්න
+                <Button
+                  sx={styles.joinNow}
+                  onClick={() => dispatch(markLogin({ login: !registerBanner }))}
+                  variant="primaryMd"
+                >
+                  {registerBanner ? "ගිණුමට පිවිසෙන්න" : "ලියාපදිංචි වන්න"}
                 </Button>
               </Flex>
 
@@ -66,10 +72,7 @@ export default function Header() {
                   <GrClose onClick={closeMobileMenu} size="20px" />
                 </Button>
               ) : (
-                <MenuButton
-                  aria-label="Toggle Menu"
-                  onClick={toggleMobileMenu}
-                />
+                <MenuButton aria-label="Toggle Menu" onClick={toggleMobileMenu} />
               )}
             </Box>
           </Container>
@@ -78,6 +81,7 @@ export default function Header() {
     </Box>
   );
 }
+
 
 const styles = {
   headerWrapper: {
