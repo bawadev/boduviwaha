@@ -69,7 +69,7 @@ const ContactFeedback = () => {
             <br />
             <Text sx={styles.address}>සමාජ මාධ්‍ය</Text>
             <Flex sx={styles.socialLinks}>
-              <a href="#" style={{ display: "flex", alignItems: "center" }}>
+              <a href="https://www.facebook.com/profile.php?id=61563479035989" style={{ display: "flex", alignItems: "center" }}>
                 <FaFacebook />
                 <Text>Facebook</Text>
               </a>
