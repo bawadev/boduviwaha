@@ -1,100 +1,100 @@
 const siteImages = {
   logo: {
-    src: 'boduviwaha.lk/assets/images/logo-white-lk.png',
+    src: '/assets/images/logo-white-lk.png',
   },
   bannerBg: {
-    src: 'boduviwaha.lk/assets/images/banner-bg.jpg',
+    src: '/assets/images/banner-bg.jpg',
   },
   chat: {
-    src: 'boduviwaha.lk/assets/images/icons/chat.png',
+    src: '/assets/images/icons/chat.png',
   },
   call: {
-    src: 'boduviwaha.lk/assets/images/icons/call.png',
+    src: '/assets/images/icons/call.png',
   },
   play: {
-    src: 'boduviwaha.lk/assets/images/icons/play.png',
+    src: '/assets/images/icons/play.png',
   },
   pause: {
-    src: 'boduviwaha.lk/assets/images/icons/pause.png',
+    src: '/assets/images/icons/pause.png',
   },
   close: {
-    src: 'boduviwaha.lk/assets/images/icons/close.png',
+    src: '/assets/images/icons/close.png',
   },
   'menu-icon': {
-    src: 'boduviwaha.lk/assets/images/icons/menu-icon.png',
+    src: '/assets/images/icons/menu-icon.png',
   },
   'user-icon': {
-    src: 'boduviwaha.lk/assets/images/icons/user-icon.png',
+    src: '/assets/images/icons/user-icon.png',
   },
   'arrow-down': {
-    src: 'boduviwaha.lk/assets/images/icons/arrow-down.png',
+    src: '/assets/images/icons/arrow-down.png',
   },
  
   thumb: [
-    { src: 'boduviwaha.lk/assets/images/blog/1.png' },
-    { src: 'boduviwaha.lk/assets/images/blog/2.png' },
-    { src: 'boduviwaha.lk/assets/images/blog/3.png' }
+    { src: '/assets/images/blog/1.png' },
+    { src: '/assets/images/blog/2.png' },
+    { src: '/assets/images/blog/3.png' }
   ],
   // Additional images with replaced paths
   userIcon: {
-    src: 'boduviwaha.lk/assets/images/icons/two-users.png',
+    src: '/assets/images/icons/two-users.png',
   },
   userIcon2: {
-    src: 'boduviwaha.lk/assets/images/icons/three-users.png',
+    src: '/assets/images/icons/three-users.png',
   },
   customer: {
-    src: 'boduviwaha.lk/assets/images/customer.png',
+    src: '/assets/images/customer.png',
   },
   gallery1: {
-    src: 'boduviwaha.lk/assets/images/gallery/1.png',
+    src: '/assets/images/gallery/1.png',
   },
   gallery2: {
-    src: 'boduviwaha.lk/assets/images/gallery/2.png',
+    src: '/assets/images/gallery/2.png',
   },
   gallery3: {
-    src: 'boduviwaha.lk/assets/images/gallery/3.png',
+    src: '/assets/images/gallery/3.png',
   },
   gallery4: {
-    src: 'boduviwaha.lk/assets/images/gallery/4.png',
+    src: '/assets/images/gallery/4.png',
   },
   gallery5: {
-    src: 'boduviwaha.lk/assets/images/gallery/5.png',
+    src: '/assets/images/gallery/5.png',
   },
   gallery6: {
-    src: 'boduviwaha.lk/assets/images/gallery/6.png',
+    src: '/assets/images/gallery/6.png',
   },
   expand: {
-    src: 'boduviwaha.lk/assets/images/icons/expand.png',
+    src: '/assets/images/icons/expand.png',
   },
   users: {
-    src: 'boduviwaha.lk/assets/images/icons/users.png',
+    src: '/assets/images/icons/users.png',
   },
   wifi: {
-    src: 'boduviwaha.lk/assets/images/icons/wifi.png',
+    src: '/assets/images/icons/wifi.png',
   },
   slider1: {
-    src: 'boduviwaha.lk/assets/images/features/1.png',
+    src: '/assets/images/features/1.png',
   },
   slider2: {
-    src: 'boduviwaha.lk/assets/images/features/2.png',
+    src: '/assets/images/features/2.png',
   },
   slider3: {
-    src: 'boduviwaha.lk/assets/images/features/3.jpg',
+    src: '/assets/images/features/3.jpg',
   },
   uber: {
-    src: 'boduviwaha.lk/assets/images/clients/uber.png',
+    src: '/assets/images/clients/uber.png',
   },
   google: {
-    src: 'boduviwaha.lk/assets/images/clients/google.png',
+    src: '/assets/images/clients/google.png',
   },
   paypal: {
-    src: 'boduviwaha.lk/assets/images/clients/paypal.png',
+    src: '/assets/images/clients/paypal.png',
   },
   microsoft: {
-    src: 'boduviwaha.lk/assets/images/clients/microsoft.png',
+    src: '/assets/images/clients/microsoft.png',
   },
   dribbble: {
-    src: 'boduviwaha.lk/assets/images/clients/dribbble.png',
+    src: '/assets/images/clients/dribbble.png',
   },
 };
 
