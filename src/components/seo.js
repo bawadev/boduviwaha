@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 
 export default function SEO({
-  description = 'බෞද්දයන් සඳහාම වෙන් වූ ශ්‍රී ලංකාවේ ප්‍රථම හා ඔබේ විස්වාසනීයතම මංගල සේවාව. Sri Lanka\'s first ever matrimonial service specifically made to support buddhist community.',
+  description = 'බෞද්ධයන් සඳහාම වෙන් වූ ශ්‍රී ලංකාවේ ප්‍රථම හා ඔබේ විස්වාසනීයතම මංගල සේවාව',
   author = 'boduviwaha.lk',
   meta = [],
   title = 'යහපත් පවුලක්, යහපත් සමාජයක් - boduviwaha.lk',

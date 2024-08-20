@@ -10,6 +10,7 @@ class CustomDocument extends Document {
     return (
       <Html lang="en-US">
         <Head >
+        <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/icon.ico" />
         </Head>
         <body>
