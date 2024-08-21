@@ -13,7 +13,7 @@ const steps = [
   { component: SubmissionSuccess, title: "ස්තුතියි" },
 ];
 
-  const backEndBaseUrl = "https://ec2-16-171-153-216.eu-north-1.compute.amazonaws.com"
+  const backEndBaseUrl = "https://ec2-16-171-153-216.eu-north-1.compute.amazonaws.com"  
 //const backEndBaseUrl = "http://localhost:8080"
 
 export default function RegisterMultiStepForm() {
