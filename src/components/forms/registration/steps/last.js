@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import {
     jsx,
     Box,
@@ -7,6 +8,7 @@ import {
   } from "theme-ui";
   
   export default function SubmissionSuccess({ onBack }) {
+    
     return (
       <Box sx={styles.container}>
         <Box sx={styles.card}>
@@ -16,7 +18,7 @@ import {
           <Text sx={styles.message}>
             ඔබගේ දත්ත යොමු කර ඇත. අපගේ කණ්ඩායම විමර්ශනය කරමින් සිටී. ඔබට එහි සම්බන්ධිත තොරතුරු ඉක්මනින්ම ලබා දෙනු ලැබේ.
           </Text>
-          <Button onClick={onBack} sx={styles.button}>
+          <Button onClick={(onBack)} sx={styles.button}>
             ආපසු
           </Button>
         </Box>

@@ -14,6 +14,7 @@ import { z } from "zod";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { padding } from "polished";
+import { useRouter } from "next/router";
 
 const PersonalInfoSchema = z.object({
   firstName: z.string().min(1, "ඔබේ නම අත්‍යවශ්‍යයි"),
@@ -39,6 +40,11 @@ export default function PersonalInfo({ data, onSubmit }) {
     resolver: zodResolver(PersonalInfoSchema),
     defaultValues: data,
   });
+
+  const router = useRouter();
+    const handleBack = () =>{
+      //router.push("profile/not-verified/warning")
+    }
 
   const dateOfBirth = watch("dateOfBirth");
 

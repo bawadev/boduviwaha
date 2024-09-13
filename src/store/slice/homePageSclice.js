@@ -6,12 +6,12 @@ const homePageSlice = createSlice({
     login: true,
   },
   reducers: {
-    markLogin: (state,action) => {
+    updateLoginBanner: (state,action) => {
       state.login = action.payload.login;
     },
     
   },
 });
 
-export const { markLogin } = homePageSlice.actions;
+export const { updateLoginBanner: updateLoginBanner } = homePageSlice.actions;
 export default homePageSlice.reducer;

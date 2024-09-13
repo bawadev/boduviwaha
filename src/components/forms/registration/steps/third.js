@@ -17,7 +17,7 @@ import { margin, padding } from "polished";
 
 const AdditionalInfoSchema = z.object({
   socialStatus: z.string().min(1, "සමාජ තත්වය අත්‍යවශ්‍යයි"),
-  highestEducationQulifi: z.string().min(1, "අධ්‍යාපනය අත්‍යවශ්‍යයි"),
+  highestEducationQualification: z.string().min(1, "අධ්‍යාපනය අත්‍යවශ්‍යයි"),
   jobOrProffesion: z.string().min(1, "රැකියාව අත්‍යවශ්‍යයි"),
   monthlyIncome: z.string().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
   houseOwnership: z.string().min(1, "නිවාස හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
@@ -54,11 +54,11 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
           ඔබේ සමාජ තත්වය
         </Heading>
         <Box sx={styles.field}>
-          <Label htmlFor="highestEducationQulifi">ලබා ඇති ඉහලම අධ්‍යාපනය</Label>
+          <Label htmlFor="highestEducationQualification">ලබා ඇති ඉහලම අධ්‍යාපනය</Label>
           <Select
             defaultValue={"NO"}
-            id="highestEducationQulifi"
-            {...register("highestEducationQulifi")}
+            id="highestEducationQualification"
+            {...register("highestEducationQualification")}
             sx={styles.select}
           >
             <option value="NO">පාසල් අද්‍යාපනය ලබා නැත</option>

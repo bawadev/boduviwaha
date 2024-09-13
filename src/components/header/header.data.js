@@ -8,7 +8,7 @@ export default [
     label: 'අපි ගැන',
   },
   {
-    path: '/registration',
+    path: '/matching',
     label: 'ඔබේ ගැලපීම්',
   },
   {
