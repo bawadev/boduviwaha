@@ -7,7 +7,7 @@ import Feature from '../components/cards/feature';
 import Image from '../components/image';
 import siteImages from '../resource/images'; // Assuming siteImages is correctly imported from your resource folder
 
-import SwiperCore, { Autoplay, Pagination, EffectFade } from 'swiper';
+import SwiperCore, { Autoplay, Pagination, EffectFade } from 'swiper/core';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 

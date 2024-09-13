@@ -238,7 +238,7 @@ const RegistrationForm = () => {
           />
           <Heading as="h2">{`${userData.firstName} ${userData.lastName}`}</Heading>
           <Text sx={styles.subTitle}>
-            {userData.buddhistPractice.descriptionOfYourSelf}
+            {}
           </Text>
 
           {/*  <Flex sx={styles.buttonGroup}>
