@@ -15,7 +15,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { padding } from "polished";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const PersonalInfoSchema = z.object({
   firstName: z.string().min(1, "ඔබේ නම අත්‍යවශ්‍යයි"),
@@ -52,6 +53,26 @@ export default function PersonalInfo({ data, onSubmit }) {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [districts, setDistricts] = useState([]);
   const [towns, setTowns] = useState([]);
+  const userBasicDetails = useSelector((state) => state.userDetails.userDetails);
+  const userAuthDetails = useSelector((state) => state.userDetails.authDetails);
+
+  useEffect(() => {
+    if (userBasicDetails.addresses && userBasicDetails.addresses.length > 0) {
+      setValue("address", userBasicDetails.addresses[0].address);
+      setValue("province", userBasicDetails.addresses[0].province);
+      setValue("district", userBasicDetails.addresses[0].district);
+      setValue("nearestTown", userBasicDetails.addresses[0].nearestTown);
+    }
+    if (userBasicDetails.contacts && userBasicDetails.contacts.length > 0) {
+      setValue("phoneNumber", userBasicDetails.addresses[0].address);
+    }
+    setValue("email", userBasicDetails.email);
+    setValue("firstName", userBasicDetails.firstName);
+    setValue("lastName", userBasicDetails.lastName);
+    setValue("dateOfBirth", new Date(userBasicDetails.dateOfBirth));
+    setValue("gender", userBasicDetails.gender);
+    // Handle other fields like contacts if available
+  }, [userBasicDetails]);
 
   const locations = [
     {

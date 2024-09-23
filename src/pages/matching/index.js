@@ -14,8 +14,13 @@ import {
 } from "theme-ui";
 import { useState } from "react";
 import { margin } from "polished";
+import Overlay from "../../components/blur-overlay";
+import { useRouter } from "next/router";
 
 const FilterPage = () => {
+  const [isOverlayVisible, setOverlayVisible] = useState(true);
+
+
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [districts, setDistricts] = useState([]);
@@ -52,6 +57,14 @@ const FilterPage = () => {
     },
     // Other provinces...
   ];
+
+  const router = useRouter();
+
+  
+  const toggleOverlay = () => {
+    router.push('/profile')
+    setOverlayVisible(!isOverlayVisible);
+  };
 
   const handleProvinceChange = (e) => {
     const selected = e.target.value;
@@ -290,7 +303,9 @@ const FilterPage = () => {
           </Card>
         </Grid>
       </Box>
-
+      {isOverlayVisible && (
+        <Overlay buttonText="ඔබේ ගිණුමට යොමුවන්න" description="ගිණුමේ තොරතුරු අප විසින් තහවුරු කර නොමැත. ඔබේ විද්‍යුත් තැපෑල හෝ වට්සැප් පරීක්ෂා කර බලන්න." footerDescription = "එසේම ඔබේ ඇතුලත් කල තොරතුරු වල නිරවද්‍යතාව නැවත නැවැතත් පරීක්ෂා කර තොරතුරු යාවත්කාලීන කරන්න" onClose={toggleOverlay} />
+      )}
       {/* Results Section */}
       <Box as="section" sx={styles.resultsSection}>
         <Heading sx={styles.resultsTitle}>Results</Heading>
@@ -333,9 +348,9 @@ const styles = {
   input: {
     fontSize: 12.5, // Slightly increased font size (optional)
     px: 1.3, // Slightly increased padding
-     // Reduce height for smaller input field
+    // Reduce height for smaller input field
     width: "90%",
-    height: "90%"
+    height: "90%",
   },
   select: {
     fontSize: 12.5, // Slightly increased font size
@@ -358,7 +373,7 @@ const styles = {
   },
   resultsSection: {
     mt: 1, // Minimal margin
-    mb: 150
+    mb: 150,
   },
   resultsTitle: {
     fontSize: 22.5, // Reduced font size

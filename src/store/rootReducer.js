@@ -5,7 +5,7 @@ import userDetailSlice from './slice/userDetailSlice';
 
 const rootReducer = combineReducers({
   homepage: homePageSclice,
-  userDetail: userDetailSlice
+  userDetails: userDetailSlice
 });
 
 export default rootReducer;

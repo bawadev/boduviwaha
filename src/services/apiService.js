@@ -127,8 +127,68 @@ export const createHealthInfo = async (data, userId, token) => {
   return response.data;
 };
 
-// API call to fetch user details
-export const fetchUserDetails = async (userId, token) => {
-  const response = await api.get(`/api/buddhist-users/${userId}`, setAuthHeader(token));
+
+
+
+export const uploadImage = async (formData, userToken) => {
+  const response = await axios.post(`${backEndBaseUrl}/api/user-images`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+  return response.data;
+};
+
+// Function to delete an image
+export const deleteImage = async (imageId, userToken) => {
+  const response = await axios.delete(`${backEndBaseUrl}/api/user-images/${imageId}`, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const getUserImagesByUser = async (userId, userToken) => {
+  try {
+    const response = await axios.get(`${backEndBaseUrl}/api/user-images/user-id/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user images:', error);
+    throw error;
+  }
+};
+
+export const getUserImageVisibilityByUser = async (userId, userToken) => {
+  try {
+    const response = await axios.get(`${backEndBaseUrl}/api/user-meta/visibility/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user images:', error);
+    throw error;
+  }
+};
+
+export const addUpdateUserMeta = async (value, userId, metaId, token) => {
+  const response = await api.post(
+    `/api/user-meta/${userId}`,
+    {
+      id: metaId,
+      metaKey: "IMAGE_VISIBILITY",
+      metaValue: value,
+    },
+    setAuthHeader(token)
+  );
   return response.data;
 };

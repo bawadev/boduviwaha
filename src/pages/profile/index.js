@@ -1,5 +1,6 @@
 /** @jsxImportSource theme-ui */
-import React from "react";
+/** @jsxImportSource theme-ui */
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -12,13 +13,88 @@ import {
   Card,
 } from "theme-ui";
 import ImageUpload from "../../components/image-uploader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import ReactImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import Gallery from "../../sections/gallery";
+import { deleteImage, getUserImagesByUser, getUserImageVisibilityByUser } from "../../services/apiService";
+import {
+  updateUserImages,
+  updateUserImageVisibility,
+  updateUserProfileImage,
+} from "../../store/slice/userDetailSlice";
+import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 
 const RegistrationForm = () => {
-  const userData = useSelector((state)=>state.userDetail.userDetails);
+  const userData = useSelector((state) => state.userDetails.userDetails);
+  const userImageData = useSelector((state) => state.userDetails.userImages);
+  const userToken = useSelector((state) => state.userDetails.token);
+  const userProfileImageData = useSelector(
+    (state) => state.userDetails.userProfileImage
+  );
+  const userImageVisibility = useSelector((state) => state.userDetails.userImageVisibility);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const handleDialogToggle = () => {
+    setIsDialogOpen(!isDialogOpen);
+  };
 
-  const maxMeditationTime = 60; // Assuming 60 minutes as the max for meditation
-  const maxDanaAmount = 5000; // Assuming 5000 as max for Dana Amount
+  useEffect(() => {
+    console.log(userImageData.isLoaded);
+    if (userData.userId) {
+      getUserImageVisibilityByUser(userData.userId, userToken).then((value) => {
+        console.log("llllllllllllllll" + userImageVisibility);
+        console.log(value);
+        if (value != null) {
+          dispatch(updateUserImageVisibility({ userImageVisibility: value }));
+        }
+      });
+    }
+    
+    
+    if (!userImageData.isLoaded && userToken) {
+      getUserImagesByUser(userData.userId, userToken).then((data) => {
+        data.map((image) => {
+          console.log(image.imageType);
+          if (image.imageType == "REGULAR") {
+            dispatch(
+              updateUserImages({
+                actionType: "ADD",
+                image: {
+                  id: image.id,
+                  image: `data:image/png;base64,${image.imageData}`,
+                },
+              }) 
+            );
+          } else {
+            dispatch(
+              updateUserProfileImage({
+                userProfileImage: { isLoaded: true, image: image.imageData },
+              })
+            );
+          }
+        });
+      });
+    }
+  }, []); //
+
+  const deleteUserImage = (imageId) => {
+    try {
+      deleteImage(imageId, userToken);
+      dispatch(updateUserImages({ imageId, actionType: "DELETE_ONE" }));
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "අසාර්ථකයි",
+        text: "චායා රූපය ඉවත් කිරීම අසාර්ථකයි. නැවත ගිණුමට ඇතුල් වී උත්සහ කරන්න",
+      });
+    }
+  };
+
+  const maxMeditationTime = 60;
+  const maxDanaAmount = 5000;
   const maxIncome = 100000;
 
   function getMaritalStatusText(maritalStatus) {
@@ -61,6 +137,7 @@ const RegistrationForm = () => {
         return "ප්‍රකාශ කිරීමට අකමැති";
     }
   }
+
   function getDrugUsageText(response) {
     switch (response) {
       case "YES":
@@ -107,6 +184,7 @@ const RegistrationForm = () => {
         return "Unknown value";
     }
   };
+
   function getVehicleOwnershipText(ownership) {
     switch (ownership) {
       case "NO":
@@ -123,6 +201,7 @@ const RegistrationForm = () => {
         return "Unknown vehicle ownership";
     }
   }
+
   function getHouseOwnershipText(ownership) {
     switch (ownership) {
       case "NO_HOUSE":
@@ -155,87 +234,104 @@ const RegistrationForm = () => {
       case "LESS_5":
         return "වසර 5ට අඩු කාලයක්";
       default:
-        return "Unknown time";
+        return "නොදන්නා";
     }
   };
+
   return (
     <Container sx={styles.container}>
       <Flex sx={styles.headerContainer}>
         <Box sx={styles.profileBox}>
-          {/* Profile Information */}
-          <img
-            src="https://play-lh.googleusercontent.com/7oW_TFaC5yllHJK8nhxHLQRCvGDE8jYIAc2SWljYpR6hQlFTkbA6lNvER1ZK-doQnQ=w240-h480-rw"
-            alt="Profile Avatar"
-            sx={styles.avatar}
-          />
-          <Heading as="h2">{`${userData.firstName} ${userData.lastName}`}</Heading>
+          <div style={{ position: "relative", display: "inline-block" }}>
+            <img
+              src={`data:image/png;base64,${userProfileImageData.image}`}
+              alt="Profile Avatar"
+              sx={styles.avatar}
+              onClick={handleDialogToggle}
+              style={{
+                cursor: "pointer",
+                filter: `blur(${(100 - userImageVisibility) / 10}px)`,
+              }}
+            />
+            <div
+              onClick={handleDialogToggle}
+              sx={styles.cameraIconContainer}
+              style={{ cursor: "pointer" }}
+            >
+              <img
+                src="https://w7.pngwing.com/pngs/519/947/png-transparent-camera-computer-icons-graphy-camera-electronics-rectangle-photography-thumbnail.png"
+                alt="Update Icon"
+                sx={styles.cameraIcon}
+              />
+            </div>
+          </div>
+          <Heading
+            as="h2"
+            sx={styles.userName}
+          >{`${userData.firstName} ${userData.lastName}`}</Heading>
+          <br />
           <Text sx={styles.subTitle}>
             {userData.buddhistPractice.descriptionOfYourSelf}
           </Text>
-
-          {/*  <Flex sx={styles.buttonGroup}>
-            <Button sx={styles.button}>Follow</Button>
-            <Button sx={styles.button}>Message</Button>
-          </Flex>
-          <Box sx={styles.socialLinks}>
-            <Text>Website: https://bootdey.com</Text>
-            <Text>GitHub: bootdey</Text>
-            <Text>Twitter: @bootdey</Text>
-            <Text>Instagram: bootdey</Text>
-            <Text>Facebook: bootdey</Text>
-          </Box> */}
         </Box>
         <Box sx={styles.infoBox}>
-          <Flex sx={styles.infoItem}>
-            <Heading as="h3">නම</Heading>
-            <Text>{`${userData.firstName} ${userData.lastName}`}</Text>
-          </Flex>
-          <Flex sx={styles.infoItem}>
-            <Heading as="h3">උපන් දිනය</Heading>
-            <Text>{userData.dateOfBirth}</Text>
-          </Flex>
-          <Flex sx={styles.infoItem}>
-            <Heading as="h3">භාවය</Heading>
-            <Text>{userData.gender}</Text>
-          </Flex>
-          <Flex sx={styles.infoItem}>
-            <Heading as="h3">ලිපිනය</Heading>
-            <Text>{userData.addresses[0].address}</Text>
-          </Flex>
-          <Button sx={styles.editButton}>Edit</Button>
+          <Grid columns={[1, 2]} gap={2}>
+            <Box>
+              <Heading as="h3">නම</Heading>
+              <Text>{`${userData.firstName} ${userData.lastName}`}</Text>
+            </Box>
+            <Box>
+              <Heading as="h3">උපන් දිනය</Heading>
+              <Text>{userData.dateOfBirth}</Text>
+            </Box>
+            <Box>
+              <Heading as="h3">භාවය</Heading>
+              <Text>{userData.gender}</Text>
+            </Box>
+            <Box>
+              <Heading as="h3">ලිපිනය</Heading>
+              <Text>{userData.addresses[0].address}</Text>
+            </Box>
+          </Grid>
+          <Button sx={styles.editButton} onClick={()=>router.push("/registration")}>Edit</Button>
         </Box>
       </Flex>
-      <Flex sx={styles.statusContainer}>
-        {/* Buddhist Practice Information */}
-        <Box sx={styles.statusBox}>
-          <Heading as="h4">බෞද්ධ හැදෑරීම</Heading>
 
-          <Text>
-            <strong>බෞද්ධ දර්ශනය වසර </strong>{" "}
-            {getTextBasedOnTime(userData.buddhistPractice.timeInvestedOverall)}{" "}
-            {" කාලයක් හදාරා ඇත"}
-          </Text>
-          <hr />
-          <Card
-            sx={{
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.16)",
-              marginBottom: "20px",
-            }}
-          >
-            <Text sx={{ borderBottom: "1px solid black" }}>
-              <strong>භාවනා කල ප්‍රමාණ</strong>
+      <Grid columns={[1, null, 2]} gap={4} sx={styles.statusContainer}>
+        <Box sx={styles.statusBox}>
+          <Heading as="h2">බෞද්ධ හැදෑරීම</Heading>
+          <br />
+
+          <Card sx={styles.card}>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>බෞද්ධ දර්ශනය වසර </u>
+              </strong>
+              {getTextBasedOnTime(
+                userData.buddhistPractice.timeInvestedOverall
+              )}
+              {" කාලයක් හදාරා ඇත"}
             </Text>
             <br />
-            <Text>
-              <strong>කර්මස්ථාන අචාර්ය වරයා:</strong>{" "}
+            <br />
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>කර්මස්ථාන අචාර්ය වරයා</u>
+              </strong>
+              {"    "}
               {userData.buddhistPractice.meditationTeacher}
             </Text>
-            <br />
+          </Card>
 
-            <Box sx={{ display: "flex" }}>
-              <Box sx={{ flex: 1, p: 2 }}>
-                <Text>
-                  <strong>ආනාපාන සති:</strong>
+          <Card sx={styles.card}>
+            <Heading as="h3">භාවනා කල ප්‍රමාණ</Heading>
+            <br />
+            <Grid columns={[1, 2]} gap={2}>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>ආනාපාන සති</u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxMeditationTime}
@@ -243,16 +339,11 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box
-                sx={{
-                  flex: 1,
-                  p: 2,
-
-                  justifyContent: "center",
-                }}
-              >
-                <Text>
-                  <strong>මෛත්‍රී :</strong>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>මෛත්‍රී </u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxMeditationTime}
@@ -260,11 +351,11 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-            </Box>
-            <Box sx={{ display: "flex" }}>
-              <Box sx={{ flex: 1, p: 2 }}>
-                <Text>
-                  <strong>සතර ඉරියවුවේ සිහිය:</strong>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>සතර ඉරියවුවේ සිහිය</u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxMeditationTime}
@@ -272,9 +363,11 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box sx={{ flex: 1, p: 2 }}>
-                <Text>
-                  <strong>වෙනත් භාවනා:</strong>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>වෙනත් භාවනා</u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxMeditationTime}
@@ -282,23 +375,18 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-            </Box>
+            </Grid>
           </Card>
 
-          <Card
-            sx={{
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.16)",
-              marginBottom: "20px",
-            }}
-          >
-            <Text sx={{ borderBottom: "1px solid black" }}>
-              <strong>සිල් රැකි ප්‍රමාණ</strong>
-            </Text>
+          <Card sx={styles.card}>
+            <Heading as="h3">සිල් රැකි ප්‍රමාණ</Heading>
             <br />
-            <Box sx={{ display: "flex" }}>
-              <Box sx={{ flex: 1, p: 2 }}>
-                <Text>
-                  <strong>පන්සිල්:</strong>
+            <Grid columns={[1, 2]} gap={2}>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>පන්සිල්</u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxMeditationTime}
@@ -306,9 +394,11 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box sx={{ flex: 1, p: 2 }}>
-                <Text>
-                  <strong>අටසිල්:</strong>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>අටසිල්</u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxMeditationTime}
@@ -316,12 +406,11 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-            </Box>
-
-            <Box sx={{ display: "flex" }}>
-              <Box sx={{ flex: 1, p: 2 }}>
-                <Text>
-                  <strong>සිල්පද පහට අඩුවෙන්:</strong>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>සිල්පද පහට අඩුවෙන්</u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxMeditationTime}
@@ -329,23 +418,18 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box sx={{ flex: 1, p: 2 }}></Box>
-            </Box>
+            </Grid>
           </Card>
-          <Card
-            sx={{
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.16)",
-              marginBottom: "20px",
-            }}
-          >
-            <Text sx={{ borderBottom: "1px solid black" }}>
-              <strong>දාන දුන් ප්‍රමාණ:</strong>
-            </Text>
+
+          <Card sx={styles.card}>
+            <Heading as="h3">දාන දුන් ප්‍රමාණ</Heading>
             <br />
-            <Box sx={{ display: "flex" }}>
-              <Box sx={{ flex: 1, p: 2 }}>
-                <Text>
-                  <strong>සතුන්ට දානය:</strong>
+            <Grid columns={[1, 2]} gap={2}>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>සතුන්ට දානය</u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxDanaAmount}
@@ -353,9 +437,11 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box sx={{ flex: 1, p: 2 }}>
-                <Text>
-                  <strong>මිනිසුන්ට දානය:</strong>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>මිනිසුන්ට දානය</u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxDanaAmount}
@@ -363,11 +449,11 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-            </Box>
-            <Box sx={{ display: "flex" }}>
-              <Box sx={{ flex: 1, p: 2 }}>
-                <Text>
-                  <strong>සංඝයාට දානය:</strong>
+              <Box>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>සංඝයාට දානය</u>
+                  </strong>
                 </Text>
                 <Progress
                   max={maxDanaAmount}
@@ -375,231 +461,372 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box sx={{ flex: 1, p: 2 }}></Box>
-            </Box>
+            </Grid>
           </Card>
 
-          <Text>
-            <strong>දේශනා වලට සවන් දුන් කාලය (මිනිත්තු):</strong>{" "}
+          <Text sx={styles.normalText}>
+            <strong>
+              <u>දේශනා වලට සවන් දුන් කාලය (මිනිත්තු)</u>
+            </strong>
+            {"  "}
             {userData.buddhistPractice.sermonListenTime}
           </Text>
-          <hr />
-          <Text>
-            <strong>සවන් දෙන දේශකයන් වහන්සේලා පිලිබඳ විස්තර:</strong> <br />
+          <br />
+          <br />
+
+          <Text sx={styles.normalText}>
+            <strong>
+              <u>සවන් දෙන දේශකයන් වහන්සේලා පිලිබඳ විස්තර</u>
+            </strong>
+            {"    "}
+            <br />
             {userData.buddhistPractice.sermonSpeakersDetails}
           </Text>
-          <hr />
-          <Text>
-            <strong>අභිධර්මය පිලිබඳ දැනුම:</strong>{" "}
+          <br />
+          <Text sx={styles.normalText}>
+            <strong>
+              <u>අභිධර්මය පිලිබඳ දැනුම</u>
+            </strong>
+            {"    "}
             {getTextBasedOnValue(userData.buddhistPractice.knowledgeAbhiDhamma)}
           </Text>
         </Box>
+
         <Box sx={styles.statusBox}>
-          <Heading as="h4">සමාජ තත්වය</Heading>
+          <Heading as="h2">සමාජ තත්වය</Heading>
           <br />
-          <Text>
-            <strong>විවාහ තත්ත්වය:</strong>{" "}
-            {getMaritalStatusText(userData.socialInformation.marriageStatus)}
-          </Text>
-          <hr />
-          <Text>
-            <strong>රැකියාව:</strong> {userData.socialInformation.occupation}
-          </Text>
-          <hr />
-          <Text>
-            <strong>උසස්ම අධ්‍යාපන සුදුසුකම:</strong>{" "}
-            {getEducationQualificationText(
-              userData.socialInformation.highestEducationQualification
-            )}
-          </Text>
-          <hr />
-          <Text>
-            <strong>මාසික ආදායම:</strong> <br />
-            {userData.socialInformation.monthlyIncome}
-          </Text>
-          <hr />
-          <Text>
-            <strong>නිවාස හිමිකාරීත්වය:</strong>{" "}
-            {getHouseOwnershipText(userData.socialInformation.houseOwnership)}
-          </Text>
-          <hr />
-          <Text>
-            <strong>වාහන හිමිකාරීත්වය:</strong>{" "}
-            {getVehicleOwnershipText(
-              userData.socialInformation.vehicleOwnership
-            )}
-          </Text>
-          <hr/>
-          <ImageUpload>
-
-          </ImageUpload>
+          <Grid columns={[1, 2]} gap={2}>
+            <Box>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>විවාහ තත්ත්වය</u>
+                </strong>
+                {"    "}
+                {getMaritalStatusText(
+                  userData.socialInformation.marriageStatus
+                )}
+              </Text>
+            </Box>
+            <Box>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>රැකියාව</u>
+                </strong>
+                {"    "}
+                {userData.socialInformation.occupation}
+              </Text>
+            </Box>
+            <Box>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>උසස්ම අධ්‍යාපන සුදුසුකම</u>
+                </strong>
+                {"    "}
+                {getEducationQualificationText(
+                  userData.socialInformation.highestEducationQualification
+                )}
+              </Text>
+            </Box>
+            <Box>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>මාසික ආදායම</u>
+                </strong>
+                {"    "}
+                <Progress
+                  max={maxIncome}
+                  value={userData.socialInformation.monthlyIncome}
+                  sx={styles.progress}
+                />
+              </Text>
+            </Box>
+            <Box>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>නිවාස හිමිකාරීත්වය</u>
+                </strong>
+                {"    "}
+                {getHouseOwnershipText(
+                  userData.socialInformation.houseOwnership
+                )}
+              </Text>
+            </Box>
+            <Box>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>වාහන හිමිකාරීත්වය</u>
+                </strong>
+                {"    "}
+                {getVehicleOwnershipText(
+                  userData.socialInformation.vehicleOwnership
+                )}
+              </Text>
+            </Box>
+          </Grid>
+          <Box sx={styles.imageUploadContainer}>
+            <ImageUpload
+              disabled={userImageData.images.length > 2}
+              userId={userData.userId}
+              imageType="REGULAR"
+            />
+          </Box>
+          <Box sx={styles.imageUploadContainer}>
+            <Gallery
+              title={"ඔබේ චායා රූප"}
+              data={userImageData.images}
+              onDelete={deleteUserImage}
+            />
+          </Box>
         </Box>
-      </Flex>
-      <Flex sx={styles.statusContainer}>
-        <Box sx={styles.statusBox}>
-          <Heading as="h4">Health Information</Heading>
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Text>උස: {userData.userHealthInformation.height} ft</Text>
-            </Box>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Text>බර: {userData.userHealthInformation.weight} kg</Text>
-            </Box>
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Text>
-                <strong>භාහිර ආකර්ශනීය බව(ඔබේ තක්සේරුව):</strong>{" "}
-                {getExternalAttractivenessText(userData.userHealthInformation.physicalAttractiveness)}
-              </Text>
-            </Box>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Text>
-                <strong>සමේ පැහැය:</strong>{" "}
-                {getSkinToneText(userData.userHealthInformation.skinTone)}
-              </Text>
-            </Box>
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ flex: 1, p: 2 }}>
-              
-            <Text>
-                <strong>මද්‍යසාර පානය:</strong>{" "}
-                {getDrugUsageText(userData.userHealthInformation.drugUsage)}
-              </Text>
-            </Box>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Text>
-                <strong>දුම් පානය:</strong>{" "}
-                {getDrugUsageText(userData.userHealthInformation.smoking)}
-              </Text>
-            </Box>
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ flex: 1, p: 2 }}>
-            <Text>
-                <strong>බලාපොරොත්තු වන දරුවන් ගණන:</strong>{" "}
-                {userData.userHealthInformation.kidsExpectancy}
-              </Text>
-            </Box>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Text>
-                <strong>සාමාන්‍ය සෞක්‍ය තත්වය:</strong>{" "}
-                {userData.userHealthInformation.healthCondition}
-              </Text>
-            </Box>
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ flex: 1, p: 2 }}>
-              {" "}
-              <Text>
-                <strong>ශාරීරික දුබලතා:</strong>{" "}
-                {userData.userHealthInformation.disability}
-              </Text>
-            </Box>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Text>
-                <strong>මානසික රෝග:</strong>{" "}
-                {userData.userHealthInformation.mentalHealth}
-              </Text>
-            </Box>
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Text>
-                <strong>ජානමය රෝග:</strong>{" "}
-                {userData.userHealthInformation.geneticRisks}
-              </Text>
-            </Box>
-            <Box sx={{ flex: 1, p: 2 }}>
-              <Text>
-                <strong>විශේෂ දැනුම්දීම්:</strong>{" "}
-                {userData.userHealthInformation.yourMessage}
-              </Text>
-            </Box>
-          </Box>
+      </Grid>
 
+      <Box sx={styles.statusBox}>
+        <Heading as="h2">Health Information</Heading>
+        <br />
+        <Grid columns={[1, 2, 3]} gap={2}>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>උස</u>
+              </strong>
+              {"  "} {userData.userHealthInformation.height} ft
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>බර</u>
+              </strong>
+              {"  "} {userData.userHealthInformation.weight} kg
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>භාහිර ආකර්ශනීය බව(ඔබේ තක්සේරුව)</u>
+              </strong>
+              {"    "}
+              {getExternalAttractivenessText(
+                userData.userHealthInformation.physicalAttractiveness
+              )}
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>සමේ පැහැය</u>
+              </strong>
+              {"    "}
+              {getSkinToneText(userData.userHealthInformation.skinTone)}
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>මද්‍යසාර පානය</u>
+              </strong>
+              {"    "}
+              {getDrugUsageText(userData.userHealthInformation.drugUsage)}
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>දුම් පානය</u>
+              </strong>
+              {"    "}
+              {getDrugUsageText(userData.userHealthInformation.smoking)}
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>බලාපොරොත්තු වන දරුවන් ගණන</u>
+              </strong>
+              {"    "}
+              {userData.userHealthInformation.kidsExpectancy}
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>සාමාන්‍ය සෞක්‍ය තත්වය</u>
+              </strong>
+              {"    "}
+              {userData.userHealthInformation.healthCondition}
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>ශාරීරික දුබලතා</u>
+              </strong>
+              {"    "}
+              {userData.userHealthInformation.disability}
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>මානසික රෝග</u>
+              </strong>
+              {"    "}
+              {userData.userHealthInformation.mentalHealth}
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>ජානමය රෝග</u>
+              </strong>
+              {"    "}
+              {userData.userHealthInformation.geneticRisks}
+            </Text>
+          </Box>
+          <Box>
+            <Text sx={styles.normalText}>
+              <strong>
+                <u>විශේෂ දැනුම්දීම්</u>
+              </strong>
+              {"    "}
+              {userData.userHealthInformation.yourMessage}
+            </Text>
+          </Box>
+        </Grid>
+      </Box>
+
+      {isDialogOpen && (
+        <Box sx={styles.modal} onClick={handleDialogToggle}>
+          <Box sx={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <ImageUpload userId={userData.userId} imageType="PROFILE" />
+            <Button onClick={handleDialogToggle} sx={styles.closeButton}>
+              &times;
+            </Button>
+          </Box>
         </Box>
-      </Flex>
+      )}
     </Container>
   );
 };
 
 const styles = {
-  progress: {
-    height: "10px",
-    borderRadius: "5px",
-    backgroundColor: "#f5f5f5",
+  normalText: {
+    fontSize: 17,
   },
   container: {
     py: 4,
-    paddingTop: "100px",
+    paddingTop: ["20px", "50px", "100px"],
+    px: [2, 3, 4],
   },
   headerContainer: {
-    flexDirection: "row",
+    flexDirection: ["column", null, "row"],
     justifyContent: "space-between",
+    alignItems: ["center", null, "flex-start"],
   },
   profileBox: {
-    flex: 1,
+    flex: [null, null, 1],
     padding: 3,
     backgroundColor: "#f7f9fc",
     borderRadius: "8px",
     textAlign: "center",
+    mb: [3, null, 0],
   },
   infoBox: {
-    flex: 2,
+    flex: [null, null, 2],
     padding: 3,
     backgroundColor: "#ffffff",
     borderRadius: "8px",
     boxShadow: "0px 0px 15px rgba(0,0,0,0.1)",
+    mt: [3, null, 0],
   },
   avatar: {
     borderRadius: "50%",
-    width: "100px",
-    height: "100px",
+    width: ["80px", "100px"],
+    height: ["80px", "100px"],
     marginBottom: "10px",
+  },
+  cameraIconContainer: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    backgroundColor: "#fff",
+    borderRadius: "50%",
+    width: "30px",
+    height: "30px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cameraIcon: {
+    width: "20px",
+    height: "20px",
+  },
+  userName: {
+    fontSize: [3, 4],
+    mb: 2,
   },
   subTitle: {
     color: "#555",
-  },
-  location: {
-    color: "#777",
-    marginBottom: "20px",
-  },
-  buttonGroup: {
-    justifyContent: "center",
-    marginBottom: "20px",
-  },
-  button: {
-    mr: 2,
-  },
-  socialLinks: {
-    textAlign: "left",
-    padding: "10px",
-  },
-  infoItem: {
-    justifyContent: "space-between",
-    padding: "10px 0",
-    borderBottom: "1px solid #eee",
+    fontSize: [1, 2],
   },
   editButton: {
     mt: 3,
     alignSelf: "flex-start",
   },
   statusContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     mt: 4,
-    textAlign: "center",
   },
   statusBox: {
-    flex: 1,
     padding: 3,
     backgroundColor: "#ffffff",
     borderRadius: "8px",
     boxShadow: "0px 0px 15px rgba(0,0,0,0.1)",
-    marginLeft: "10px",
-    textAlign: "left",
+    mb: 4,
+  },
+  card: {
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.16)",
+    marginBottom: "20px",
+  },
+  cardHeader: {
+    pb: 2,
+    mb: 2,
+  },
+  progress: {
+    mt: 1,
+    height: "14px",
+    borderRadius: "5px",
+    backgroundColor: "#f5f5f5",
+  },
+  imageUploadContainer: {
+    mt: 5,
+  },
+  modal: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    bg: "rgba(0,0,0,0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+  },
+  modalContent: {
+    width: ["90%", "80%", "400px"],
+    bg: "#fff",
+    p: 4,
+    borderRadius: "8px",
+    position: "relative",
+  },
+  closeButton: {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "16px",
   },
 };
 

@@ -1,51 +1,62 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { backEndBaseUrl } from "../store/static-store";
+import { useDispatch, useSelector } from "react-redux";
+import { addUpdateUserMeta, uploadImage } from "../services/apiService";
+import { updateUserImages, updateUserImageVisibility, updateUserProfileImage } from "../store/slice/userDetailSlice";
 
-const ImageUpload = ({ userId }) => {
+const ImageUpload = ({ userId, imageType, disabled }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const [visibility, setVisibility] = useState(100); // Single slider visibility for all images
-  //const userToken = useSelector((state)=>state.userDetail.token)
-  const userToken = useSelector((state)=> state.userDetail.token)
-  const userDetails = useSelector((state)=> state.userDetail.userDetails)
+  const visibility = useSelector((state) => state.userDetails.userImageVisibility);
+  const dispatch = useDispatch();
+  const userToken = useSelector((state) => state.userDetails.token);
+  const userMeta = useSelector((state) => state.userDetails.userMeta);
+  
+
   const onDrop = (acceptedFiles) => {
     if (acceptedFiles.length + selectedFiles.length > 3) {
-      alert("චායාරූප ඇතුල් කරන්න. ඇතුල් කල හැකි උපරිමය 3ක් පමණි.");
+      alert("You can upload a maximum of 3 images.");
       return;
     }
 
     const newFiles = acceptedFiles.map((file) =>
-      Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      })
+      Object.assign(file, { preview: URL.createObjectURL(file) })
     );
 
     setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
   };
 
+  const handleSliderRelease = () =>{
+    addUpdateUserMeta(visibility, userId, userMeta.id, userToken);
+  };
+
+  
+
   const handleUpload = async () => {
-    console.log("user data ====>"+userDetails)
     setUploading(true);
 
     try {
       for (let i = 0; i < selectedFiles.length; i++) {
         const formData = new FormData();
         formData.append("imageData", selectedFiles[i]);
-        formData.append("isVisible", visibility > 50); // Adjust visibility threshold
+        formData.append("imageType", imageType);
+        formData.append("isVisible", visibility > 99);
         formData.append("isDelete", false);
-        formData.append("userId", 1); // assuming the userId is passed as a prop
+        formData.append("userId", userId);
 
-        console.log("token===" + userToken);
-        await axios.post(`${backEndBaseUrl}/api/user-images`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "Authorization": "Bearer " + userToken
-            },
-        });
-    }
+        const response = await uploadImage(formData, userToken);
+
+        if (imageType === "PROFILE") {
+          dispatch(updateUserProfileImage({ userProfileImage: { isLoaded: true, image: response.imageData } }));
+        } else {
+          dispatch(
+            updateUserImages({
+              actionType: "ADD",
+              image: { id: response.id, image: `data:image/png;base64,${response.imageData}` },
+            })
+          );
+        }
+      }
 
       alert("Images uploaded successfully!");
     } catch (error) {
@@ -64,28 +75,29 @@ const ImageUpload = ({ userId }) => {
   };
 
   const handleSliderChange = (e) => {
-    setVisibility(e.target.value);
+    dispatch(updateUserImageVisibility({ userImageVisibility: e.target.value }));
   };
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop,
     maxFiles: 3 - selectedFiles.length,
+    disabled, // Pass disabled state to the dropzone
   });
 
   return (
-    <div>
+    <div style={{ opacity: disabled ? 0.5 : 1, pointerEvents: disabled ? "none" : "auto" }}>
       <div
         {...getRootProps()}
         style={{
           border: "2px dashed #000",
           padding: "20px",
           textAlign: "center",
-          cursor: "pointer",
+          cursor: disabled ? "not-allowed" : "pointer",
         }}
       >
         <input {...getInputProps()} />
-        <p>චායාරූප ඇතුල් කරන්න (Click or Drag and drop) (උපරිම 3)</p>
+        <p>Upload Images (Click or Drag and drop) (Max 3)</p>
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", marginTop: "20px" }}>
@@ -102,49 +114,54 @@ const ImageUpload = ({ userId }) => {
                 filter: `blur(${(100 - visibility) / 10}px)`,
               }}
             />
-            <button
-              onClick={() => removeFile(index)}
-              style={{
-                position: "absolute",
-                top: "5px",
-                right: "5px",
-                backgroundColor: "red",
-                color: "white",
-                border: "none",
-                borderRadius: "50%",
-                width: "20px",
-                height: "20px",
-                cursor: "pointer",
-              }}
-            >
-              &times;
-            </button>
+            {!disabled && (
+              <button
+                onClick={() => removeFile(index)}
+                style={{
+                  position: "absolute",
+                  top: "5px",
+                  right: "5px",
+                  backgroundColor: "red",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "20px",
+                  height: "20px",
+                  cursor: "pointer",
+                }}
+              >
+                &times;
+              </button>
+            )}
           </div>
         ))}
       </div>
 
-      <>
+      {/* Keep the slider always visible and interactive */}
+      <div style={{ opacity: 1, pointerEvents: "auto", marginTop: "20px" }}>
         <input
           type="range"
           min="0"
           max="100"
           value={visibility}
           onChange={handleSliderChange}
-          style={{ marginTop: "20px", width: "100%" }}
+          onMouseUp={handleSliderRelease} // Event when mouse is released
+          onTouchEnd={handleSliderRelease} 
+          style={{ width: "100%" }}
         />
-        <p>දර්ශනය නොවන ප්‍රමාණය (Blur effect): {100-visibility}%</p>
-      </>
+        <p>Visibility: {100 - visibility}%</p>
+      </div>
 
       <button
         onClick={handleUpload}
-        disabled={uploading || selectedFiles.length === 0}
+        disabled={uploading || selectedFiles.length === 0 || disabled}
         style={{
           marginTop: "20px",
           padding: "10px 20px",
-          backgroundColor: "#007bff",
+          backgroundColor: disabled ? "#d3d3d3" : "#007bff",
           color: "#fff",
           border: "none",
-          cursor: "pointer",
+          cursor: disabled ? "not-allowed" : "pointer",
         }}
       >
         {uploading ? "Uploading..." : "Upload Images"}

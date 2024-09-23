@@ -8,7 +8,7 @@ import menuItems from "./header.data";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLoginBanner } from "../../store/slice/homePageSclice";
 import { FaUserCircle } from "react-icons/fa";
-import { clearAuthDetails, updateAuthDetails } from "../../store/slice/userDetailSlice";
+import { clearAuthDetails, logoutAndReset, updateAuthDetails } from "../../store/slice/userDetailSlice";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
@@ -17,8 +17,8 @@ export default function Header() {
   const [showProfilePopup, setShowProfilePopup] = useState(false);
   const dispatch = useDispatch();
   const registerBanner = useSelector((state) => state.homepage.login);
-  const authDetails = useSelector((state) => state.userDetail.authDetails);
-  const userDetail = useSelector((state)=>state.userDetail.userDetails);
+  const authDetails = useSelector((state) => state.userDetails.authDetails);
+  const userDetail = useSelector((state)=>state.userDetails.userDetails);
   const router = useRouter();
 
   const toggleMobileMenu = () => {
@@ -40,13 +40,13 @@ export default function Header() {
 
   const logout = () => {
     // Handle logout logic, like clearing the auth details from the store
-    dispatch(clearAuthDetails());
+    dispatch(logoutAndReset());
     router.push('/')
     setShowProfilePopup(false);
   };
   const viewAccount = () => {
     console.log(userDetail)
-    if (userDetail.userId>0) {
+    if (authDetails.id>-1) {
       router.push('/profile')
       setShowProfilePopup(false);
     }else{
@@ -93,7 +93,7 @@ export default function Header() {
                   ))}
                 </Box>
                 
-                {authDetails ? (
+                {!(authDetails === null || authDetails.id == -1)  ? (
                   <Box sx={styles.profileContainer}>
                     <FaUserCircle
                       onClick={toggleProfilePopup}
