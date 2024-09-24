@@ -23,7 +23,7 @@ const steps = [
   { component: SubmissionSuccess, title: "ස්තුතියි" },
 ];
 
-export default function RegisterMultiStepForm() {
+export default function UpdateMultiStepForm() {
   const [userData, setUserData] = useState({});
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({});

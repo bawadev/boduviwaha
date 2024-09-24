@@ -44,35 +44,58 @@ export default function PersonalInfo({ data, onSubmit }) {
   });
 
   const router = useRouter();
-    const handleBack = () =>{
-      //router.push("profile/not-verified/warning")
-    }
+  const handleBack = () => {
+    //router.push("profile/not-verified/warning")
+  };
 
   const dateOfBirth = watch("dateOfBirth");
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedTown, setSelectedTown] = useState("");
   const [districts, setDistricts] = useState([]);
   const [towns, setTowns] = useState([]);
-  const userBasicDetails = useSelector((state) => state.userDetails.userDetails);
+  const userBasicDetails = useSelector(
+    (state) => state.userDetails.userDetails
+  );
   const userAuthDetails = useSelector((state) => state.userDetails.authDetails);
+
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     if (userBasicDetails.addresses && userBasicDetails.addresses.length > 0) {
       setValue("address", userBasicDetails.addresses[0].address);
-      setValue("province", userBasicDetails.addresses[0].province);
-      setValue("district", userBasicDetails.addresses[0].district);
-      setValue("nearestTown", userBasicDetails.addresses[0].nearestTown);
+      const address = userBasicDetails.addresses[0];
+      setSelectedProvince(address.province);
+  
+      const province = locations.find(
+        (location) => location.province === address.province
+      );
+      if (province) {
+        setDistricts(province.districts);
+        setSelectedDistrict(address.district);
+  
+        const district = province.districts.find(
+          (district) => district.district === address.district
+        );
+        if (district) {
+          setTowns(district.towns);
+          setSelectedTown(address.nearestTown);
+        }
+      }
     }
+  
     if (userBasicDetails.contacts && userBasicDetails.contacts.length > 0) {
-      setValue("phoneNumber", userBasicDetails.addresses[0].address);
+      setValue("phoneNumber", userBasicDetails.contacts[0].phoneNumber);
     }
-    setValue("email", userBasicDetails.email);
+  
+    setValue("email", userAuthDetails.email);
     setValue("firstName", userBasicDetails.firstName);
     setValue("lastName", userBasicDetails.lastName);
     setValue("dateOfBirth", new Date(userBasicDetails.dateOfBirth));
     setValue("gender", userBasicDetails.gender);
     // Handle other fields like contacts if available
   }, [userBasicDetails]);
+  
 
   const locations = [
     {
@@ -113,7 +136,6 @@ export default function PersonalInfo({ data, onSubmit }) {
     setSelectedDistrict("");
     setTowns([]);
   };
-  
 
   const handleDistrictChange = (e) => {
     const selected = e.target.value;
@@ -194,9 +216,24 @@ export default function PersonalInfo({ data, onSubmit }) {
           ඔබේ ගිණුම තහුවුරු කරගැනීමේ මෙහි ඇතුලත් කරන තොරතුරු යොදා ගැනේ. මනා සිහි
           නුවනින් යුතුව පුරවන්න.
         </Text>
-        <Box sx={styles.field}>
+        <Box
+          sx={styles.field}
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
+          {showTooltip && (
+            <Box sx={styles.tooltip}>
+              ඔබගේ විද්‍යුත් තැපෑල (email) නිවැරදි නොවේ නම් මෙම ලිපිනය සඳහන් කර
+              අපට විද්‍යුත් ලිපියක්(email) යොමු කරන්න.
+            </Box>
+          )}
           <Label htmlFor="email">විදුත් තැපෑල</Label>
-          <Input id="email" {...register("email")} sx={styles.input} />
+          <Input
+            disabled={true}
+            id="email"
+            {...register("email")}
+            sx={styles.input}
+          />
           {errors.email && (
             <Text sx={styles.error}>{errors.email.message}</Text>
           )}
@@ -298,6 +335,7 @@ export default function PersonalInfo({ data, onSubmit }) {
             id="nearestTown"
             {...register("nearestTown")}
             sx={styles.select}
+            value={selectedTown}
             disabled={!selectedDistrict}
           >
             <option value="">Select Town</option>
@@ -330,22 +368,22 @@ export default function PersonalInfo({ data, onSubmit }) {
 
 const styles = {
   textArea: {
-    width: '100%',
-    padding: '12px',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#f8f8f8',
-    resize: 'vertical',
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    lineHeight: 'inherit',
-    boxSizing: 'border-box',
-    transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
-    '&:focus': {
-      borderColor: '#5b9dd9',
-      outline: 'none',
-      boxShadow: '0 0 0 2px rgba(91, 157, 217, 0.3)',
+    width: "100%",
+    padding: "12px",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#f8f8f8",
+    resize: "vertical",
+    fontFamily: "inherit",
+    fontSize: "inherit",
+    lineHeight: "inherit",
+    boxSizing: "border-box",
+    transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
+    "&:focus": {
+      borderColor: "#5b9dd9",
+      outline: "none",
+      boxShadow: "0 0 0 2px rgba(91, 157, 217, 0.3)",
     },
   },
   description: {
@@ -353,12 +391,12 @@ const styles = {
   },
   card: {
     padding: 20,
-    display: 'flex',
-    flexDirection: 'column',
-    border: '1px solid #ddd',
+    display: "flex",
+    flexDirection: "column",
+    border: "1px solid #ddd",
     borderRadius: 8,
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#f9f9f9',
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#f9f9f9",
     marginBottom: 20,
   },
   form: {
@@ -366,17 +404,17 @@ const styles = {
   },
   select: {
     borderRadius: 4,
-    height: '2.5em',
+    height: "2.5em",
     fontSize: 16,
-    padding: '0 1em',
-    border: '1px solid #ccc',
-    '@media screen and (max-width: 768px)': {
+    padding: "0 1em",
+    border: "1px solid #ccc",
+    "@media screen and (max-width: 768px)": {
       fontSize: 14, // Adjust font size for smaller screens
     },
-    '&:focus': {
-      borderColor: '#5b9dd9',
-      outline: 'none',
-      boxShadow: '0 0 0 2px rgba(91, 157, 217, 0.3)',
+    "&:focus": {
+      borderColor: "#5b9dd9",
+      outline: "none",
+      boxShadow: "0 0 0 2px rgba(91, 157, 217, 0.3)",
     },
   },
   heading: {
@@ -386,11 +424,11 @@ const styles = {
   subHeading: {
     mb: 3,
     fontSize: 2,
-    color: '#555',
+    color: "#555",
   },
   row: {
-    display: 'flex',
-    flexDirection: ['column', 'row'], // Stack columns on small screens, row on larger screens
+    display: "flex",
+    flexDirection: ["column", "row"], // Stack columns on small screens, row on larger screens
     gap: 3,
     mb: 3,
   },
@@ -400,24 +438,24 @@ const styles = {
     marginRight: [0, 3], // Add right margin only on larger screens
   },
   input: {
-    width: '100%',
-    height: '2.5em',
+    width: "100%",
+    height: "2.5em",
     mb: 2,
-    padding: '0.5em',
+    padding: "0.5em",
     fontSize: 16,
     borderRadius: 4,
-    border: '1px solid #ccc',
-    '@media screen and (max-width: 768px)': {
+    border: "1px solid #ccc",
+    "@media screen and (max-width: 768px)": {
       fontSize: 14, // Adjust font size for smaller screens
     },
-    '&:focus': {
-      borderColor: '#5b9dd9',
-      outline: 'none',
-      boxShadow: '0 0 0 2px rgba(91, 157, 217, 0.3)',
+    "&:focus": {
+      borderColor: "#5b9dd9",
+      outline: "none",
+      boxShadow: "0 0 0 2px rgba(91, 157, 217, 0.3)",
     },
   },
   error: {
-    color: 'red',
+    color: "red",
     fontSize: 1,
   },
   button: {
@@ -426,15 +464,15 @@ const styles = {
     py: 2,
     fontSize: 2,
     borderRadius: 20,
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
-    '&:hover': {
-      backgroundColor: 'darkblue',
+    border: "none",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+    "&:hover": {
+      backgroundColor: "darkblue",
     },
   },
   buttonRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
+    display: "flex",
+    justifyContent: "space-between",
   },
 };

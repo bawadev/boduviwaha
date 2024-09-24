@@ -24,6 +24,10 @@ export const createBuddhistUser = async (data, token,id) => {
       dateOfBirth: new Date(data.dateOfBirth).toISOString().split("T")[0],
       gender: data.gender,
       publicImageVisibility: 0.0,
+      contacts: [{
+        phoneNumber: data.phoneNumber,
+        phoneType: "MOBILE"
+      }],
       user: {
         id: id
       }

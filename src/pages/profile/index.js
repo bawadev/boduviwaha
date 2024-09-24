@@ -293,7 +293,7 @@ const RegistrationForm = () => {
               <Text>{userData.addresses[0].address}</Text>
             </Box>
           </Grid>
-          <Button sx={styles.editButton} onClick={()=>router.push("/registration")}>Edit</Button>
+          <Button sx={styles.editButton} onClick={()=>router.push("/updation")}>Edit</Button>
         </Box>
       </Flex>
 

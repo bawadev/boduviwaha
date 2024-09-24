@@ -11,7 +11,7 @@ const initialState = {
     userId: null,
     firstName: "",
     lastName: "",
-    dateOfBirth: "",
+    dateOfBirth: "1800-01-01",
     gender: "",
     contacts: [],
     addresses: [
