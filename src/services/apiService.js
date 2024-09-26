@@ -37,10 +37,47 @@ export const createBuddhistUser = async (data, token,id) => {
   return response.data;
 };
 
+export const updateBuddhistUser = async (userId, data, token,id) => {
+  const response = await api.put(
+    `/api/buddhist-users/${userId}`,
+    {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dateOfBirth: new Date(data.dateOfBirth).toISOString().split("T")[0],
+      gender: data.gender,
+      publicImageVisibility: 0.0,
+      contacts: [{
+        phoneNumber: data.phoneNumber,
+        phoneType: "MOBILE"
+      }],
+      user: {
+        id: id
+      }
+    },
+    setAuthHeader(token)
+  );
+  return response.data;
+};
+
 // API call to create address
 export const createAddress = async (data, userId, token) => {
   const response = await api.post(
     `/api/addresses`,
+    {
+      address: data.address,
+      province: data.province,
+      district: data.district,
+      nearestTown: data.nearestTown,
+      user: { userId },
+    },
+    setAuthHeader(token)
+  );
+  return response.data;
+};
+
+export const updateAddress = async (data, userId, token) => {
+  const response = await api.put(
+    `/api/addresses/${userId}`,
     {
       address: data.address,
       province: data.province,

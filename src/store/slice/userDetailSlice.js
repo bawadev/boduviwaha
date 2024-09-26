@@ -134,6 +134,28 @@ const userDetailSlice = createSlice({
     updateUserDetails: (state, action) => {
       state.userDetails = action.payload.userDetails;
     },
+    updateUserDetailsBUser: (state, action) => {
+      const { firstName, lastName, dateOfBirth, gender, publicImageVisibility,contacts } = action.payload;
+    
+      // Update only the specific fields without mutating other state properties
+      state.userDetails = {
+        ...state.userDetails,
+        firstName: firstName || state.userDetails.firstName,
+        lastName: lastName || state.userDetails.lastName,
+        dateOfBirth: dateOfBirth || state.userDetails.dateOfBirth,
+        gender: gender || state.userDetails.gender,
+        publicImageVisibility: publicImageVisibility !== undefined ? publicImageVisibility : state.userDetails.publicImageVisibility,
+        contacts: contacts || state.userDetails.contacts
+      };
+    }, 
+    updateUserDetailsAddress: (state, action) => {
+      state.userDetails = {
+        ...state.userDetails,
+        addresses: action.payload.address || state.userDetails.addresses,
+        
+      };
+    }, 
+       
     updateToken: (state, action) => {
       state.token = action.payload.token;
     },
@@ -156,7 +178,9 @@ export const {
   clearAuthDetails,
   updateUserProfileImage,
   updateUserImages,
-  updateUserImageVisibility
+  updateUserImageVisibility,
+  updateUserDetailsAddress,
+  updateUserDetailsBUser
 } = userDetailSlice.actions;
 
 export default userDetailSlice.reducer;

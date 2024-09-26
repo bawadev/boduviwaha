@@ -179,8 +179,8 @@ export default function Banner() {
                 ) : (
                   <>
                     <Box as="form" onSubmit={handleSubmit} sx={styles.form}>
-                      <Heading as="h2" sx={styles.heroTitle}>
-                        දෙවියෙක් හා දිව්‍යාංගනාවක් සම වන විවාහය..
+                      <Heading as="h2" sx={styles.heroTitleFrontPage}>
+                        දෙවියෙක් හා දිව්‍යාංගනාවක් සම වන විවාහය
                       </Heading>
                       <Text as="p" sx={styles.desc}>
                         &nbsp;&nbsp;&nbsp;&nbsp;ශ්‍රී ලංකාවේ ප්‍රථම බොදු ධාර්මික
@@ -329,6 +329,17 @@ const styles = {
   heroTitle: {
     fontSize: [20, 20, 20, 20, , 4, 6],
     fontWeight: 700,
+    letterSpacing: "heading",
+    lineHeight: [1.4, null, null, null, null, null, 1.2],
+    "@media only screen and (min-height: 720px) and (max-height: 760px), (min-width: 1501px) and (max-width: 1560px)":
+      {
+        fontSize: 30,
+      },
+  },
+  heroTitleFrontPage: {
+    fontSize: [20, 20, 20, 20, , 4, 6],
+    fontWeight: 700,
+    textAlign: "center",
     letterSpacing: "heading",
     lineHeight: [1.4, null, null, null, null, null, 1.2],
     "@media only screen and (min-height: 720px) and (max-height: 760px), (min-width: 1501px) and (max-width: 1560px)":

@@ -66,14 +66,14 @@ export default function PersonalInfo({ data, onSubmit }) {
       setValue("address", userBasicDetails.addresses[0].address);
       const address = userBasicDetails.addresses[0];
       setSelectedProvince(address.province);
-  
+
       const province = locations.find(
         (location) => location.province === address.province
       );
       if (province) {
         setDistricts(province.districts);
         setSelectedDistrict(address.district);
-  
+
         const district = province.districts.find(
           (district) => district.district === address.district
         );
@@ -81,13 +81,16 @@ export default function PersonalInfo({ data, onSubmit }) {
           setTowns(district.towns);
           setSelectedTown(address.nearestTown);
         }
+        setValue("province", address.province);
+        setValue("district", address.district);
+        setValue("nearestTown", address.nearestTown);
       }
     }
-  
+
     if (userBasicDetails.contacts && userBasicDetails.contacts.length > 0) {
       setValue("phoneNumber", userBasicDetails.contacts[0].phoneNumber);
     }
-  
+    
     setValue("email", userAuthDetails.email);
     setValue("firstName", userBasicDetails.firstName);
     setValue("lastName", userBasicDetails.lastName);
@@ -95,7 +98,6 @@ export default function PersonalInfo({ data, onSubmit }) {
     setValue("gender", userBasicDetails.gender);
     // Handle other fields like contacts if available
   }, [userBasicDetails]);
-  
 
   const locations = [
     {
@@ -144,6 +146,11 @@ export default function PersonalInfo({ data, onSubmit }) {
       (district) => district.district === selected
     );
     setTowns(district ? district.towns : []);
+  };
+
+  const handleTownChange = (e) => {
+    const selected = e.target.value;
+    setSelectedTown(selected);
   };
 
   return (
@@ -335,7 +342,6 @@ export default function PersonalInfo({ data, onSubmit }) {
             id="nearestTown"
             {...register("nearestTown")}
             sx={styles.select}
-            value={selectedTown}
             disabled={!selectedDistrict}
           >
             <option value="">Select Town</option>

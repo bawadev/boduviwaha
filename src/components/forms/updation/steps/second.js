@@ -11,15 +11,54 @@ import {
 } from "theme-ui";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function SpiritualInfo({ data, onSubmit, onBack }) {
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: data,
   });
+
+  const userBasicDetails = useSelector(
+    (state) => state.userDetails.userDetails
+  );
+  const userAuthDetails = useSelector((state) => state.userDetails.authDetails);
+
+
+  useEffect(() => {
+    
+    setValue("origin", userBasicDetails.buddhistPractice.origin);
+    setValue("timeInvestedOverall", userBasicDetails.buddhistPractice.timeInvestedOverall); // Fixed typo here
+    setValue("deedCategoryDana", userBasicDetails.buddhistPractice.deedCategoryDana);
+    setValue("deedCategorySeela", userBasicDetails.buddhistPractice.deedCategorySeela);
+    setValue("deedCategoryBhavana", userBasicDetails.buddhistPractice.deedCategoryBhavana);
+    setValue("deedCategoryOther", userBasicDetails.buddhistPractice.deedCategoryOther);
+    setValue("meditationAnaPanaSathiTime", userBasicDetails.buddhistPractice.meditationAnaPanaSathiTime);
+    setValue("meditationMayithreeTime", userBasicDetails.buddhistPractice.meditationMayithreeTime);
+    setValue("bodyAwarenessTime", userBasicDetails.buddhistPractice.bodyAwarenessTime);
+    setValue("meditationOtherTime", userBasicDetails.buddhistPractice.meditationOtherTime);
+    setValue("meditationTeacher", userBasicDetails.buddhistPractice.meditationTeacher);
+    setValue("seelaPansilTime", userBasicDetails.buddhistPractice.seelaPansilTime);
+    setValue("seelaAtaSilTime", userBasicDetails.buddhistPractice.seelaAtaSilTime);
+    setValue("seelaOtherTime", userBasicDetails.buddhistPractice.seelaOtherTime);
+    setValue("danaAmountAnimals", userBasicDetails.buddhistPractice.danaAmountAnimals);
+    setValue("danaAmountPeople", userBasicDetails.buddhistPractice.danaAmountPeople);
+    setValue("danaAmountSangha", userBasicDetails.buddhistPractice.danaAmountSangha);
+    setValue("sermonListenTime", userBasicDetails.buddhistPractice.sermonListenTime);
+    setValue("sermonSpeakersDetails", userBasicDetails.buddhistPractice.sermonSpeakersDetails);
+    setValue("knowledgeAbhiDhamma", userBasicDetails.buddhistPractice.knowledgeAbhiDhamma);
+    setValue("descriptionOfYourSelf", userBasicDetails.buddhistPractice.descriptionOfYourSelf);
+    setValue("enterToHardPractice", userBasicDetails.buddhistPractice.enterToHardPractice);
+    setValue("createdAt", userBasicDetails.buddhistPractice.createdAt);
+    setValue("valueScore", userBasicDetails.buddhistPractice.valueScore);
+  }, [userAuthDetails, userBasicDetails.buddhistPractice]);
+
+  
 
   const scrollToTop = () => {
     // Find the element with id 'topBox' and scroll to it

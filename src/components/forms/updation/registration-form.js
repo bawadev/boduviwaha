@@ -6,13 +6,15 @@ import SpiritualInfo from "./steps/second";
 import AdditionalInfo from "./steps/third";
 import SubmissionSuccess from "./steps/last";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserDetails } from "../../../store/slice/userDetailSlice";
+import { updateUserDetails, updateUserDetailsAddress, updateUserDetailsBUser } from "../../../store/slice/userDetailSlice";
 import {
   createBuddhistUser,
   createAddress,
   createBuddhistPractice,
   createSocialInfo,
   createHealthInfo,
+  updateBuddhistUser,
+  updateAddress,
 } from "../../../services/apiService"
 import { getUserDetails } from "../../../services/userService";
 
@@ -28,14 +30,7 @@ export default function UpdateMultiStepForm() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({});
   const router = useRouter();
-  const userDetails = useSelector((state) => state.userDetails.userDetails);
-
-  useEffect(() => {
-    console.log("============"+userDetails)
-    if (userDetails.userId>-1) {
-      setFormData(userDetails);
-    }
-  }, [userDetails]);
+  
 
   useEffect(() => {
     const phone = router.query.phone;
@@ -53,12 +48,20 @@ export default function UpdateMultiStepForm() {
       switch (currentStep) {
         case 0:
           console.log(authDetail.id)
-          const userResponse = await createBuddhistUser(data, token, authDetail.id);
-          console.log(userResponse)
-          setUserData(userResponse);
-          dispatch(updateUserDetails({ userDetails: userResponse }));
-
-          await createAddress(data, userResponse.userId, token);
+          if (userDetail.userId>-1) {
+            const address = await updateAddress(data, userDetail.userId, token);
+            const userResponse = await updateBuddhistUser(userDetail.userId, data, token, authDetail.id);
+            setUserData(userResponse);
+            dispatch(updateUserDetailsAddress({userDetail: address}))
+            dispatch(updateUserDetailsBUser({ userDetails: userResponse }));
+          }else{
+            const userResponse = await createBuddhistUser(data, token, authDetail.id);
+            console.log(userResponse)
+            setUserData(userResponse);
+            dispatch(updateUserDetails({ userDetails: userResponse }));
+  
+            await createAddress(data, userResponse.userId, token);
+          }
           break;
 
         case 1:

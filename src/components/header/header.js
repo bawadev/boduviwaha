@@ -11,6 +11,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { clearAuthDetails, logoutAndReset, updateAuthDetails } from "../../store/slice/userDetailSlice";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import { persistor } from "../../store/store";
 
 export default function Header() {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -41,6 +42,7 @@ export default function Header() {
   const logout = () => {
     // Handle logout logic, like clearing the auth details from the store
     dispatch(logoutAndReset());
+    persistor.purge();
     router.push('/')
     setShowProfilePopup(false);
   };
