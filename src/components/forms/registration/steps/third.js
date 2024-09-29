@@ -19,7 +19,7 @@ import { useEffect } from "react";
 const AdditionalInfoSchema = z.object({
   socialStatus: z.string().min(1, "සමාජ තත්වය අත්‍යවශ්‍යයි"),
   highestEducationQualification: z.string().min(1, "අධ්‍යාපනය අත්‍යවශ්‍යයි"),
-  jobOrProffesion: z.string().min(1, "රැකියාව අත්‍යවශ්‍යයි"),
+  occupation: z.string().min(1, "රැකියාව අත්‍යවශ්‍යයි"),
   monthlyIncome: z.string().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
   houseOwnership: z.string().min(1, "නිවාස හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
   vehicleOwnership: z.string().min(1, "වාහන හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
@@ -76,23 +76,23 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
             {...register("highestEducationQualification")}
             sx={styles.select}
           >
-            <option value="NO">පාසල් අද්‍යාපනය ලබා නැත</option>
+            <option value="NO">පාසල් අධ්‍යාපනය ලබා නැත</option>
             <option value="GRADE_5">5 ශ්‍රේණිය දක්වා</option>
             <option value="OL">සාමාන්‍ය පෙළ දක්වා</option>
             <option value="AL">උසස් පෙළ දක්වා</option>
-            <option value="UNI">විශ්ව විද්‍යාල අද්‍යාපනය</option>
+            <option value="UNI">විශ්ව විද්‍යාල අධ්‍යාපනය</option>
             <option value="PHD">පශ්චාත් උපාධි</option>
           </Select>
         </Box>
         <Box sx={styles.field}>
-          <Label htmlFor="jobOrProffesion">වර්තමාන රැකියාව</Label>
+          <Label htmlFor="occupation">වර්තමාන රැකියාව</Label>
           <Input
-            id="jobOrProffesion"
-            {...register("jobOrProffesion")}
+            id="occupation"
+            {...register("occupation")}
             sx={styles.input}
           />
-          {errors.jobOrProffesion && (
-            <Text sx={styles.error}>{errors.jobOrProffesion.message}</Text>
+          {errors.occupation && (
+            <Text sx={styles.error}>{errors.occupation.message}</Text>
           )}
         </Box>
         <Box sx={styles.field}>

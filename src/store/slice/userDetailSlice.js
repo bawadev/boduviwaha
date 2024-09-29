@@ -58,6 +58,7 @@ const initialState = {
       monthlyIncome: 0,
       houseOwnership: "",
       vehicleOwnership: "",
+      assetsOwnership: "",
       createdAt: "",
     },
     userHealthInformation: {

@@ -45,6 +45,7 @@ const styles = {
   message: {
     fontSize: '1.25rem', // Message font size
     mb: 3,
+    color: '#8c842e'
   },
   closeButton: {
     backgroundColor: 'primary',

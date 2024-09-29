@@ -124,6 +124,39 @@ export const createBuddhistPractice = async (data, userId, token) => {
   return response.data;
 };
 
+export const updateBuddhistPractice = async (data, userId, token) => {
+  const response = await api.put(
+    `/api/buddhist-practices/${userId}`,
+    {
+      origin: data.origin,
+      timeInvestedOverall: data.timeInvestedOverall,
+      deedCategoryDana: data.deedCategoryDana,
+      deedCategorySeela: data.deedCategorySeela,
+      deedCategoryBhavana: data.deedCategoryBhavana,
+      deedCategoryOther: data.deedCategoryOther,
+      meditationAnaPanaSathiTime: parseInt(data.meditationAnaPanaSathiTime),
+      meditationMayithreeTime: parseInt(data.meditationMayithreeTime),
+      bodyAwarenessTime: parseInt(data.bodyAwarenessTime),
+      meditationOtherTime: parseInt(data.meditationOtherTime),
+      meditationTeacher: data.meditationTeacher,
+      seelaPansilTime: parseInt(data.seelaPansilTime),
+      seelaAtaSilTime: parseInt(data.seelaAtaSilTime),
+      seelaOtherTime: parseInt(data.seelaOtherTime),
+      danaAmountAnimals: parseInt(data.danaAmountAnimals),
+      danaAmountPeople: parseInt(data.danaAmountPeople),
+      danaAmountSangha: parseInt(data.danaAmountSangha),
+      sermonListenTime: parseInt(data.sermonListenTime),
+      sermonSpeakersDetails: data.sermonSpeakersDetails,
+      knowledgeAbhiDhamma: data.knowledgeAbhiDhamma,
+      descriptionOfYourSelf: data.descriptionOfYourSelf,
+      enterToHardPractice: data.enterToHardPractice,
+      user: { userId },
+    },
+    setAuthHeader(token)
+  );
+  return response.data;
+};
+
 // API call to create social information
 export const createSocialInfo = async (data, userId, token) => {
   const response = await api.post(
@@ -135,6 +168,26 @@ export const createSocialInfo = async (data, userId, token) => {
       monthlyIncome: data.monthlyIncome,
       houseOwnership: data.houseOwnership,
       vehicleOwnership: data.vehicleOwnership,
+      assetsOwnership: data.assetsOwnership,
+      createdAt: new Date().toISOString(),
+      user: { userId },
+    },
+    setAuthHeader(token)
+  );
+  return response.data;
+};
+
+export const updateSocialInfo = async (data, userId, token) => {
+  const response = await api.put(
+    `/api/social-information/${userId}`,
+    {
+      marriageStatus: data.marriageStatus,
+      occupation: data.occupation,
+      highestEducationQualification: data.highestEducationQualification,
+      monthlyIncome: data.monthlyIncome,
+      houseOwnership: data.houseOwnership,
+      vehicleOwnership: data.vehicleOwnership,
+      assetsOwnership: data.assetsOwnership,
       createdAt: new Date().toISOString(),
       user: { userId },
     },
@@ -147,6 +200,30 @@ export const createSocialInfo = async (data, userId, token) => {
 export const createHealthInfo = async (data, userId, token) => {
   const response = await api.post(
     `/api/health-information`,
+    {
+      height: data.height,
+      weight: data.weight,
+      physicalAttractiveness: data.physicalAttractiveness,
+      skinTone: data.skinTone,
+      kidsExpectancy: data.kidsExpectancy,
+      smoking: data.smoking,
+      drugUsage: data.drugUsage,
+      healthCondition: data.healthCondition,
+      disability: data.disability,
+      mentalHealth: data.mentalHealth,
+      geneticRisks: data.geneticRisks,
+      yourMessage: data.yourMessage,
+      createdAt: new Date().toISOString(),
+      user: { userId },
+    },
+    setAuthHeader(token)
+  );
+  return response.data;
+};
+
+export const updateHealthInfo = async (data, userId, token) => {
+  const response = await api.put(
+    `/api/health-information/${userId}`,
     {
       height: data.height,
       weight: data.weight,
@@ -230,6 +307,19 @@ export const addUpdateUserMeta = async (value, userId, metaId, token) => {
       metaValue: value,
     },
     setAuthHeader(token)
+  );
+  return response.data;
+};
+
+export const addUserFeedBackMessage = async (email, message) => {
+  console.log(email);
+  console.log(message)
+  const response = await api.post(
+    `/api/messages/feedback`,
+    {
+      email,
+      message
+    }
   );
   return response.data;
 };

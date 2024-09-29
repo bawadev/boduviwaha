@@ -10,11 +10,11 @@ import { updateUserDetails, updateUserDetailsAddress, updateUserDetailsBUser } f
 import {
   createBuddhistUser,
   createAddress,
-  createBuddhistPractice,
-  createSocialInfo,
-  createHealthInfo,
   updateBuddhistUser,
   updateAddress,
+  updateBuddhistPractice,
+  updateSocialInfo,
+  updateHealthInfo,
 } from "../../../services/apiService"
 import { getUserDetails } from "../../../services/userService";
 
@@ -65,12 +65,12 @@ export default function UpdateMultiStepForm() {
           break;
 
         case 1:
-          await createBuddhistPractice(data, userDetail.userId, token);
+          await updateBuddhistPractice(data, userDetail.buddhistPractice.practiceId, token);
           break;
 
         case 2:
-          await createSocialInfo(data, userDetail.userId, token);
-          const healthResponse = await createHealthInfo(data, userDetail.userId, token);
+          await updateSocialInfo(data, userDetail.socialInformation.socialInfoId, token);
+          const healthResponse = await updateHealthInfo(data, userDetail.userHealthInformation.healthInfoId, token);
           setUserData(healthResponse);
 
           const userDetailResponse = await getUserDetails(authDetail.id, token);

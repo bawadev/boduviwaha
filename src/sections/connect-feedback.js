@@ -12,7 +12,28 @@ import {
 } from "theme-ui";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import SectionHeading from "../components/section-heading";
+import { addUserFeedBackMessage } from "../services/apiService";
+import { useState } from "react";
 const ContactFeedback = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError('');
+    setSuccess('');
+    try {
+      await addUserFeedBackMessage( email, message );
+      setSuccess('Your feedback has been submitted successfully!');
+      setEmail('');
+      setMessage('');
+    } catch (err) {
+      console.log(err)
+      setError('There was an error submitting your feedback. Please try again.' + err);
+    }
+  };
   return (
     <Box id="contact-feedback" as="section" sx={styles.section}>
       <Container>
@@ -33,18 +54,28 @@ const ContactFeedback = () => {
         <br />
         <br />
         <Flex sx={styles.content}>
-          <Box as="form" sx={styles.form}>
+          <Box as="form" sx={styles.form} onSubmit={handleSubmit}>
             <Heading as="h2" sx={styles.formHeading}>
               ඔබේ අදහස් යොමු කරන්න
             </Heading>
+            {error && <Text sx={{ color: "red" }}>{error}</Text>}
+            {success && <Text sx={{ color: "green" }}>{success}</Text>}
             <Flex sx={styles.emailInput}>
               <Input
                 type="email"
                 placeholder="ඔබේ ලිපිනය, උදා:- example@gmail.com"
                 sx={styles.input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Flex>
-            <Textarea rows="4" placeholder="ඔබේ අදහස්" sx={styles.textarea} />
+            <Textarea
+              rows="4"
+              placeholder="ඔබේ අදහස්"
+              sx={styles.textarea}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
             <Button type="submit" sx={styles.submitButton}>
               අදහස් යොමු කරන්න
             </Button>
@@ -69,7 +100,10 @@ const ContactFeedback = () => {
             <br />
             <Text sx={styles.address}>සමාජ මාධ්‍ය</Text>
             <Flex sx={styles.socialLinks}>
-              <a href="https://www.facebook.com/profile.php?id=61563479035989" style={{ display: "flex", alignItems: "center" }}>
+              <a
+                href="https://www.facebook.com/profile.php?id=61563479035989"
+                style={{ display: "flex", alignItems: "center" }}
+              >
                 <FaFacebook />
                 <Text>Facebook</Text>
               </a>
@@ -152,7 +186,7 @@ const styles = {
   textarea: {
     borderColor: "border",
     borderRadius: "4px",
-    fontSize:16,
+    fontSize: 16,
     p: 2,
     mb: 3,
   },
@@ -201,4 +235,3 @@ const styles = {
     },
   },
 };
-

@@ -15,23 +15,22 @@ import { z } from "zod";
 import "react-datepicker/dist/react-datepicker.css";
 import { margin, padding } from "polished";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+
 
 const AdditionalInfoSchema = z.object({
-  socialStatus: z.string().min(1, "සමාජ තත්වය අත්‍යවශ්‍යයි"),
   highestEducationQualification: z.string().min(1, "අධ්‍යාපනය අත්‍යවශ්‍යයි"),
-  jobOrProffesion: z.string().min(1, "රැකියාව අත්‍යවශ්‍යයි"),
-  monthlyIncome: z.string().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
+  occupation: z.string().min(1, "රැකියාව අත්‍යවශ්‍යයි"),
+  monthlyIncome: z.number().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
   houseOwnership: z.string().min(1, "නිවාස හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
   vehicleOwnership: z.string().min(1, "වාහන හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
+  assetsOwnership: z.string().min(0, "වාහන හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
   marriageStatus: z.string().min(1, "අවිවාහක තත්වය අත්‍යවශ්‍යයි"),
-  phisicalStatus: z.string().min(1, "ශාරීරික තත්වය අත්‍යවශ්‍යයි"),
-  height: z.string().min(1, "උස අත්‍යවශ්‍යයි"),
-  weight: z.string().min(1, "බර අත්‍යවශ්‍යයි"),
-  phisicalAttractiveness: z.string().min(1, "ආකර්ශනීය බව අත්‍යවශ්‍යයි"),
-  skinTone: z.string().min(1, "සමේ පැහැපත් බව අත්‍යවශ්‍යයි"),
-  kidsExpectancy: z.string().min(1, "දරුවන් ගණන අත්‍යවශ්‍යයි"),
+  height: z.number().min(1, "උස අත්‍යවශ්‍යයි"),
+  weight: z.number().min(1, "බර අත්‍යවශ්‍යයි"),
+  kidsExpectancy: z.number().min(1, "දරුවන් ගණන අත්‍යවශ්‍යයි"),
   smoking: z.string().min(1, "දුම් පානය අත්‍යවශ්‍යයි"),
-  drinking: z.string().min(1, "මත් ද්‍රව්‍ය පාවිච්චිය අත්‍යවශ්‍යයි"),
+  drugUsage: z.string().min(1, "මත් ද්‍රව්‍ය පාවිච්චිය අත්‍යවශ්‍යයි"),
   healthCondition: z.string().min(1, "ශාරීරික රෝග අත්‍යවශ්‍යයි"),
   disability: z.string().min(1, "ශාරීරික අකර්මන්‍යතා අත්‍යවශ්‍යයි"),
   mentalHealth: z.string().min(1, "මානසික රෝග අත්‍යවශ්‍යයි"),
@@ -39,7 +38,22 @@ const AdditionalInfoSchema = z.object({
   yourMessage: z.string().min(1, "ඔබේ පණිවිඩය අත්‍යවශ්‍යයි"),
 });
 
+
 export default function AdditionalInfo({ data, onSubmit, onBack }) {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue
+  } = useForm({
+    resolver: zodResolver(AdditionalInfoSchema),
+    defaultValues: data,
+  });
+  
+  const userBasicDetails = useSelector(
+    (state) => state.userDetails.userDetails
+  );
 
   const scrollToTop = () => {
     // Find the element with id 'topBox' and scroll to it
@@ -49,18 +63,43 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
     }
   };
 
+  useEffect(() => {
+    // Set form values using userBasicDetails
+    const formData = {
+      highestEducationQualification: userBasicDetails.socialInformation.highestEducationQualification,
+      occupation: userBasicDetails.socialInformation.occupation,
+      monthlyIncome: userBasicDetails.socialInformation.monthlyIncome,
+      houseOwnership: userBasicDetails.socialInformation.houseOwnership,
+      assetsOwnership: userBasicDetails.socialInformation.assetsOwnership,
+      vehicleOwnership: userBasicDetails.socialInformation.vehicleOwnership,
+      marriageStatus: userBasicDetails.socialInformation.marriageStatus,
+      phisicalStatus: userBasicDetails.userHealthInformation.phisicalStatus,
+      height: userBasicDetails.userHealthInformation.height,
+      weight: userBasicDetails.userHealthInformation.weight,
+      phisicalAttractiveness: userBasicDetails.userHealthInformation.phisicalAttractiveness,
+      skinTone: userBasicDetails.userHealthInformation.skinTone,
+      kidsExpectancy: userBasicDetails.userHealthInformation.kidsExpectancy,
+      smoking: userBasicDetails.userHealthInformation.smoking,
+      drugUsage: userBasicDetails.userHealthInformation.drugUsage,
+      healthCondition: userBasicDetails.userHealthInformation.healthCondition,
+      disability: userBasicDetails.userHealthInformation.disability,
+      mentalHealth: userBasicDetails.userHealthInformation.mentalHealth,
+      geneticRisks: userBasicDetails.userHealthInformation.geneticRisks,
+      yourMessage: userBasicDetails.userHealthInformation.yourMessage,
+    };
+
+    // Set form values
+    for (const key in formData) {
+      setValue(key, formData[key]);
+    }
+  }, [userBasicDetails]);
+
   // Use useEffect to scroll to top on component mount
   useEffect(() => {
     scrollToTop();
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: data,
-  });
+  
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} sx={styles.form}>
@@ -76,23 +115,23 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
             {...register("highestEducationQualification")}
             sx={styles.select}
           >
-            <option value="NO">පාසල් අද්‍යාපනය ලබා නැත</option>
+            <option value="NO">පාසල් අධ්‍යාපනය ලබා නැත</option>
             <option value="GRADE_5">5 ශ්‍රේණිය දක්වා</option>
             <option value="OL">සාමාන්‍ය පෙළ දක්වා</option>
             <option value="AL">උසස් පෙළ දක්වා</option>
-            <option value="UNI">විශ්ව විද්‍යාල අද්‍යාපනය</option>
+            <option value="UNI">විශ්ව විද්‍යාල අධ්‍යාපනය</option>
             <option value="PHD">පශ්චාත් උපාධි</option>
           </Select>
         </Box>
         <Box sx={styles.field}>
-          <Label htmlFor="jobOrProffesion">වර්තමාන රැකියාව</Label>
+          <Label htmlFor="occupation">වර්තමාන රැකියාව</Label>
           <Input
-            id="jobOrProffesion"
-            {...register("jobOrProffesion")}
+            id="occupation"
+            {...register("occupation")}
             sx={styles.input}
           />
-          {errors.jobOrProffesion && (
-            <Text sx={styles.error}>{errors.jobOrProffesion.message}</Text>
+          {errors.occupation && (
+            <Text sx={styles.error}>{errors.occupation.message}</Text>
           )}
         </Box>
         <Box sx={styles.field}>

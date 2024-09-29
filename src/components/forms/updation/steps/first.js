@@ -81,16 +81,16 @@ export default function PersonalInfo({ data, onSubmit }) {
           setTowns(district.towns);
           setSelectedTown(address.nearestTown);
         }
-        setValue("province", address.province);
-        setValue("district", address.district);
-        setValue("nearestTown", address.nearestTown);
       }
+      setValue("province", address.province);
+      setValue("district", address.district);
+      setValue("nearestTown", address.nearestTown);
     }
 
     if (userBasicDetails.contacts && userBasicDetails.contacts.length > 0) {
       setValue("phoneNumber", userBasicDetails.contacts[0].phoneNumber);
     }
-    
+
     setValue("email", userAuthDetails.email);
     setValue("firstName", userBasicDetails.firstName);
     setValue("lastName", userBasicDetails.lastName);
@@ -340,8 +340,10 @@ export default function PersonalInfo({ data, onSubmit }) {
           <Label htmlFor="nearestTown">ලඟම නගරය</Label>
           <Select
             id="nearestTown"
+            value={selectedTown}
             {...register("nearestTown")}
             sx={styles.select}
+            onChange={(e) => setSelectedTown(e.target.value)}
             disabled={!selectedDistrict}
           >
             <option value="">Select Town</option>
