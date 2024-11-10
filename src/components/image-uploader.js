@@ -149,7 +149,7 @@ const ImageUpload = ({ userId, imageType, disabled }) => {
           onTouchEnd={handleSliderRelease} 
           style={{ width: "100%" }}
         />
-        <p>Visibility: {100 - visibility}%</p>
+        <p>Visibility: {visibility}%</p>
       </div>
 
       <button
@@ -164,7 +164,7 @@ const ImageUpload = ({ userId, imageType, disabled }) => {
           cursor: disabled ? "not-allowed" : "pointer",
         }}
       >
-        {uploading ? "Uploading..." : "Upload Images"}
+        {uploading ? "ඇතුලත් කරමින්..." : "චායා රූප ඇතුලත් කරන්න"}
       </button>
     </div>
   );

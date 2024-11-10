@@ -16,6 +16,7 @@ import { useState } from "react";
 import { margin } from "polished";
 import Overlay from "../../components/blur-overlay";
 import { useRouter } from "next/router";
+import { locations } from "../../components/locationSelector";
 
 const FilterPage = () => {
   const [isOverlayVisible, setOverlayVisible] = useState(true);
@@ -26,37 +27,7 @@ const FilterPage = () => {
   const [districts, setDistricts] = useState([]);
   const [towns, setTowns] = useState([]);
 
-  const locations = [
-    {
-      province: "Western Province",
-      districts: [
-        {
-          district: "Colombo",
-          towns: [
-            { town: "Colombo", lat: "6.9271", lon: "79.8612" },
-            { town: "Dehiwala-Mount Lavinia", lat: "6.8390", lon: "79.8650" },
-            // Other towns...
-          ],
-        },
-        // Other districts...
-      ],
-    },
-    {
-      province: "Central Province",
-      districts: [
-        {
-          district: "Kandy",
-          towns: [
-            { town: "Kandy", lat: "7.2906", lon: "80.6337" },
-            { town: "Peradeniya", lat: "7.2590", lon: "80.5972" },
-            // Other towns...
-          ],
-        },
-        // Other districts...
-      ],
-    },
-    // Other provinces...
-  ];
+
 
   const router = useRouter();
 

@@ -45,7 +45,7 @@ const RegistrationForm = () => {
     console.log(userImageData.isLoaded);
     if (userData.userId) {
       getUserImageVisibilityByUser(userData.userId, userToken).then((value) => {
-        console.log("llllllllllllllll" + userImageVisibility);
+        
         console.log(value);
         if (value != null) {
           dispatch(updateUserImageVisibility({ userImageVisibility: value }));
@@ -327,7 +327,7 @@ const RegistrationForm = () => {
             <Heading as="h3">භාවනා කල ප්‍රමාණ</Heading>
             <br />
             <Grid columns={[1, 2]} gap={2}>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>ආනාපාන සති</u>
@@ -339,7 +339,7 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>මෛත්‍රී </u>
@@ -351,7 +351,7 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>සතර ඉරියවුවේ සිහිය</u>
@@ -363,7 +363,7 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>වෙනත් භාවනා</u>
@@ -382,7 +382,7 @@ const RegistrationForm = () => {
             <Heading as="h3">සිල් රැකි ප්‍රමාණ</Heading>
             <br />
             <Grid columns={[1, 2]} gap={2}>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>පන්සිල්</u>
@@ -394,7 +394,7 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>අටසිල්</u>
@@ -406,7 +406,7 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>සිල්පද පහට අඩුවෙන්</u>
@@ -425,7 +425,7 @@ const RegistrationForm = () => {
             <Heading as="h3">දාන දුන් ප්‍රමාණ</Heading>
             <br />
             <Grid columns={[1, 2]} gap={2}>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>සතුන්ට දානය</u>
@@ -437,7 +437,7 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>මිනිසුන්ට දානය</u>
@@ -449,7 +449,7 @@ const RegistrationForm = () => {
                   sx={styles.progress}
                 />
               </Box>
-              <Box>
+              <Box sx={styles.box}>
                 <Text sx={styles.normalText}>
                   <strong>
                     <u>සංඝයාට දානය</u>
@@ -463,26 +463,26 @@ const RegistrationForm = () => {
               </Box>
             </Grid>
           </Card>
-
-          <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+            <Text sx={styles.normalText}>
             <strong>
               <u>දේශනා වලට සවන් දුන් කාලය (මිනිත්තු)</u>
             </strong>
             {"  "}
             {userData.buddhistPractice.sermonListenTime}
           </Text>
-          <br />
-          <br />
-
+          </Box>
+          <Box sx={styles.box}>
           <Text sx={styles.normalText}>
             <strong>
               <u>සවන් දෙන දේශකයන් වහන්සේලා පිලිබඳ විස්තර</u>
             </strong>
             {"    "}
-            <br />
+           
             {userData.buddhistPractice.sermonSpeakersDetails}
           </Text>
-          <br />
+          </Box>
+          <Box sx={styles.box}>
           <Text sx={styles.normalText}>
             <strong>
               <u>අභිධර්මය පිලිබඳ දැනුම</u>
@@ -490,14 +490,18 @@ const RegistrationForm = () => {
             {"    "}
             {getTextBasedOnValue(userData.buddhistPractice.knowledgeAbhiDhamma)}
           </Text>
+          </Box>
+          
+          <br />
+          
         </Box>
 
         <Box sx={styles.statusBox}>
           <Heading as="h2">සමාජ තත්වය</Heading>
           <br />
           <Grid columns={[1, 2]} gap={2}>
-            <Box>
-              <Text sx={styles.normalText}>
+            <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
                 <strong>
                   <u>විවාහ තත්ත්වය</u>
                 </strong>
@@ -507,8 +511,8 @@ const RegistrationForm = () => {
                 )}
               </Text>
             </Box>
-            <Box>
-              <Text sx={styles.normalText}>
+            <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
                 <strong>
                   <u>රැකියාව</u>
                 </strong>
@@ -516,8 +520,8 @@ const RegistrationForm = () => {
                 {userData.socialInformation.occupation}
               </Text>
             </Box>
-            <Box>
-              <Text sx={styles.normalText}>
+            <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
                 <strong>
                   <u>උසස්ම අධ්‍යාපන සුදුසුකම</u>
                 </strong>
@@ -527,21 +531,17 @@ const RegistrationForm = () => {
                 )}
               </Text>
             </Box>
-            <Box>
-              <Text sx={styles.normalText}>
+            <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
                 <strong>
                   <u>මාසික ආදායම</u>
                 </strong>
                 {"    "}
-                <Progress
-                  max={maxIncome}
-                  value={userData.socialInformation.monthlyIncome}
-                  sx={styles.progress}
-                />
+                {userData.socialInformation.monthlyIncome}
               </Text>
             </Box>
-            <Box>
-              <Text sx={styles.normalText}>
+            <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
                 <strong>
                   <u>නිවාස හිමිකාරීත්වය</u>
                 </strong>
@@ -551,8 +551,8 @@ const RegistrationForm = () => {
                 )}
               </Text>
             </Box>
-            <Box>
-              <Text sx={styles.normalText}>
+            <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
                 <strong>
                   <u>වාහන හිමිකාරීත්වය</u>
                 </strong>
@@ -584,24 +584,24 @@ const RegistrationForm = () => {
         <Heading as="h2">Health Information</Heading>
         <br />
         <Grid columns={[1, 2, 3]} gap={2}>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>උස</u>
               </strong>
               {"  "} {userData.userHealthInformation.height} ft
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>බර</u>
               </strong>
               {"  "} {userData.userHealthInformation.weight} kg
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>භාහිර ආකර්ශනීය බව(ඔබේ තක්සේරුව)</u>
               </strong>
@@ -611,8 +611,8 @@ const RegistrationForm = () => {
               )}
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>සමේ පැහැය</u>
               </strong>
@@ -620,8 +620,8 @@ const RegistrationForm = () => {
               {getSkinToneText(userData.userHealthInformation.skinTone)}
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>මද්‍යසාර පානය</u>
               </strong>
@@ -629,8 +629,8 @@ const RegistrationForm = () => {
               {getDrugUsageText(userData.userHealthInformation.drugUsage)}
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>දුම් පානය</u>
               </strong>
@@ -638,8 +638,8 @@ const RegistrationForm = () => {
               {getDrugUsageText(userData.userHealthInformation.smoking)}
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>බලාපොරොත්තු වන දරුවන් ගණන</u>
               </strong>
@@ -647,8 +647,8 @@ const RegistrationForm = () => {
               {userData.userHealthInformation.kidsExpectancy}
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>සාමාන්‍ය සෞක්‍ය තත්වය</u>
               </strong>
@@ -656,8 +656,8 @@ const RegistrationForm = () => {
               {userData.userHealthInformation.healthCondition}
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>ශාරීරික දුබලතා</u>
               </strong>
@@ -665,8 +665,8 @@ const RegistrationForm = () => {
               {userData.userHealthInformation.disability}
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>මානසික රෝග</u>
               </strong>
@@ -674,8 +674,8 @@ const RegistrationForm = () => {
               {userData.userHealthInformation.mentalHealth}
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>ජානමය රෝග</u>
               </strong>
@@ -683,8 +683,8 @@ const RegistrationForm = () => {
               {userData.userHealthInformation.geneticRisks}
             </Text>
           </Box>
-          <Box>
-            <Text sx={styles.normalText}>
+          <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
               <strong>
                 <u>විශේෂ දැනුම්දීම්</u>
               </strong>
@@ -710,8 +710,17 @@ const RegistrationForm = () => {
 };
 
 const styles = {
+  box: {
+    border: '2px solid #FFD700', // golden border for warmth and focus
+    borderRadius: '8px',          // rounded edges for a softer feel
+    padding: '16px',              // padding for inner spacing
+    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', // subtle shadow for depth
+    backgroundColor: '#F9F9F9',   // light background to keep it calm
+    width: '100%',             // set a maximum width for consistency
+    margin: '0 auto',             // center-align if desired
+  },
   normalText: {
-    fontSize: 17,
+    fontSize: 18,
   },
   container: {
     py: 4,

@@ -17,12 +17,12 @@ import { padding } from "polished";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { locations } from "../../../locationSelector";
 
 const PersonalInfoSchema = z.object({
   firstName: z.string().min(1, "ඔබේ නම අත්‍යවශ්‍යයි"),
   lastName: z.string().min(1, "වාසගම අත්‍යවශ්‍යයි"),
   dateOfBirth: z.date({ required_error: "උපන් දිනය අත්‍යවශ්‍යයි" }),
-  email: z.string().email("වලංගු විදුත් තැපෑලක් නොවේ"),
   phoneNumber: z.string().min(1, "දුරකථන අංකය අත්‍යවශ්‍යයි"),
   gender: z.string().min(1, "ස්ත්‍රී/පුරුෂ භාවය අත්‍යවශ්‍යයි"),
   address: z.string().min(1, "ලිපිනය අත්‍යවශ්‍යයි"),
@@ -59,7 +59,6 @@ export default function PersonalInfo({ data, onSubmit }) {
   );
   const userAuthDetails = useSelector((state) => state.userDetails.authDetails);
 
-  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     if (userBasicDetails.addresses && userBasicDetails.addresses.length > 0) {
@@ -99,34 +98,7 @@ export default function PersonalInfo({ data, onSubmit }) {
     // Handle other fields like contacts if available
   }, [userBasicDetails]);
 
-  const locations = [
-    {
-      province: "Western Province",
-      districts: [
-        {
-          district: "Colombo",
-          towns: [
-            { town: "Colombo", lat: "6.9271", lon: "79.8612" },
-            { town: "Dehiwala-Mount Lavinia", lat: "6.8390", lon: "79.8650" },
-          ],
-        },
-        // Other districts...
-      ],
-    },
-    {
-      province: "Central Province",
-      districts: [
-        {
-          district: "Kandy",
-          towns: [
-            { town: "Kandy", lat: "7.2906", lon: "80.6337" },
-            { town: "Peradeniya", lat: "7.2590", lon: "80.5972" },
-          ],
-        },
-      ],
-    },
-    // Other provinces...
-  ];
+
 
   const handleProvinceChange = (e) => {
     const selected = e.target.value;
@@ -223,28 +195,7 @@ export default function PersonalInfo({ data, onSubmit }) {
           ඔබේ ගිණුම තහුවුරු කරගැනීමේ මෙහි ඇතුලත් කරන තොරතුරු යොදා ගැනේ. මනා සිහි
           නුවනින් යුතුව පුරවන්න.
         </Text>
-        <Box
-          sx={styles.field}
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-        >
-          {showTooltip && (
-            <Box sx={styles.tooltip}>
-              ඔබගේ විද්‍යුත් තැපෑල (email) නිවැරදි නොවේ නම් මෙම ලිපිනය සඳහන් කර
-              අපට විද්‍යුත් ලිපියක්(email) යොමු කරන්න.
-            </Box>
-          )}
-          <Label htmlFor="email">විදුත් තැපෑල</Label>
-          <Input
-            disabled={true}
-            id="email"
-            {...register("email")}
-            sx={styles.input}
-          />
-          {errors.email && (
-            <Text sx={styles.error}>{errors.email.message}</Text>
-          )}
-        </Box>
+        
         <Box sx={styles.row}>
           <Box sx={styles.field}>
             <Label htmlFor="phoneNumber">දුරකථන අංකය</Label>

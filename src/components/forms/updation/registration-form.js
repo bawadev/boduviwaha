@@ -74,6 +74,8 @@ export default function UpdateMultiStepForm() {
           setUserData(healthResponse);
 
           const userDetailResponse = await getUserDetails(authDetail.id, token);
+          console.log("logging user Detail response")
+          console.log(userDetailResponse)
           dispatch(updateUserDetails({ userDetails: userDetailResponse }));
           break;
 

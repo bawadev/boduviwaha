@@ -21,7 +21,7 @@ import { useSelector } from "react-redux";
 const AdditionalInfoSchema = z.object({
   highestEducationQualification: z.string().min(1, "අධ්‍යාපනය අත්‍යවශ්‍යයි"),
   occupation: z.string().min(1, "රැකියාව අත්‍යවශ්‍යයි"),
-  monthlyIncome: z.number().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
+  monthlyIncome: z.string().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
   houseOwnership: z.string().min(1, "නිවාස හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
   vehicleOwnership: z.string().min(1, "වාහන හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
   assetsOwnership: z.string().min(0, "වාහන හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
