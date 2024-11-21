@@ -8,7 +8,11 @@ import menuItems from "./header.data";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLoginBanner } from "../../store/slice/homePageSclice";
 import { FaUserCircle } from "react-icons/fa";
-import { clearAuthDetails, logoutAndReset, updateAuthDetails } from "../../store/slice/userDetailSlice";
+import {
+  clearAuthDetails,
+  logoutAndReset,
+  updateAuthDetails,
+} from "../../store/slice/userDetailSlice";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import { persistor } from "../../store/store";
@@ -19,13 +23,12 @@ export default function Header() {
   const dispatch = useDispatch();
   const registerBanner = useSelector((state) => state.homepage.login);
   const authDetails = useSelector((state) => state.userDetails.authDetails);
-  const userDetail = useSelector((state)=>state.userDetails.userDetails);
+  const userDetail = useSelector((state) => state.userDetails.userDetails);
   const router = useRouter();
 
   const toggleMobileMenu = () => {
     setMobileMenu(!mobileMenu);
   };
-  
 
   const openMobileMenu = () => {
     setMobileMenu(true);
@@ -43,22 +46,20 @@ export default function Header() {
     // Handle logout logic, like clearing the auth details from the store
     dispatch(logoutAndReset());
     persistor.purge();
-    router.push('/')
+    router.push("/");
     setShowProfilePopup(false);
   };
   const viewAccount = () => {
-    console.log(userDetail)
-    if (authDetails.id>-1) {
-      router.push('/profile')
+    console.log(userDetail);
+    if (authDetails.id > -1) {
+      router.push("/profile");
       setShowProfilePopup(false);
-    }else{
+    } else {
       Swal.fire({
         title: "ඔබේ ගිණුම සම්පූර්ණ කරන්න",
         text: "ගැලපීම් සඳහා අවශ්‍යවන දත්ත ඇතුලත් කර නොමැත. කරුණා කර තොරතුරු ඇතුලත් කරන්න",
       });
     }
-    
-    
   };
 
   return (
@@ -94,16 +95,13 @@ export default function Header() {
                     </li>
                   ))}
                 </Box>
-                
-                {!(authDetails === null || authDetails.id == -1)  ? (
+
+                {!(authDetails === null || authDetails.id == -1) ? (
                   <Box sx={styles.profileContainer}>
-                    <FaUserCircle
-                      onClick={toggleProfilePopup}
-                      size="30px"
-                      style={{ cursor: "pointer" }}
-                    />
+                    <Box sx={styles.iconWrapper}>
+                      <FaUserCircle onClick={toggleProfilePopup} size="30px" style={{ color: "#2D3748" }} />
+                    </Box>
                     {showProfilePopup && !mobileMenu && (
-                      
                       <Box sx={styles.profilePopup}>
                         <p>{authDetails.username}</p>
                         <p>{authDetails.email}</p>
@@ -125,40 +123,40 @@ export default function Header() {
                     )}
                     {showProfilePopup && mobileMenu && (
                       <Box sx={styles.profileContainer}>
-                      {showProfilePopup && (
-                        <Box
-                          sx={[
-                            styles.profileMenu,
-                            { display: ["block", "block", "none"] }, // Show only on mobile
-                          ]}
-                        >
-                          <p>{authDetails.username}</p>
-                          <p>{authDetails.email}</p>
-                          <Button
-                            variant="primaryMd"
-                            sx={styles.logoutButton}
-                            onClick={viewAccount}
+                        {showProfilePopup && (
+                          <Box
+                            sx={[
+                              styles.profileMenu,
+                              { display: ["block", "block", "none"] }, // Show only on mobile
+                            ]}
                           >
-                            View Account
-                          </Button>
-                          
-                          <Button
-                            variant="primaryMd"
-                            sx={styles.logoutButton}
-                            onClick={logout}
-                          >
-                            Logout
-                          </Button>
-                        </Box>
-                      )}
-                    </Box>
+                            <p>{authDetails.username}</p>
+                            <p>{authDetails.email}</p>
+                            <Button
+                              variant="primaryMd"
+                              sx={styles.logoutButton}
+                              onClick={viewAccount}
+                            >
+                              View Account
+                            </Button>
+
+                            <Button
+                              variant="primaryMd"
+                              sx={styles.logoutButton}
+                              onClick={logout}
+                            >
+                              Logout
+                            </Button>
+                          </Box>
+                        )}
+                      </Box>
                     )}
                   </Box>
                 ) : (
                   <Button
                     sx={styles.joinNow}
                     onClick={() => {
-                      router.push('/')
+                      router.push("/");
                       dispatch(updateLoginBanner({ login: !registerBanner }));
                       closeMobileMenu();
                     }}
@@ -188,6 +186,20 @@ export default function Header() {
 }
 
 const styles = {
+  iconWrapper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "50px", // Outer circle size
+    height: "50px",
+    backgroundColor: "rgba(255, 255, 255, 0.5)", // Slightly transparent white
+    border: "2px solid rgba(255, 255, 255, 0.5)", // Slightly transparent white border
+    borderRadius: "50%", // Ensures the shape is circular
+    boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)", // Optional shadow for depth
+  },
+  
+  
+
   profileContainer: {
     position: "relative",
     marginLeft: "auto",
@@ -231,7 +243,8 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    "@media only screen and (max-width: 1000px)": { // Updated from 768px to 900px
+    "@media only screen and (max-width: 1000px)": {
+      // Updated from 768px to 900px
       ".navbar": {
         position: "absolute",
         top: "100%",
@@ -276,7 +289,7 @@ const styles = {
       fontWeight: 900,
       fontSize: 20,
       padding: 0,
-      textAlign:'center',
+      textAlign: "center",
       margin: "0 20px",
       backgroundColor: "rgba(255, 255, 255, 0.5)",
       padding: "10px",
@@ -332,7 +345,7 @@ const styles = {
     },
   },
   logoutButton: {
-    mt:2,
+    mt: 2,
     width: "100%",
     textAlign: "center",
   },

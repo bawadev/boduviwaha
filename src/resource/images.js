@@ -73,13 +73,16 @@ const siteImages = {
     src: '/assets/images/icons/wifi.png',
   },
   slider1: {
-    src: '/assets/images/features/1.png',
+    src: '/assets/images/features/1.jpg',
   },
   slider2: {
     src: '/assets/images/features/2.png',
   },
   slider3: {
-    src: '/assets/images/features/3.jpg',
+    src: '/assets/images/features/3.png',
+  },
+  slider4: {
+    src: '/assets/images/features/4.jpg',
   },
   uber: {
     src: '/assets/images/clients/uber.png',
