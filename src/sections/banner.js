@@ -50,8 +50,7 @@ export default function Banner() {
         Swal.fire({
           icon: "success",
           title: "සාර්ථකයි...",
-          text: "ලියාපදිංචිය සාර්ථකයි! ගිණුමට පිවිසෙන්න",
-          footer: '<a href="#">ඇයි මෙහෙම වෙන්නේ?</a>',
+          text: "ලියාපදිංචිය සාර්ථකයි! ගිණුමට පිවිසෙන්න"
         });
         dispatch(updateLoginBanner({ login: false }));
       } else {
@@ -62,8 +61,7 @@ export default function Banner() {
         Swal.fire({
           icon: "success",
           title: "සාර්ථකයි...",
-          text: "පිවිසීම සාර්ථකයි! ගිණුමට පිවිසෙන්න",
-          footer: '<a href="#">ඇයි මෙහෙම වෙන්නේ?</a>',
+          text: "පිවිසීම සාර්ථකයි!"
         });
 
         try {

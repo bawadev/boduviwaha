@@ -43,6 +43,15 @@ const RegistrationForm = () => {
 
   useEffect(() => {
     console.log(userImageData.isLoaded);
+    if (!userData.buddhistPractice?.descriptionOfYourSelf && !(userData?.buddhistPractice && userData?.socialInformation && userData?.userHealthInformation)) {
+      Swal.fire({
+        title: "ඔබේ ගිණුම සම්පූර්ණ කරන්න",
+        text: "ගැලපීම් සඳහා අවශ්‍යවන දත්ත ඇතුලත් කර නොමැත. කරුණා කර තොරතුරු ඇතුලත් කරන්න",
+      });
+      router.push("/updation");
+      return;
+    }
+
     if (userData.userId) {
       getUserImageVisibilityByUser(userData.userId, userToken).then((value) => {
         
@@ -239,473 +248,482 @@ const RegistrationForm = () => {
   };
 
   return (
-    <Container sx={styles.container}>
-      <Flex sx={styles.headerContainer}>
-        <Box sx={styles.profileBox}>
-          <div style={{ position: "relative", display: "inline-block" }}>
-            <img
-              src={`data:image/png;base64,${userProfileImageData.image}`}
-              alt="Profile Avatar"
-              sx={styles.avatar}
-              onClick={handleDialogToggle}
-              style={{
-                cursor: "pointer",
-                filter: `blur(${(100 - userImageVisibility) / 10}px)`,
-              }}
-            />
-            <div
-              onClick={handleDialogToggle}
-              sx={styles.cameraIconContainer}
-              style={{ cursor: "pointer" }}
-            >
+    <>{
+      (userData?.buddhistPractice && userData?.socialInformation && userData?.userHealthInformation) && ( <Container sx={styles.container}>
+        <Flex sx={styles.headerContainer}>
+          <Box sx={styles.profileBox}>
+            <div style={{ position: "relative", display: "inline-block" }}>
               <img
-                src="https://w7.pngwing.com/pngs/519/947/png-transparent-camera-computer-icons-graphy-camera-electronics-rectangle-photography-thumbnail.png"
-                alt="Update Icon"
-                sx={styles.cameraIcon}
+                src={`data:image/png;base64,${userProfileImageData.image}`}
+                alt="Profile Avatar"
+                sx={styles.avatar}
+                onClick={handleDialogToggle}
+                style={{
+                  cursor: "pointer",
+                  filter: `blur(${(100 - userImageVisibility) / 10}px)`,
+                }}
               />
+              <div
+                onClick={handleDialogToggle}
+                sx={styles.cameraIconContainer}
+                style={{ cursor: "pointer" }}
+              >
+                <img
+                  src="https://w7.pngwing.com/pngs/519/947/png-transparent-camera-computer-icons-graphy-camera-electronics-rectangle-photography-thumbnail.png"
+                  alt="Update Icon"
+                  sx={styles.cameraIcon}
+                />
+              </div>
             </div>
-          </div>
-          <Heading
-            as="h2"
-            sx={styles.userName}
-          >{`${userData.firstName} ${userData.lastName}`}</Heading>
-          <br />
-          <Text sx={styles.subTitle}>
-            {userData.buddhistPractice.descriptionOfYourSelf}
-          </Text>
-        </Box>
-        <Box sx={styles.infoBox}>
-          <Grid columns={[1, 2]} gap={2}>
-            <Box>
-              <Heading as="h3">නම</Heading>
-              <Text>{`${userData.firstName} ${userData.lastName}`}</Text>
-            </Box>
-            <Box>
-              <Heading as="h3">උපන් දිනය</Heading>
-              <Text>{userData.dateOfBirth}</Text>
-            </Box>
-            <Box>
-              <Heading as="h3">භාවය</Heading>
-              <Text>{userData.gender}</Text>
-            </Box>
-            <Box>
-              <Heading as="h3">ලිපිනය</Heading>
-              <Text>{userData.addresses[0].address}</Text>
-            </Box>
-          </Grid>
-          <Button sx={styles.editButton} onClick={()=>router.push("/updation")}>Edit</Button>
-        </Box>
-      </Flex>
-
-      <Grid columns={[1, null, 2]} gap={4} sx={styles.statusContainer}>
-        <Box sx={styles.statusBox}>
-          <Heading as="h2">බෞද්ධ හැදෑරීම</Heading>
-          <br />
-
-          <Card sx={styles.card}>
-            <Text sx={styles.normalText}>
-              <strong>
-                <u>බෞද්ධ දර්ශනය වසර </u>
-              </strong>
-              {getTextBasedOnTime(
-                userData.buddhistPractice.timeInvestedOverall
-              )}
-              {" කාලයක් හදාරා ඇත"}
+            <Heading
+              as="h2"
+              sx={styles.userName}
+            >{`${userData.firstName} ${userData.lastName}`}</Heading>
+            <br />
+            <Text sx={styles.subTitle}>
+              {userData.buddhistPractice.descriptionOfYourSelf}
             </Text>
-            <br />
-            <br />
-            <Text sx={styles.normalText}>
-              <strong>
-                <u>කර්මස්ථාන අචාර්ය වරයා</u>
-              </strong>
-              {"    "}
-              {userData.buddhistPractice.meditationTeacher}
-            </Text>
-          </Card>
-
-          <Card sx={styles.card}>
-            <Heading as="h3">භාවනා කල ප්‍රමාණ</Heading>
-            <br />
+          </Box>
+          <Box sx={styles.infoBox}>
             <Grid columns={[1, 2]} gap={2}>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>ආනාපාන සති</u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxMeditationTime}
-                  value={userData.buddhistPractice.meditationAnaPanaSathiTime}
-                  sx={styles.progress}
-                />
+              <Box>
+                <Heading as="h3">නම</Heading>
+                <Text>{`${userData.firstName} ${userData.lastName}`}</Text>
               </Box>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>මෛත්‍රී </u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxMeditationTime}
-                  value={userData.buddhistPractice.meditationMayithreeTime}
-                  sx={styles.progress}
-                />
+              <Box>
+                <Heading as="h3">උපන් දිනය</Heading>
+                <Text>{userData.dateOfBirth}</Text>
               </Box>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>සතර ඉරියවුවේ සිහිය</u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxMeditationTime}
-                  value={userData.buddhistPractice.bodyAwarenessTime}
-                  sx={styles.progress}
-                />
+              <Box>
+                <Heading as="h3">භාවය</Heading>
+                <Text>{userData.gender}</Text>
               </Box>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>වෙනත් භාවනා</u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxMeditationTime}
-                  value={userData.buddhistPractice.meditationOtherTime}
-                  sx={styles.progress}
-                />
+              <Box>
+                <Heading as="h3">ලිපිනය</Heading>
+                <Text>{userData.addresses[0].address}</Text>
               </Box>
             </Grid>
-          </Card>
-
-          <Card sx={styles.card}>
-            <Heading as="h3">සිල් රැකි ප්‍රමාණ</Heading>
-            <br />
-            <Grid columns={[1, 2]} gap={2}>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>පන්සිල්</u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxMeditationTime}
-                  value={userData.buddhistPractice.seelaPansilTime}
-                  sx={styles.progress}
-                />
-              </Box>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>අටසිල්</u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxMeditationTime}
-                  value={userData.buddhistPractice.seelaAtaSilTime}
-                  sx={styles.progress}
-                />
-              </Box>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>සිල්පද පහට අඩුවෙන්</u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxMeditationTime}
-                  value={userData.buddhistPractice.seelaOtherTime}
-                  sx={styles.progress}
-                />
-              </Box>
-            </Grid>
-          </Card>
-
-          <Card sx={styles.card}>
-            <Heading as="h3">දාන දුන් ප්‍රමාණ</Heading>
-            <br />
-            <Grid columns={[1, 2]} gap={2}>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>සතුන්ට දානය</u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxDanaAmount}
-                  value={userData.buddhistPractice.danaAmountAnimals}
-                  sx={styles.progress}
-                />
-              </Box>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>මිනිසුන්ට දානය</u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxDanaAmount}
-                  value={userData.buddhistPractice.danaAmountPeople}
-                  sx={styles.progress}
-                />
-              </Box>
-              <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                  <strong>
-                    <u>සංඝයාට දානය</u>
-                  </strong>
-                </Text>
-                <Progress
-                  max={maxDanaAmount}
-                  value={userData.buddhistPractice.danaAmountSangha}
-                  sx={styles.progress}
-                />
-              </Box>
-            </Grid>
-          </Card>
-          <Box sx={styles.box}>
-            <Text sx={styles.normalText}>
-            <strong>
-              <u>දේශනා වලට සවන් දුන් කාලය (මිනිත්තු)</u>
-            </strong>
-            {"  "}
-            {userData.buddhistPractice.sermonListenTime}
-          </Text>
-          </Box>
-          <Box sx={styles.box}>
-          <Text sx={styles.normalText}>
-            <strong>
-              <u>සවන් දෙන දේශකයන් වහන්සේලා පිලිබඳ විස්තර</u>
-            </strong>
-            {"    "}
-           
-            {userData.buddhistPractice.sermonSpeakersDetails}
-          </Text>
-          </Box>
-          <Box sx={styles.box}>
-          <Text sx={styles.normalText}>
-            <strong>
-              <u>අභිධර්මය පිලිබඳ දැනුම</u>
-            </strong>
-            {"    "}
-            {getTextBasedOnValue(userData.buddhistPractice.knowledgeAbhiDhamma)}
-          </Text>
-          </Box>
-          
-          <br />
-          
-        </Box>
-
-        <Box sx={styles.statusBox}>
-          <Heading as="h2">සමාජ තත්වය</Heading>
-          <br />
-          <Grid columns={[1, 2]} gap={2}>
-            <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                <strong>
-                  <u>විවාහ තත්ත්වය</u>
-                </strong>
-                {"    "}
-                {getMaritalStatusText(
-                  userData.socialInformation.marriageStatus
-                )}
-              </Text>
-            </Box>
-            <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                <strong>
-                  <u>රැකියාව</u>
-                </strong>
-                {"    "}
-                {userData.socialInformation.occupation}
-              </Text>
-            </Box>
-            <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                <strong>
-                  <u>උසස්ම අධ්‍යාපන සුදුසුකම</u>
-                </strong>
-                {"    "}
-                {getEducationQualificationText(
-                  userData.socialInformation.highestEducationQualification
-                )}
-              </Text>
-            </Box>
-            <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                <strong>
-                  <u>මාසික ආදායම</u>
-                </strong>
-                {"    "}
-                {userData.socialInformation.monthlyIncome}
-              </Text>
-            </Box>
-            <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                <strong>
-                  <u>නිවාස හිමිකාරීත්වය</u>
-                </strong>
-                {"    "}
-                {getHouseOwnershipText(
-                  userData.socialInformation.houseOwnership
-                )}
-              </Text>
-            </Box>
-            <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-                <strong>
-                  <u>වාහන හිමිකාරීත්වය</u>
-                </strong>
-                {"    "}
-                {getVehicleOwnershipText(
-                  userData.socialInformation.vehicleOwnership
-                )}
-              </Text>
-            </Box>
-          </Grid>
-          <Box sx={styles.imageUploadContainer}>
-            <ImageUpload
-              disabled={userImageData.images.length > 2}
-              userId={userData.userId}
-              imageType="REGULAR"
-            />
-          </Box>
-          <Box sx={styles.imageUploadContainer}>
-            <Gallery
-              title={"ඔබේ චායා රූප"}
-              data={userImageData.images}
-              onDelete={deleteUserImage}
-            />
-          </Box>
-        </Box>
-      </Grid>
-
-      <Box sx={styles.statusBox}>
-        <Heading as="h2">Health Information</Heading>
-        <br />
-        <Grid columns={[1, 2, 3]} gap={2}>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>උස</u>
-              </strong>
-              {"  "} {userData.userHealthInformation.height} ft
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>බර</u>
-              </strong>
-              {"  "} {userData.userHealthInformation.weight} kg
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>භාහිර ආකර්ශනීය බව(ඔබේ තක්සේරුව)</u>
-              </strong>
-              {"    "}
-              {getExternalAttractivenessText(
-                userData.userHealthInformation.physicalAttractiveness
-              )}
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>සමේ පැහැය</u>
-              </strong>
-              {"    "}
-              {getSkinToneText(userData.userHealthInformation.skinTone)}
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>මද්‍යසාර පානය</u>
-              </strong>
-              {"    "}
-              {getDrugUsageText(userData.userHealthInformation.drugUsage)}
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>දුම් පානය</u>
-              </strong>
-              {"    "}
-              {getDrugUsageText(userData.userHealthInformation.smoking)}
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>බලාපොරොත්තු වන දරුවන් ගණන</u>
-              </strong>
-              {"    "}
-              {userData.userHealthInformation.kidsExpectancy}
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>සාමාන්‍ය සෞක්‍ය තත්වය</u>
-              </strong>
-              {"    "}
-              {userData.userHealthInformation.healthCondition}
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>ශාරීරික දුබලතා</u>
-              </strong>
-              {"    "}
-              {userData.userHealthInformation.disability}
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>මානසික රෝග</u>
-              </strong>
-              {"    "}
-              {userData.userHealthInformation.mentalHealth}
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>ජානමය රෝග</u>
-              </strong>
-              {"    "}
-              {userData.userHealthInformation.geneticRisks}
-            </Text>
-          </Box>
-          <Box sx={styles.box}>
-                <Text sx={styles.normalText}>
-              <strong>
-                <u>විශේෂ දැනුම්දීම්</u>
-              </strong>
-              {"    "}
-              {userData.userHealthInformation.yourMessage}
-            </Text>
-          </Box>
-        </Grid>
-      </Box>
-
-      {isDialogOpen && (
-        <Box sx={styles.modal} onClick={handleDialogToggle}>
-          <Box sx={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <ImageUpload userId={userData.userId} imageType="PROFILE" />
-            <Button onClick={handleDialogToggle} sx={styles.closeButton}>
-              &times;
+            <Button
+              sx={styles.editButton}
+              onClick={() => router.push("/updation")}
+            >
+              Edit
             </Button>
           </Box>
+        </Flex>
+
+        <Grid columns={[1, null, 2]} gap={4} sx={styles.statusContainer}>
+          <Box sx={styles.statusBox}>
+            <Heading as="h2">බෞද්ධ හැදෑරීම</Heading>
+            <br />
+
+            <Card sx={styles.card}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>බෞද්ධ දර්ශනය වසර </u>
+                </strong>
+                {getTextBasedOnTime(
+                  userData.buddhistPractice.timeInvestedOverall
+                )}
+                {" කාලයක් හදාරා ඇත"}
+              </Text>
+              <br />
+              <br />
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>කර්මස්ථාන අචාර්ය වරයා</u>
+                </strong>
+                {"    "}
+                {userData.buddhistPractice.meditationTeacher}
+              </Text>
+            </Card>
+
+            <Card sx={styles.card}>
+              <Heading as="h3">භාවනා කල ප්‍රමාණ</Heading>
+              <br />
+              <Grid columns={[1, 2]} gap={2}>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>ආනාපාන සති</u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxMeditationTime}
+                    value={userData.buddhistPractice.meditationAnaPanaSathiTime}
+                    sx={styles.progress}
+                  />
+                </Box>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>මෛත්‍රී </u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxMeditationTime}
+                    value={userData.buddhistPractice.meditationMayithreeTime}
+                    sx={styles.progress}
+                  />
+                </Box>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>සතර ඉරියවුවේ සිහිය</u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxMeditationTime}
+                    value={userData.buddhistPractice.bodyAwarenessTime}
+                    sx={styles.progress}
+                  />
+                </Box>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>වෙනත් භාවනා</u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxMeditationTime}
+                    value={userData.buddhistPractice.meditationOtherTime}
+                    sx={styles.progress}
+                  />
+                </Box>
+              </Grid>
+            </Card>
+
+            <Card sx={styles.card}>
+              <Heading as="h3">සිල් රැකි ප්‍රමාණ</Heading>
+              <br />
+              <Grid columns={[1, 2]} gap={2}>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>පන්සිල්</u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxMeditationTime}
+                    value={userData.buddhistPractice.seelaPansilTime}
+                    sx={styles.progress}
+                  />
+                </Box>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>අටසිල්</u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxMeditationTime}
+                    value={userData.buddhistPractice.seelaAtaSilTime}
+                    sx={styles.progress}
+                  />
+                </Box>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>සිල්පද පහට අඩුවෙන්</u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxMeditationTime}
+                    value={userData.buddhistPractice.seelaOtherTime}
+                    sx={styles.progress}
+                  />
+                </Box>
+              </Grid>
+            </Card>
+
+            <Card sx={styles.card}>
+              <Heading as="h3">දාන දුන් ප්‍රමාණ</Heading>
+              <br />
+              <Grid columns={[1, 2]} gap={2}>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>සතුන්ට දානය</u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxDanaAmount}
+                    value={userData.buddhistPractice.danaAmountAnimals}
+                    sx={styles.progress}
+                  />
+                </Box>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>මිනිසුන්ට දානය</u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxDanaAmount}
+                    value={userData.buddhistPractice.danaAmountPeople}
+                    sx={styles.progress}
+                  />
+                </Box>
+                <Box sx={styles.box}>
+                  <Text sx={styles.normalText}>
+                    <strong>
+                      <u>සංඝයාට දානය</u>
+                    </strong>
+                  </Text>
+                  <Progress
+                    max={maxDanaAmount}
+                    value={userData.buddhistPractice.danaAmountSangha}
+                    sx={styles.progress}
+                  />
+                </Box>
+              </Grid>
+            </Card>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>දේශනා වලට සවන් දුන් කාලය (මිනිත්තු)</u>
+                </strong>
+                {"  "}
+                {userData.buddhistPractice.sermonListenTime}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>සවන් දෙන දේශකයන් වහන්සේලා පිලිබඳ විස්තර</u>
+                </strong>
+                {"    "}
+
+                {userData.buddhistPractice.sermonSpeakersDetails}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>අභිධර්මය පිලිබඳ දැනුම</u>
+                </strong>
+                {"    "}
+                {getTextBasedOnValue(
+                  userData.buddhistPractice.knowledgeAbhiDhamma
+                )}
+              </Text>
+            </Box>
+
+            <br />
+          </Box>
+
+          <Box sx={styles.statusBox}>
+            <Heading as="h2">සමාජ තත්වය</Heading>
+            <br />
+            <Grid columns={[1, 2]} gap={2}>
+              <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>විවාහ තත්ත්වය</u>
+                  </strong>
+                  {"    "}
+                  {getMaritalStatusText(
+                    userData.socialInformation.marriageStatus
+                  )}
+                </Text>
+              </Box>
+              <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>රැකියාව</u>
+                  </strong>
+                  {"    "}
+                  {userData.socialInformation.occupation}
+                </Text>
+              </Box>
+              <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>උසස්ම අධ්‍යාපන සුදුසුකම</u>
+                  </strong>
+                  {"    "}
+                  {getEducationQualificationText(
+                    userData.socialInformation.highestEducationQualification
+                  )}
+                </Text>
+              </Box>
+              <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>මාසික ආදායම</u>
+                  </strong>
+                  {"    "}
+                  {userData.socialInformation.monthlyIncome}
+                </Text>
+              </Box>
+              <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>නිවාස හිමිකාරීත්වය</u>
+                  </strong>
+                  {"    "}
+                  {getHouseOwnershipText(
+                    userData.socialInformation.houseOwnership
+                  )}
+                </Text>
+              </Box>
+              <Box sx={styles.box}>
+                <Text sx={styles.normalText}>
+                  <strong>
+                    <u>වාහන හිමිකාරීත්වය</u>
+                  </strong>
+                  {"    "}
+                  {getVehicleOwnershipText(
+                    userData.socialInformation.vehicleOwnership
+                  )}
+                </Text>
+              </Box>
+            </Grid>
+            <Box sx={styles.imageUploadContainer}>
+              <ImageUpload
+                disabled={userImageData.images.length > 2}
+                userId={userData.userId}
+                imageType="REGULAR"
+              />
+            </Box>
+            <Box sx={styles.imageUploadContainer}>
+              <Gallery
+                title={"ඔබේ චායා රූප"}
+                data={userImageData.images}
+                onDelete={deleteUserImage}
+              />
+            </Box>
+          </Box>
+        </Grid>
+
+        <Box sx={styles.statusBox}>
+          <Heading as="h2">Health Information</Heading>
+          <br />
+          <Grid columns={[1, 2, 3]} gap={2}>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>උස</u>
+                </strong>
+                {"  "} {userData.userHealthInformation.height} ft
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>බර</u>
+                </strong>
+                {"  "} {userData.userHealthInformation.weight} kg
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>භාහිර ආකර්ශනීය බව(ඔබේ තක්සේරුව)</u>
+                </strong>
+                {"    "}
+                {getExternalAttractivenessText(
+                  userData.userHealthInformation.physicalAttractiveness
+                )}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>සමේ පැහැය</u>
+                </strong>
+                {"    "}
+                {getSkinToneText(userData.userHealthInformation.skinTone)}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>මද්‍යසාර පානය</u>
+                </strong>
+                {"    "}
+                {getDrugUsageText(userData.userHealthInformation.drugUsage)}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>දුම් පානය</u>
+                </strong>
+                {"    "}
+                {getDrugUsageText(userData.userHealthInformation.smoking)}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>බලාපොරොත්තු වන දරුවන් ගණන</u>
+                </strong>
+                {"    "}
+                {userData.userHealthInformation.kidsExpectancy}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>සාමාන්‍ය සෞක්‍ය තත්වය</u>
+                </strong>
+                {"    "}
+                {userData.userHealthInformation.healthCondition}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>ශාරීරික දුබලතා</u>
+                </strong>
+                {"    "}
+                {userData.userHealthInformation.disability}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>මානසික රෝග</u>
+                </strong>
+                {"    "}
+                {userData.userHealthInformation.mentalHealth}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>ජානමය රෝග</u>
+                </strong>
+                {"    "}
+                {userData.userHealthInformation.geneticRisks}
+              </Text>
+            </Box>
+            <Box sx={styles.box}>
+              <Text sx={styles.normalText}>
+                <strong>
+                  <u>විශේෂ දැනුම්දීම්</u>
+                </strong>
+                {"    "}
+                {userData.userHealthInformation.yourMessage}
+              </Text>
+            </Box>
+          </Grid>
         </Box>
-      )}
-    </Container>
+
+        {isDialogOpen && (
+          <Box sx={styles.modal} onClick={handleDialogToggle}>
+            <Box sx={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+              <ImageUpload userId={userData.userId} imageType="PROFILE" />
+              <Button onClick={handleDialogToggle} sx={styles.closeButton}>
+                &times;
+              </Button>
+            </Box>
+          </Box>
+        )}
+      </Container>)
+    }
+    </>
   );
 };
 

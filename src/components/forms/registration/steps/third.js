@@ -17,21 +17,18 @@ import { margin, padding } from "polished";
 import { useEffect } from "react";
 
 const AdditionalInfoSchema = z.object({
-  socialStatus: z.string().min(1, "සමාජ තත්වය අත්‍යවශ්‍යයි"),
   highestEducationQualification: z.string().min(1, "අධ්‍යාපනය අත්‍යවශ්‍යයි"),
   occupation: z.string().min(1, "රැකියාව අත්‍යවශ්‍යයි"),
-  monthlyIncome: z.string().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
+  monthlyIncome: z.number().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
   houseOwnership: z.string().min(1, "නිවාස හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
   vehicleOwnership: z.string().min(1, "වාහන හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
+  assetsOwnership: z.string().min(0, "වාහන හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
   marriageStatus: z.string().min(1, "අවිවාහක තත්වය අත්‍යවශ්‍යයි"),
-  phisicalStatus: z.string().min(1, "ශාරීරික තත්වය අත්‍යවශ්‍යයි"),
-  height: z.string().min(1, "උස අත්‍යවශ්‍යයි"),
-  weight: z.string().min(1, "බර අත්‍යවශ්‍යයි"),
-  phisicalAttractiveness: z.string().min(1, "ආකර්ශනීය බව අත්‍යවශ්‍යයි"),
-  skinTone: z.string().min(1, "සමේ පැහැපත් බව අත්‍යවශ්‍යයි"),
-  kidsExpectancy: z.string().min(1, "දරුවන් ගණන අත්‍යවශ්‍යයි"),
+  height: z.number().min(1, "උස අත්‍යවශ්‍යයි"),
+  weight: z.number().min(1, "බර අත්‍යවශ්‍යයි"),
+  kidsExpectancy: z.number().min(1, "දරුවන් ගණන අත්‍යවශ්‍යයි"),
   smoking: z.string().min(1, "දුම් පානය අත්‍යවශ්‍යයි"),
-  drinking: z.string().min(1, "මත් ද්‍රව්‍ය පාවිච්චිය අත්‍යවශ්‍යයි"),
+  drugUsage: z.string().min(1, "මත් ද්‍රව්‍ය පාවිච්චිය අත්‍යවශ්‍යයි"),
   healthCondition: z.string().min(1, "ශාරීරික රෝග අත්‍යවශ්‍යයි"),
   disability: z.string().min(1, "ශාරීරික අකර්මන්‍යතා අත්‍යවශ්‍යයි"),
   mentalHealth: z.string().min(1, "මානසික රෝග අත්‍යවශ්‍යයි"),
@@ -39,7 +36,18 @@ const AdditionalInfoSchema = z.object({
   yourMessage: z.string().min(1, "ඔබේ පණිවිඩය අත්‍යවශ්‍යයි"),
 });
 
+
 export default function AdditionalInfo({ data, onSubmit, onBack }) {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue
+  } = useForm({
+    resolver: zodResolver(AdditionalInfoSchema),
+    defaultValues: data,
+  });
 
   const scrollToTop = () => {
     // Find the element with id 'topBox' and scroll to it
@@ -54,13 +62,6 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
     scrollToTop();
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: data,
-  });
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} sx={styles.form}>
@@ -100,7 +101,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
           <Input
             type="number"
             id="monthlyIncome"
-            {...register("monthlyIncome")}
+            {...register("monthlyIncome", { valueAsNumber: true })}
             sx={styles.input}
           />
           {errors.monthlyIncome && (
@@ -173,7 +174,8 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
             <Input
               type="number"
               id="height"
-              {...register("height")}
+              step="0.1"
+              {...register("height", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.height && (
@@ -185,7 +187,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
             <Input
               type="number"
               id="weight"
-              {...register("weight")}
+              {...register("weight", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.weight && (
@@ -227,7 +229,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
           <Input
             type="number"
             id="kidsExpectancy"
-            {...register("kidsExpectancy")}
+            {...register("kidsExpectancy", { valueAsNumber: true })}
             sx={styles.input}
           />
           {errors.kidsExpectancy && (

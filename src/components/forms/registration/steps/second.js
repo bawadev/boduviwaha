@@ -11,15 +11,26 @@ import {
 } from "theme-ui";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+const BuddhistPracticeSchema = z.object({
+  descriptionOfYourSelf: z.string().min(1, "ඔබේ පණිවිඩය අත්‍යවශ්‍යයි"),
+  
+});
 
 export default function SpiritualInfo({ data, onSubmit, onBack }) {
+
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm({
+    resolver: zodResolver(BuddhistPracticeSchema),
     defaultValues: data,
   });
+  
 
   const scrollToTop = () => {
     // Find the element with id 'topBox' and scroll to it

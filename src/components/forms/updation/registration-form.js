@@ -15,6 +15,9 @@ import {
   updateBuddhistPractice,
   updateSocialInfo,
   updateHealthInfo,
+  createBuddhistPractice,
+  createSocialInfo,
+  createHealthInfo,
 } from "../../../services/apiService"
 import { getUserDetails } from "../../../services/userService";
 
@@ -62,21 +65,36 @@ export default function UpdateMultiStepForm() {
   
             await createAddress(data, userResponse.userId, token);
           }
+          dispatch(updateUserDetails({ userDetails: await getUserDetails(authDetail.id, token) }));
           break;
-
+          
         case 1:
-          await updateBuddhistPractice(data, userDetail.buddhistPractice.practiceId, token);
+          if (userDetail?.buddhistPractice==null) {
+            await createBuddhistPractice(data, userDetail.userId, token);
+          
+          }else{
+            await updateBuddhistPractice(data, userDetail.buddhistPractice.practiceId, token);
+          }
+          
+          dispatch(updateUserDetails({ userDetails: await getUserDetails(authDetail.id, token) }));
+          
           break;
 
         case 2:
-          await updateSocialInfo(data, userDetail.socialInformation.socialInfoId, token);
-          const healthResponse = await updateHealthInfo(data, userDetail.userHealthInformation.healthInfoId, token);
-          setUserData(healthResponse);
+          if (userDetail?.socialInformation==null) {
+            await createSocialInfo(data, userDetail.userId, token);
+          }else{
+            await updateSocialInfo(data, userDetail.socialInformation.socialInfoId, token);
+          }
+          if (userDetail?.userHealthInformation==null) {
+            const healthResponse = await createHealthInfo(data, userDetail.userId, token);
+            setUserData(healthResponse);
+          }else{
+            const healthResponse = await updateHealthInfo(data, userDetail.userHealthInformation.healthInfoId, token);
+            setUserData(healthResponse);
+          }
 
-          const userDetailResponse = await getUserDetails(authDetail.id, token);
-          console.log("logging user Detail response")
-          console.log(userDetailResponse)
-          dispatch(updateUserDetails({ userDetails: userDetailResponse }));
+          dispatch(updateUserDetails({ userDetails: await getUserDetails(authDetail.id, token) }));
           break;
 
         default:

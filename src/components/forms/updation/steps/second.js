@@ -12,8 +12,15 @@ import {
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
+const BuddhistPracticeSchema = z.object({
+  descriptionOfYourSelf: z.string().min(1, "ඔබේ පණිවිඩය අත්‍යවශ්‍යයි"),
+  
+});
 export default function SpiritualInfo({ data, onSubmit, onBack }) {
+  
   const {
     register,
     handleSubmit,
@@ -21,8 +28,10 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
     reset,
     formState: { errors },
   } = useForm({
+    resolver: zodResolver(BuddhistPracticeSchema),
     defaultValues: data,
   });
+  
 
   const userBasicDetails = useSelector(
     (state) => state.userDetails.userDetails
@@ -32,31 +41,30 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
 
   useEffect(() => {
     
-    setValue("origin", userBasicDetails.buddhistPractice.origin);
-    setValue("timeInvestedOverall", userBasicDetails.buddhistPractice.timeInvestedOverall); // Fixed typo here
-    setValue("deedCategoryDana", userBasicDetails.buddhistPractice.deedCategoryDana);
-    setValue("deedCategorySeela", userBasicDetails.buddhistPractice.deedCategorySeela);
-    setValue("deedCategoryBhavana", userBasicDetails.buddhistPractice.deedCategoryBhavana);
-    setValue("deedCategoryOther", userBasicDetails.buddhistPractice.deedCategoryOther);
-    setValue("meditationAnaPanaSathiTime", userBasicDetails.buddhistPractice.meditationAnaPanaSathiTime);
-    setValue("meditationMayithreeTime", userBasicDetails.buddhistPractice.meditationMayithreeTime);
-    setValue("bodyAwarenessTime", userBasicDetails.buddhistPractice.bodyAwarenessTime);
-    setValue("meditationOtherTime", userBasicDetails.buddhistPractice.meditationOtherTime);
-    setValue("meditationTeacher", userBasicDetails.buddhistPractice.meditationTeacher);
-    setValue("seelaPansilTime", userBasicDetails.buddhistPractice.seelaPansilTime);
-    setValue("seelaAtaSilTime", userBasicDetails.buddhistPractice.seelaAtaSilTime);
-    setValue("seelaOtherTime", userBasicDetails.buddhistPractice.seelaOtherTime);
-    setValue("danaAmountAnimals", userBasicDetails.buddhistPractice.danaAmountAnimals);
-    setValue("danaAmountPeople", userBasicDetails.buddhistPractice.danaAmountPeople);
-    setValue("danaAmountSangha", userBasicDetails.buddhistPractice.danaAmountSangha);
-    setValue("sermonListenTime", userBasicDetails.buddhistPractice.sermonListenTime);
-    setValue("sermonSpeakersDetails", userBasicDetails.buddhistPractice.sermonSpeakersDetails);
-    setValue("knowledgeAbhiDhamma", userBasicDetails.buddhistPractice.knowledgeAbhiDhamma);
-    setValue("descriptionOfYourSelf", userBasicDetails.buddhistPractice.descriptionOfYourSelf);
-    setValue("enterToHardPractice", userBasicDetails.buddhistPractice.enterToHardPractice);
-    setValue("createdAt", userBasicDetails.buddhistPractice.createdAt);
-    setValue("valueScore", userBasicDetails.buddhistPractice.valueScore);
-  }, [userAuthDetails, userBasicDetails.buddhistPractice]);
+    if (userBasicDetails.buddhistPractice?.origin) setValue("origin", userBasicDetails.buddhistPractice.origin);
+    if (userBasicDetails.buddhistPractice?.timeInvestedOverall) setValue("timeInvestedOverall", userBasicDetails.buddhistPractice.timeInvestedOverall);
+    if (userBasicDetails.buddhistPractice?.deedCategoryDana) setValue("deedCategoryDana", userBasicDetails.buddhistPractice.deedCategoryDana);
+    if (userBasicDetails.buddhistPractice?.deedCategorySeela) setValue("deedCategorySeela", userBasicDetails.buddhistPractice.deedCategorySeela);
+    if (userBasicDetails.buddhistPractice?.deedCategoryBhavana) setValue("deedCategoryBhavana", userBasicDetails.buddhistPractice.deedCategoryBhavana);
+    if (userBasicDetails.buddhistPractice?.deedCategoryOther) setValue("deedCategoryOther", userBasicDetails.buddhistPractice.deedCategoryOther);
+    if (userBasicDetails.buddhistPractice?.meditationAnaPanaSathiTime) setValue("meditationAnaPanaSathiTime", userBasicDetails.buddhistPractice.meditationAnaPanaSathiTime);
+    if (userBasicDetails.buddhistPractice?.meditationMayithreeTime) setValue("meditationMayithreeTime", userBasicDetails.buddhistPractice.meditationMayithreeTime);
+    if (userBasicDetails.buddhistPractice?.bodyAwarenessTime) setValue("bodyAwarenessTime", userBasicDetails.buddhistPractice.bodyAwarenessTime);
+    if (userBasicDetails.buddhistPractice?.meditationOtherTime) setValue("meditationOtherTime", userBasicDetails.buddhistPractice.meditationOtherTime);
+    if (userBasicDetails.buddhistPractice?.meditationTeacher) setValue("meditationTeacher", userBasicDetails.buddhistPractice.meditationTeacher);
+    if (userBasicDetails.buddhistPractice?.seelaPansilTime) setValue("seelaPansilTime", userBasicDetails.buddhistPractice.seelaPansilTime);
+    if (userBasicDetails.buddhistPractice?.seelaAtaSilTime) setValue("seelaAtaSilTime", userBasicDetails.buddhistPractice.seelaAtaSilTime);
+    if (userBasicDetails.buddhistPractice?.seelaOtherTime) setValue("seelaOtherTime", userBasicDetails.buddhistPractice.seelaOtherTime);
+    if (userBasicDetails.buddhistPractice?.danaAmountAnimals) setValue("danaAmountAnimals", userBasicDetails.buddhistPractice.danaAmountAnimals);
+    if (userBasicDetails.buddhistPractice?.danaAmountPeople) setValue("danaAmountPeople", userBasicDetails.buddhistPractice.danaAmountPeople);
+    if (userBasicDetails.buddhistPractice?.danaAmountSangha) setValue("danaAmountSangha", userBasicDetails.buddhistPractice.danaAmountSangha);
+    if (userBasicDetails.buddhistPractice?.sermonListenTime) setValue("sermonListenTime", userBasicDetails.buddhistPractice.sermonListenTime);
+    if (userBasicDetails.buddhistPractice?.sermonSpeakersDetails) setValue("sermonSpeakersDetails", userBasicDetails.buddhistPractice.sermonSpeakersDetails);
+    if (userBasicDetails.buddhistPractice?.knowledgeAbhiDhamma) setValue("knowledgeAbhiDhamma", userBasicDetails.buddhistPractice.knowledgeAbhiDhamma);
+    if (userBasicDetails.buddhistPractice?.descriptionOfYourSelf) setValue("descriptionOfYourSelf", userBasicDetails.buddhistPractice.descriptionOfYourSelf);
+    if (userBasicDetails.buddhistPractice?.enterToHardPractice) setValue("enterToHardPractice", userBasicDetails.buddhistPractice.enterToHardPractice);
+    if (userBasicDetails.buddhistPractice?.createdAt) setValue("createdAt", userBasicDetails.buddhistPractice.createdAt);
+    if (userBasicDetails.buddhistPractice?.valueScore) setValue("valueScore", userBasicDetails.buddhistPractice.valueScore);  }, [userAuthDetails, userBasicDetails.buddhistPractice]);
 
   
 

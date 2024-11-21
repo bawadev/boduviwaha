@@ -92,6 +92,7 @@ export const updateAddress = async (data, userId, token) => {
 
 // API call to create Buddhist practice information
 export const createBuddhistPractice = async (data, userId, token) => {
+  console.log("Creating Buddhist Practice");
   const response = await api.post(
     `/api/buddhist-practices`,
     {
@@ -124,9 +125,10 @@ export const createBuddhistPractice = async (data, userId, token) => {
   return response.data;
 };
 
-export const updateBuddhistPractice = async (data, userId, token) => {
+export const updateBuddhistPractice = async (data, practiceId, token) => {
+  console.log("Updating Buddhist Practice");
   const response = await api.put(
-    `/api/buddhist-practices/${userId}`,
+    `/api/buddhist-practices/${practiceId}`,
     {
       origin: data.origin,
       timeInvestedOverall: data.timeInvestedOverall,
@@ -150,7 +152,6 @@ export const updateBuddhistPractice = async (data, userId, token) => {
       knowledgeAbhiDhamma: data.knowledgeAbhiDhamma,
       descriptionOfYourSelf: data.descriptionOfYourSelf,
       enterToHardPractice: data.enterToHardPractice,
-      user: { userId },
     },
     setAuthHeader(token)
   );
@@ -177,9 +178,9 @@ export const createSocialInfo = async (data, userId, token) => {
   return response.data;
 };
 
-export const updateSocialInfo = async (data, userId, token) => {
+export const updateSocialInfo = async (data, socialInfoId, token) => {
   const response = await api.put(
-    `/api/social-information/${userId}`,
+    `/api/social-information/${socialInfoId}`,
     {
       marriageStatus: data.marriageStatus,
       occupation: data.occupation,
@@ -189,7 +190,7 @@ export const updateSocialInfo = async (data, userId, token) => {
       vehicleOwnership: data.vehicleOwnership,
       assetsOwnership: data.assetsOwnership,
       createdAt: new Date().toISOString(),
-      user: { userId },
+      
     },
     setAuthHeader(token)
   );

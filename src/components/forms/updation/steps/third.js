@@ -21,7 +21,7 @@ import { useSelector } from "react-redux";
 const AdditionalInfoSchema = z.object({
   highestEducationQualification: z.string().min(1, "අධ්‍යාපනය අත්‍යවශ්‍යයි"),
   occupation: z.string().min(1, "රැකියාව අත්‍යවශ්‍යයි"),
-  monthlyIncome: z.string().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
+  monthlyIncome: z.number().min(1, "මාසික ආදායම අත්‍යවශ්‍යයි"),
   houseOwnership: z.string().min(1, "නිවාස හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
   vehicleOwnership: z.string().min(1, "වාහන හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
   assetsOwnership: z.string().min(0, "වාහන හිමිකාරිත්වය අත්‍යවශ්‍යයි"),
@@ -65,28 +65,28 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
 
   useEffect(() => {
     // Set form values using userBasicDetails
-    const formData = {
-      highestEducationQualification: userBasicDetails.socialInformation.highestEducationQualification,
-      occupation: userBasicDetails.socialInformation.occupation,
-      monthlyIncome: userBasicDetails.socialInformation.monthlyIncome,
-      houseOwnership: userBasicDetails.socialInformation.houseOwnership,
-      assetsOwnership: userBasicDetails.socialInformation.assetsOwnership,
-      vehicleOwnership: userBasicDetails.socialInformation.vehicleOwnership,
-      marriageStatus: userBasicDetails.socialInformation.marriageStatus,
-      phisicalStatus: userBasicDetails.userHealthInformation.phisicalStatus,
-      height: userBasicDetails.userHealthInformation.height,
-      weight: userBasicDetails.userHealthInformation.weight,
-      phisicalAttractiveness: userBasicDetails.userHealthInformation.phisicalAttractiveness,
-      skinTone: userBasicDetails.userHealthInformation.skinTone,
-      kidsExpectancy: userBasicDetails.userHealthInformation.kidsExpectancy,
-      smoking: userBasicDetails.userHealthInformation.smoking,
-      drugUsage: userBasicDetails.userHealthInformation.drugUsage,
-      healthCondition: userBasicDetails.userHealthInformation.healthCondition,
-      disability: userBasicDetails.userHealthInformation.disability,
-      mentalHealth: userBasicDetails.userHealthInformation.mentalHealth,
-      geneticRisks: userBasicDetails.userHealthInformation.geneticRisks,
-      yourMessage: userBasicDetails.userHealthInformation.yourMessage,
-    };
+    const formData = {};
+    
+    if (userBasicDetails.socialInformation?.highestEducationQualification) formData.highestEducationQualification = userBasicDetails.socialInformation.highestEducationQualification;
+    if (userBasicDetails.socialInformation?.occupation) formData.occupation = userBasicDetails.socialInformation.occupation;
+    if (userBasicDetails.socialInformation?.monthlyIncome) formData.monthlyIncome = userBasicDetails.socialInformation.monthlyIncome;
+    if (userBasicDetails.socialInformation?.houseOwnership) formData.houseOwnership = userBasicDetails.socialInformation.houseOwnership;
+    if (userBasicDetails.socialInformation?.assetsOwnership) formData.assetsOwnership = userBasicDetails.socialInformation.assetsOwnership;
+    if (userBasicDetails.socialInformation?.vehicleOwnership) formData.vehicleOwnership = userBasicDetails.socialInformation.vehicleOwnership;
+    if (userBasicDetails.socialInformation?.marriageStatus) formData.marriageStatus = userBasicDetails.socialInformation.marriageStatus;
+    if (userBasicDetails.userHealthInformation?.phisicalStatus) formData.phisicalStatus = userBasicDetails.userHealthInformation.phisicalStatus;
+    if (userBasicDetails.userHealthInformation?.height) formData.height = userBasicDetails.userHealthInformation.height;
+    if (userBasicDetails.userHealthInformation?.weight) formData.weight = userBasicDetails.userHealthInformation.weight;
+    if (userBasicDetails.userHealthInformation?.phisicalAttractiveness) formData.phisicalAttractiveness = userBasicDetails.userHealthInformation.phisicalAttractiveness;
+    if (userBasicDetails.userHealthInformation?.skinTone) formData.skinTone = userBasicDetails.userHealthInformation.skinTone;
+    if (userBasicDetails.userHealthInformation?.kidsExpectancy) formData.kidsExpectancy = userBasicDetails.userHealthInformation.kidsExpectancy;
+    if (userBasicDetails.userHealthInformation?.smoking) formData.smoking = userBasicDetails.userHealthInformation.smoking;
+    if (userBasicDetails.userHealthInformation?.drugUsage) formData.drugUsage = userBasicDetails.userHealthInformation.drugUsage;
+    if (userBasicDetails.userHealthInformation?.healthCondition) formData.healthCondition = userBasicDetails.userHealthInformation.healthCondition;
+    if (userBasicDetails.userHealthInformation?.disability) formData.disability = userBasicDetails.userHealthInformation.disability;
+    if (userBasicDetails.userHealthInformation?.mentalHealth) formData.mentalHealth = userBasicDetails.userHealthInformation.mentalHealth;
+    if (userBasicDetails.userHealthInformation?.geneticRisks) formData.geneticRisks = userBasicDetails.userHealthInformation.geneticRisks;
+    if (userBasicDetails.userHealthInformation?.yourMessage) formData.yourMessage = userBasicDetails.userHealthInformation.yourMessage;
 
     // Set form values
     for (const key in formData) {
@@ -139,7 +139,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
           <Input
             type="number"
             id="monthlyIncome"
-            {...register("monthlyIncome")}
+            {...register("monthlyIncome", { valueAsNumber: true })}
             sx={styles.input}
           />
           {errors.monthlyIncome && (
@@ -212,7 +212,8 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
             <Input
               type="number"
               id="height"
-              {...register("height")}
+              step="0.1"
+              {...register("height", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.height && (
@@ -224,7 +225,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
             <Input
               type="number"
               id="weight"
-              {...register("weight")}
+              {...register("weight", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.weight && (
@@ -266,7 +267,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
           <Input
             type="number"
             id="kidsExpectancy"
-            {...register("kidsExpectancy")}
+            {...register("kidsExpectancy", { valueAsNumber: true })}
             sx={styles.input}
           />
           {errors.kidsExpectancy && (
