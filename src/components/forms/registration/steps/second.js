@@ -13,9 +13,60 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+
 const BuddhistPracticeSchema = z.object({
-  descriptionOfYourSelf: z.string().min(1, "ඔබේ පණිවිඩය අත්‍යවශ්‍යයි"),
+  // Basic Buddhist background
+  origin: z.enum(["SINCE_BIRTH", "CONVERTED"]),
+  timeInvestedOvarall: z.enum([
+    "MORE_50",
+    "MORE_40",
+    "MORE_30",
+    "MORE_20",
+    "MORE_10",
+    "MORE_5",
+    "LESS_5"
+  ]),
   
+  // Deed categories
+  deedCategoryDana: z.enum(["NO", "SMALL_TIME", "BIG_TIME"]),
+  deedCategorySeela: z.enum(["NO", "SMALL_TIME", "BIG_TIME"]),
+  deedCategoryBhavana: z.enum(["NO", "SMALL_TIME", "BIG_TIME"]),
+  deedCategoryOther: z.enum(["NO", "SMALL_TIME", "BIG_TIME"]),
+  
+  // Meditation times (hours per month)
+  meditationAnaPanaSathiTime: z.number().min(0, "කාලය ධන අගයක් විය යුතුය"),
+  meditationMayithreeTime: z.number().min(0, "කාලය ධන අගයක් විය යුතුය"),
+  bodyAwarenessTime: z.number().min(0, "කාලය ධන අගයක් විය යුතුය"),
+  meditationOtherTime: z.number().min(0, "කාලය ධන අගයක් විය යුතුය"),
+  meditationTeacher: z.string().optional(),
+  
+  // Seela practice times (hours per month)
+  seelaPansilTime: z.number().min(0, "කාලය ධන අගයක් විය යුතුය"),
+  seelaAtaSilTime: z.number().min(0, "කාලය ධන අගයක් විය යුතුය"),
+  seelaOtherTime: z.number().min(0, "කාලය ධන අගයක් විය යුතුය"),
+  
+  // Dana amounts (LKR per month)
+  danaAmountAnimals: z.number().min(0, "මුදල ධන අගයක් විය යුතුය"),
+  danaAmountPeople: z.number().min(0, "මුදල ධන අගයක් විය යුතුය"),
+  danaAmountSangha: z.number().min(0, "මුදල ධන අගයක් විය යුතුය"),
+  
+  // Sermon listening
+  sermonListenTime: z.number().min(0, "කාලය ධන අගයක් විය යුතුය"),
+  sermonSpeakersDetails: z.string().optional(),
+  
+  // Personal details
+  knowledgeAbhiDhamma: z.enum([
+    "NO",
+    "SMALL_TIME",
+    "BIG_TIME",
+    "BIG_TIME_PRACTICAL"
+  ]),
+  descriptionOfYourSelf: z.string().min(1, "ඔබේ පණිවිඩය අත්‍යවශ්‍යයි"),
+  enterToHardPractice: z.enum([
+    "NO",
+    "SMALL_TIME",
+    "BIG_TIME"
+  ])
 });
 
 export default function SpiritualInfo({ data, onSubmit, onBack }) {
@@ -150,7 +201,10 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="meditationAnaPanaSathiTime"
               type="number"
-              {...register("meditationAnaPanaSathiTime")}
+              defaultValue={0}
+              {...register("meditationAnaPanaSathiTime", {
+                valueAsNumber: true,
+              })}
               sx={styles.input}
             />
             {errors.meditationAnaPanaSathiTime && (
@@ -160,11 +214,14 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="meditationMayithreeTime">මෛත්‍රි භාවනා කාලය (මසකට පැය)</Label>
+            <Label htmlFor="meditationMayithreeTime">
+              මෛත්‍රි භාවනා කාලය (මසකට පැය)
+            </Label>
             <Input
               id="meditationMayithreeTime"
               type="number"
-              {...register("meditationMayithreeTime")}
+              defaultValue={0}
+              {...register("meditationMayithreeTime", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.meditationMayithreeTime && (
@@ -174,11 +231,14 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="bodyAwarenessTime">සතර ඉරියවුවේ සිහිය කාලය (මසකට පැය)</Label>
+            <Label htmlFor="bodyAwarenessTime">
+              සතර ඉරියවුවේ සිහිය කාලය (මසකට පැය)
+            </Label>
             <Input
               id="bodyAwarenessTime"
               type="number"
-              {...register("bodyAwarenessTime")}
+              defaultValue={0}
+              {...register("bodyAwarenessTime", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.bodyAwarenessTime && (
@@ -186,11 +246,14 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="meditationOtherTime">වෙනත් භාවනා කාලය (මසකට පැය)</Label>
+            <Label htmlFor="meditationOtherTime">
+              වෙනත් භාවනා කාලය (මසකට පැය)
+            </Label>
             <Input
               id="meditationOtherTime"
               type="number"
-              {...register("meditationOtherTime")}
+              defaultValue={0}
+              {...register("meditationOtherTime", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.meditationOtherTime && (
@@ -218,8 +281,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           සීල පුණ්‍ය කටයුතු
         </Heading>
         <Label htmlFor="seelaTimePerWeek" style={styles.description}>
-          සීල පුණ්‍ය කටයුතු ලෙස මාසයකට පැය කීයක් සීලයෙන් හැසුරුනේද යන්න
-          ඇතුලත් කරන්න
+          සීල පුණ්‍ය කටයුතු ලෙස මාසයකට පැය කීයක් සීලයෙන් හැසුරුනේද යන්න ඇතුලත්
+          කරන්න
         </Label>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
@@ -227,7 +290,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="seelaPansilTime"
               type="number"
-              {...register("seelaPansilTime")}
+              defaultValue={0}
+              {...register("seelaPansilTime", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.seelaPansilTime && (
@@ -239,7 +303,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="seelaAtaSilTime"
               type="number"
-              {...register("seelaAtaSilTime")}
+              defaultValue={0}
+              {...register("seelaAtaSilTime", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.seelaAtaSilTime && (
@@ -251,7 +316,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="seelaOtherTime"
               type="number"
-              {...register("seelaOtherTime")}
+              defaultValue={0}
+              {...register("seelaOtherTime", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.seelaOtherTime && (
@@ -265,7 +331,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           ධර්ම දාන
         </Heading>
         <Label htmlFor="danaAmountAnimals" style={styles.description}>
-          ධර්ම දාන ලෙස මාසයක් තුල සතුන්ට දී ඇති දානය ප්‍රමාණ රුපියල් වලින් ඇතුලත් කරන්න 
+          ධර්ම දාන ලෙස මාසයක් තුල සතුන්ට දී ඇති දානය ප්‍රමාණ රුපියල් වලින්
+          ඇතුලත් කරන්න
         </Label>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
@@ -273,7 +340,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="danaAmountAnimals"
               type="number"
-              {...register("danaAmountAnimals")}
+              defaultValue={0}
+              {...register("danaAmountAnimals", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.danaAmountAnimals && (
@@ -285,7 +353,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="danaAmountPeople"
               type="number"
-              {...register("danaAmountPeople")}
+              defaultValue={0}
+              {...register("danaAmountPeople", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.danaAmountPeople && (
@@ -297,7 +366,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="danaAmountSangha"
               type="number"
-              {...register("danaAmountSangha")}
+              defaultValue={0}
+              {...register("danaAmountSangha", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.danaAmountSangha && (
@@ -311,15 +381,18 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           ධර්ම ශ්‍රවණය
         </Heading>
         <Label htmlFor="sermonListenTime" style={styles.description}>
-          මාසයක් තුල පැය කිහිපයක් ධර්ම ශ්‍රවණය සඳහා වැය කලේද යන්න ඇතුලත් කරන්න 
+          මාසයක් තුල පැය කිහිපයක් ධර්ම ශ්‍රවණය සඳහා වැය කලේද යන්න ඇතුලත් කරන්න
         </Label>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
-            <Label htmlFor="sermonListenTime">ධර්ම ශ්‍රවණ කාලය (මසකට පැය)</Label>
+            <Label htmlFor="sermonListenTime">
+              ධර්ම ශ්‍රවණ කාලය (මසකට පැය)
+            </Label>
             <Input
               id="sermonListenTime"
               type="number"
-              {...register("sermonListenTime")}
+              defaultValue={0}
+              {...register("sermonListenTime", { valueAsNumber: true })}
               sx={styles.input}
             />
             {errors.sermonListenTime && (

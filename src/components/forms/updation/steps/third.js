@@ -137,7 +137,8 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
         <Box sx={styles.field}>
           <Label htmlFor="monthlyIncome">දල මාසික ආදායම</Label>
           <Input
-            type="number"
+            type="number" 
+defaultValue={0}
             id="monthlyIncome"
             {...register("monthlyIncome", { valueAsNumber: true })}
             sx={styles.input}
@@ -210,7 +211,8 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
               උස (අඩි.අඟල්, උදා අඩි 5යි අඟල් 4 = 5.4)
             </Label>
             <Input
-              type="number"
+              type="number" 
+defaultValue={0}
               id="height"
               step="0.1"
               {...register("height", { valueAsNumber: true })}
@@ -223,7 +225,8 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
           <Box sx={styles.field}>
             <Label htmlFor="weight">බර (කිලෝග්රෑම්)</Label>
             <Input
-              type="number"
+              type="number" 
+defaultValue={0}
               id="weight"
               {...register("weight", { valueAsNumber: true })}
               sx={styles.input}
@@ -265,7 +268,8 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
         <Box sx={styles.field}>
           <Label htmlFor="kidsExpectancy">බලාපොරොත්තු වන දරුවන් ගණන</Label>
           <Input
-            type="number"
+            type="number" 
+defaultValue={0}
             id="kidsExpectancy"
             {...register("kidsExpectancy", { valueAsNumber: true })}
             sx={styles.input}

@@ -36,14 +36,12 @@ const AdditionalInfoSchema = z.object({
   yourMessage: z.string().min(1, "ඔබේ පණිවිඩය අත්‍යවශ්‍යයි"),
 });
 
-
 export default function AdditionalInfo({ data, onSubmit, onBack }) {
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm({
     resolver: zodResolver(AdditionalInfoSchema),
     defaultValues: data,
@@ -62,7 +60,6 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
     scrollToTop();
   }, []);
 
-
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} sx={styles.form}>
       <Box style={styles.card}>
@@ -70,7 +67,9 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
           ඔබේ සමාජ තත්වය
         </Heading>
         <Box sx={styles.field}>
-          <Label htmlFor="highestEducationQualification">ලබා ඇති ඉහලම අධ්‍යාපනය</Label>
+          <Label htmlFor="highestEducationQualification">
+            ලබා ඇති ඉහලම අධ්‍යාපනය
+          </Label>
           <Select
             defaultValue={"NO"}
             id="highestEducationQualification"
@@ -100,6 +99,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
           <Label htmlFor="monthlyIncome">දල මාසික ආදායම</Label>
           <Input
             type="number"
+            defaultValue={0}
             id="monthlyIncome"
             {...register("monthlyIncome", { valueAsNumber: true })}
             sx={styles.input}
@@ -173,6 +173,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
             </Label>
             <Input
               type="number"
+              defaultValue={0}
               id="height"
               step="0.1"
               {...register("height", { valueAsNumber: true })}
@@ -186,6 +187,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
             <Label htmlFor="weight">බර (කිලෝග්රෑම්)</Label>
             <Input
               type="number"
+              defaultValue={0}
               id="weight"
               {...register("weight", { valueAsNumber: true })}
               sx={styles.input}
@@ -228,6 +230,7 @@ export default function AdditionalInfo({ data, onSubmit, onBack }) {
           <Label htmlFor="kidsExpectancy">බලාපොරොත්තු වන දරුවන් ගණන</Label>
           <Input
             type="number"
+            defaultValue={0}
             id="kidsExpectancy"
             {...register("kidsExpectancy", { valueAsNumber: true })}
             sx={styles.input}

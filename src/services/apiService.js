@@ -38,6 +38,8 @@ export const createBuddhistUser = async (data, token,id) => {
 };
 
 export const updateBuddhistUser = async (userId, data, token,id) => {
+  console.log("Updating Buddhist User");
+  console.log(data);
   const response = await api.put(
     `/api/buddhist-users/${userId}`,
     {
@@ -61,6 +63,8 @@ export const updateBuddhistUser = async (userId, data, token,id) => {
 
 // API call to create address
 export const createAddress = async (data, userId, token) => {
+  console.log("Creating Address");
+  console.log(data);
   const response = await api.post(
     `/api/addresses`,
     {
@@ -76,6 +80,8 @@ export const createAddress = async (data, userId, token) => {
 };
 
 export const updateAddress = async (data, userId, token) => {
+  console.log("Updating Address");
+  console.log(data);
   const response = await api.put(
     `/api/addresses/${userId}`,
     {
@@ -93,6 +99,7 @@ export const updateAddress = async (data, userId, token) => {
 // API call to create Buddhist practice information
 export const createBuddhistPractice = async (data, userId, token) => {
   console.log("Creating Buddhist Practice");
+  console.log(data);
   const response = await api.post(
     `/api/buddhist-practices`,
     {
@@ -160,6 +167,8 @@ export const updateBuddhistPractice = async (data, practiceId, token) => {
 
 // API call to create social information
 export const createSocialInfo = async (data, userId, token) => {
+  console.log("Creating Social Info");
+  console.log(data);
   const response = await api.post(
     `/api/social-information`,
     {
@@ -179,6 +188,8 @@ export const createSocialInfo = async (data, userId, token) => {
 };
 
 export const updateSocialInfo = async (data, socialInfoId, token) => {
+  console.log("Updating Social Info");
+  console.log(data);
   const response = await api.put(
     `/api/social-information/${socialInfoId}`,
     {
@@ -199,6 +210,8 @@ export const updateSocialInfo = async (data, socialInfoId, token) => {
 
 // API call to create health information
 export const createHealthInfo = async (data, userId, token) => {
+  console.log("Creating Health Info");
+  console.log(data);
   const response = await api.post(
     `/api/health-information`,
     {
@@ -223,6 +236,8 @@ export const createHealthInfo = async (data, userId, token) => {
 };
 
 export const updateHealthInfo = async (data, userId, token) => {
+  console.log("Updating Health Info");
+  console.log(data);
   const response = await api.put(
     `/api/health-information/${userId}`,
     {
@@ -250,6 +265,8 @@ export const updateHealthInfo = async (data, userId, token) => {
 
 
 export const uploadImage = async (formData, userToken) => {
+  console.log("Uploading Image");
+  console.log(formData);
   const response = await axios.post(`${backEndBaseUrl}/api/user-images`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -261,6 +278,8 @@ export const uploadImage = async (formData, userToken) => {
 
 // Function to delete an image
 export const deleteImage = async (imageId, userToken) => {
+  console.log("Deleting Image");
+  console.log(imageId);
   const response = await axios.delete(`${backEndBaseUrl}/api/user-images/${imageId}`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -270,6 +289,8 @@ export const deleteImage = async (imageId, userToken) => {
 };
 
 export const getUserImagesByUser = async (userId, userToken) => {
+  console.log("Getting User Images");
+  console.log(userId);
   try {
     const response = await axios.get(`${backEndBaseUrl}/api/user-images/user-id/${userId}`, {
       headers: {
@@ -285,6 +306,8 @@ export const getUserImagesByUser = async (userId, userToken) => {
 };
 
 export const getUserImageVisibilityByUser = async (userId, userToken) => {
+  console.log("Getting User Images");
+  console.log(userId);
   try {
     const response = await axios.get(`${backEndBaseUrl}/api/user-meta/visibility/${userId}`, {
       headers: {
@@ -300,6 +323,8 @@ export const getUserImageVisibilityByUser = async (userId, userToken) => {
 };
 
 export const addUpdateUserMeta = async (value, userId, metaId, token) => {
+  console.log("Adding User Meta");
+  console.log(value);
   const response = await api.post(
     `/api/user-meta/${userId}`,
     {
@@ -313,6 +338,7 @@ export const addUpdateUserMeta = async (value, userId, metaId, token) => {
 };
 
 export const addUserFeedBackMessage = async (email, message) => {
+  console.log("Adding User Feedback");
   console.log(email);
   console.log(message)
   const response = await api.post(

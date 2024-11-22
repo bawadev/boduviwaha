@@ -22,6 +22,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
+        serializableCheck: false,
         // Ignore persist actions that involve non-serializable values
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },

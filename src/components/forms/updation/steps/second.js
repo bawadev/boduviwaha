@@ -16,11 +16,61 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const BuddhistPracticeSchema = z.object({
+  // Basic Buddhist background - no changes needed for strings
+  origin: z.enum(["SINCE_BIRTH", "CONVERTED"]),
+  timeInvestedOvarall: z.enum([
+    "MORE_50",
+    "MORE_40",
+    "MORE_30",
+    "MORE_20",
+    "MORE_10",
+    "MORE_5",
+    "LESS_5"
+  ]),
+  
+  // Deed categories - no changes needed for enums
+  deedCategoryDana: z.enum(["NO", "SMALL_TIME", "BIG_TIME"]),
+  deedCategorySeela: z.enum(["NO", "SMALL_TIME", "BIG_TIME"]),
+  deedCategoryBhavana: z.enum(["NO", "SMALL_TIME", "BIG_TIME"]),
+  deedCategoryOther: z.enum(["NO", "SMALL_TIME", "BIG_TIME"]),
+  
+  // Meditation times - transform string inputs to numbers
+  meditationAnaPanaSathiTime: z.string().transform((val) => Number(val)),
+  meditationMayithreeTime: z.string().transform((val) => Number(val)),
+  bodyAwarenessTime: z.string().transform((val) => Number(val)),
+  meditationOtherTime: z.string().transform((val) => Number(val)),
+  meditationTeacher: z.string().optional(),
+  
+  // Seela practice times - transform string inputs to numbers
+  seelaPansilTime: z.string().transform((val) => Number(val)),
+  seelaAtaSilTime: z.string().transform((val) => Number(val)),
+  seelaOtherTime: z.string().transform((val) => Number(val)),
+  
+  // Dana amounts - transform string inputs to numbers
+  danaAmountAnimals: z.string().transform((val) => Number(val)),
+  danaAmountPeople: z.string().transform((val) => Number(val)),
+  danaAmountSangha: z.string().transform((val) => Number(val)),
+  
+  // Sermon listening - transform string input to number
+  sermonListenTime: z.string().transform((val) => Number(val)),
+  sermonSpeakersDetails: z.string().optional(),
+  
+  // Personal details - no changes needed for strings/enums
+  knowledgeAbhiDhamma: z.enum([
+    "NO",
+    "SMALL_TIME",
+    "BIG_TIME",
+    "BIG_TIME_PRACTICAL"
+  ]),
   descriptionOfYourSelf: z.string().min(1, "ඔබේ පණිවිඩය අත්‍යවශ්‍යයි"),
-  
+  enterToHardPractice: z.enum([
+    "NO",
+    "SMALL_TIME",
+    "BIG_TIME"
+  ])
 });
+
 export default function SpiritualInfo({ data, onSubmit, onBack }) {
-  
   const {
     register,
     handleSubmit,
@@ -31,42 +81,125 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
     resolver: zodResolver(BuddhistPracticeSchema),
     defaultValues: data,
   });
-  
 
   const userBasicDetails = useSelector(
     (state) => state.userDetails.userDetails
   );
   const userAuthDetails = useSelector((state) => state.userDetails.authDetails);
 
-
   useEffect(() => {
-    
-    if (userBasicDetails.buddhistPractice?.origin) setValue("origin", userBasicDetails.buddhistPractice.origin);
-    if (userBasicDetails.buddhistPractice?.timeInvestedOverall) setValue("timeInvestedOverall", userBasicDetails.buddhistPractice.timeInvestedOverall);
-    if (userBasicDetails.buddhistPractice?.deedCategoryDana) setValue("deedCategoryDana", userBasicDetails.buddhistPractice.deedCategoryDana);
-    if (userBasicDetails.buddhistPractice?.deedCategorySeela) setValue("deedCategorySeela", userBasicDetails.buddhistPractice.deedCategorySeela);
-    if (userBasicDetails.buddhistPractice?.deedCategoryBhavana) setValue("deedCategoryBhavana", userBasicDetails.buddhistPractice.deedCategoryBhavana);
-    if (userBasicDetails.buddhistPractice?.deedCategoryOther) setValue("deedCategoryOther", userBasicDetails.buddhistPractice.deedCategoryOther);
-    if (userBasicDetails.buddhistPractice?.meditationAnaPanaSathiTime) setValue("meditationAnaPanaSathiTime", userBasicDetails.buddhistPractice.meditationAnaPanaSathiTime);
-    if (userBasicDetails.buddhistPractice?.meditationMayithreeTime) setValue("meditationMayithreeTime", userBasicDetails.buddhistPractice.meditationMayithreeTime);
-    if (userBasicDetails.buddhistPractice?.bodyAwarenessTime) setValue("bodyAwarenessTime", userBasicDetails.buddhistPractice.bodyAwarenessTime);
-    if (userBasicDetails.buddhistPractice?.meditationOtherTime) setValue("meditationOtherTime", userBasicDetails.buddhistPractice.meditationOtherTime);
-    if (userBasicDetails.buddhistPractice?.meditationTeacher) setValue("meditationTeacher", userBasicDetails.buddhistPractice.meditationTeacher);
-    if (userBasicDetails.buddhistPractice?.seelaPansilTime) setValue("seelaPansilTime", userBasicDetails.buddhistPractice.seelaPansilTime);
-    if (userBasicDetails.buddhistPractice?.seelaAtaSilTime) setValue("seelaAtaSilTime", userBasicDetails.buddhistPractice.seelaAtaSilTime);
-    if (userBasicDetails.buddhistPractice?.seelaOtherTime) setValue("seelaOtherTime", userBasicDetails.buddhistPractice.seelaOtherTime);
-    if (userBasicDetails.buddhistPractice?.danaAmountAnimals) setValue("danaAmountAnimals", userBasicDetails.buddhistPractice.danaAmountAnimals);
-    if (userBasicDetails.buddhistPractice?.danaAmountPeople) setValue("danaAmountPeople", userBasicDetails.buddhistPractice.danaAmountPeople);
-    if (userBasicDetails.buddhistPractice?.danaAmountSangha) setValue("danaAmountSangha", userBasicDetails.buddhistPractice.danaAmountSangha);
-    if (userBasicDetails.buddhistPractice?.sermonListenTime) setValue("sermonListenTime", userBasicDetails.buddhistPractice.sermonListenTime);
-    if (userBasicDetails.buddhistPractice?.sermonSpeakersDetails) setValue("sermonSpeakersDetails", userBasicDetails.buddhistPractice.sermonSpeakersDetails);
-    if (userBasicDetails.buddhistPractice?.knowledgeAbhiDhamma) setValue("knowledgeAbhiDhamma", userBasicDetails.buddhistPractice.knowledgeAbhiDhamma);
-    if (userBasicDetails.buddhistPractice?.descriptionOfYourSelf) setValue("descriptionOfYourSelf", userBasicDetails.buddhistPractice.descriptionOfYourSelf);
-    if (userBasicDetails.buddhistPractice?.enterToHardPractice) setValue("enterToHardPractice", userBasicDetails.buddhistPractice.enterToHardPractice);
-    if (userBasicDetails.buddhistPractice?.createdAt) setValue("createdAt", userBasicDetails.buddhistPractice.createdAt);
-    if (userBasicDetails.buddhistPractice?.valueScore) setValue("valueScore", userBasicDetails.buddhistPractice.valueScore);  }, [userAuthDetails, userBasicDetails.buddhistPractice]);
-
-  
+    if (userBasicDetails.buddhistPractice?.origin)
+      setValue("origin", userBasicDetails.buddhistPractice.origin);
+    if (userBasicDetails.buddhistPractice?.timeInvestedOverall)
+      setValue(
+        "timeInvestedOverall",
+        userBasicDetails.buddhistPractice.timeInvestedOverall
+      );
+    if (userBasicDetails.buddhistPractice?.deedCategoryDana)
+      setValue(
+        "deedCategoryDana",
+        userBasicDetails.buddhistPractice.deedCategoryDana
+      );
+    if (userBasicDetails.buddhistPractice?.deedCategorySeela)
+      setValue(
+        "deedCategorySeela",
+        userBasicDetails.buddhistPractice.deedCategorySeela
+      );
+    if (userBasicDetails.buddhistPractice?.deedCategoryBhavana)
+      setValue(
+        "deedCategoryBhavana",
+        userBasicDetails.buddhistPractice.deedCategoryBhavana
+      );
+    if (userBasicDetails.buddhistPractice?.deedCategoryOther)
+      setValue(
+        "deedCategoryOther",
+        userBasicDetails.buddhistPractice.deedCategoryOther
+      );
+    if (userBasicDetails.buddhistPractice?.meditationAnaPanaSathiTime)
+      setValue(
+        "meditationAnaPanaSathiTime",
+       Number(userBasicDetails.buddhistPractice.meditationAnaPanaSathiTime)
+      );
+    if (userBasicDetails.buddhistPractice?.meditationMayithreeTime)
+      setValue(
+        "meditationMayithreeTime",
+        userBasicDetails.buddhistPractice.meditationMayithreeTime
+      );
+    if (userBasicDetails.buddhistPractice?.bodyAwarenessTime)
+      setValue(
+        "bodyAwarenessTime",
+        userBasicDetails.buddhistPractice.bodyAwarenessTime
+      );
+    if (userBasicDetails.buddhistPractice?.meditationOtherTime)
+      setValue(
+        "meditationOtherTime",
+        userBasicDetails.buddhistPractice.meditationOtherTime
+      );
+    if (userBasicDetails.buddhistPractice?.meditationTeacher)
+      setValue(
+        "meditationTeacher",
+        userBasicDetails.buddhistPractice.meditationTeacher
+      );
+    if (userBasicDetails.buddhistPractice?.seelaPansilTime)
+      setValue(
+        "seelaPansilTime",
+        userBasicDetails.buddhistPractice.seelaPansilTime
+      );
+    if (userBasicDetails.buddhistPractice?.seelaAtaSilTime)
+      setValue(
+        "seelaAtaSilTime",
+        userBasicDetails.buddhistPractice.seelaAtaSilTime
+      );
+    if (userBasicDetails.buddhistPractice?.seelaOtherTime)
+      setValue(
+        "seelaOtherTime",
+        userBasicDetails.buddhistPractice.seelaOtherTime
+      );
+    if (userBasicDetails.buddhistPractice?.danaAmountAnimals)
+      setValue(
+        "danaAmountAnimals",
+        userBasicDetails.buddhistPractice.danaAmountAnimals
+      );
+    if (userBasicDetails.buddhistPractice?.danaAmountPeople)
+      setValue(
+        "danaAmountPeople",
+        userBasicDetails.buddhistPractice.danaAmountPeople
+      );
+    if (userBasicDetails.buddhistPractice?.danaAmountSangha)
+      setValue(
+        "danaAmountSangha",
+        userBasicDetails.buddhistPractice.danaAmountSangha
+      );
+    if (userBasicDetails.buddhistPractice?.sermonListenTime)
+      setValue(
+        "sermonListenTime",
+        userBasicDetails.buddhistPractice.sermonListenTime
+      );
+    if (userBasicDetails.buddhistPractice?.sermonSpeakersDetails)
+      setValue(
+        "sermonSpeakersDetails",
+        userBasicDetails.buddhistPractice.sermonSpeakersDetails
+      );
+    if (userBasicDetails.buddhistPractice?.knowledgeAbhiDhamma)
+      setValue(
+        "knowledgeAbhiDhamma",
+        userBasicDetails.buddhistPractice.knowledgeAbhiDhamma
+      );
+    if (userBasicDetails.buddhistPractice?.descriptionOfYourSelf)
+      setValue(
+        "descriptionOfYourSelf",
+        userBasicDetails.buddhistPractice.descriptionOfYourSelf
+      );
+    if (userBasicDetails.buddhistPractice?.enterToHardPractice)
+      setValue(
+        "enterToHardPractice",
+        userBasicDetails.buddhistPractice.enterToHardPractice
+      );
+    if (userBasicDetails.buddhistPractice?.createdAt)
+      setValue("createdAt", userBasicDetails.buddhistPractice.createdAt);
+    if (userBasicDetails.buddhistPractice?.valueScore)
+      setValue("valueScore", userBasicDetails.buddhistPractice.valueScore);
+  }, [userAuthDetails, userBasicDetails.buddhistPractice]);
 
   const scrollToTop = () => {
     // Find the element with id 'topBox' and scroll to it
@@ -186,6 +319,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="meditationAnaPanaSathiTime"
               type="number"
+              defaultValue={0}
               {...register("meditationAnaPanaSathiTime")}
               sx={styles.input}
             />
@@ -196,10 +330,13 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="meditationMayithreeTime">මෛත්‍රි භාවනා කාලය (මසකට පැය)</Label>
+            <Label htmlFor="meditationMayithreeTime">
+              මෛත්‍රි භාවනා කාලය (මසකට පැය)
+            </Label>
             <Input
               id="meditationMayithreeTime"
               type="number"
+              defaultValue={0}
               {...register("meditationMayithreeTime")}
               sx={styles.input}
             />
@@ -210,10 +347,13 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="bodyAwarenessTime">සතර ඉරියවුවේ සිහිය කාලය (මසකට පැය)</Label>
+            <Label htmlFor="bodyAwarenessTime">
+              සතර ඉරියවුවේ සිහිය කාලය (මසකට පැය)
+            </Label>
             <Input
               id="bodyAwarenessTime"
               type="number"
+              defaultValue={0}
               {...register("bodyAwarenessTime")}
               sx={styles.input}
             />
@@ -222,10 +362,13 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             )}
           </Box>
           <Box sx={styles.field}>
-            <Label htmlFor="meditationOtherTime">වෙනත් භාවනා කාලය (මසකට පැය)</Label>
+            <Label htmlFor="meditationOtherTime">
+              වෙනත් භාවනා කාලය (මසකට පැය)
+            </Label>
             <Input
               id="meditationOtherTime"
               type="number"
+              defaultValue={0}
               {...register("meditationOtherTime")}
               sx={styles.input}
             />
@@ -254,8 +397,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           සීල පුණ්‍ය කටයුතු
         </Heading>
         <Label htmlFor="seelaTimePerWeek" style={styles.description}>
-          සීල පුණ්‍ය කටයුතු ලෙස මාසයකට පැය කීයක් සීලයෙන් හැසුරුනේද යන්න
-          ඇතුලත් කරන්න
+          සීල පුණ්‍ය කටයුතු ලෙස මාසයකට පැය කීයක් සීලයෙන් හැසුරුනේද යන්න ඇතුලත්
+          කරන්න
         </Label>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
@@ -263,6 +406,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="seelaPansilTime"
               type="number"
+              defaultValue={0}
               {...register("seelaPansilTime")}
               sx={styles.input}
             />
@@ -275,6 +419,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="seelaAtaSilTime"
               type="number"
+              defaultValue={0}
               {...register("seelaAtaSilTime")}
               sx={styles.input}
             />
@@ -287,6 +432,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="seelaOtherTime"
               type="number"
+              defaultValue={0}
               {...register("seelaOtherTime")}
               sx={styles.input}
             />
@@ -301,7 +447,8 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           ධර්ම දාන
         </Heading>
         <Label htmlFor="danaAmountAnimals" style={styles.description}>
-          ධර්ම දාන ලෙස මාසයක් තුල සතුන්ට දී ඇති දානය ප්‍රමාණ රුපියල් වලින් ඇතුලත් කරන්න 
+          ධර්ම දාන ලෙස මාසයක් තුල සතුන්ට දී ඇති දානය ප්‍රමාණ රුපියල් වලින්
+          ඇතුලත් කරන්න
         </Label>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
@@ -309,6 +456,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="danaAmountAnimals"
               type="number"
+              defaultValue={0}
               {...register("danaAmountAnimals")}
               sx={styles.input}
             />
@@ -321,6 +469,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="danaAmountPeople"
               type="number"
+              defaultValue={0}
               {...register("danaAmountPeople")}
               sx={styles.input}
             />
@@ -333,6 +482,7 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
             <Input
               id="danaAmountSangha"
               type="number"
+              defaultValue={0}
               {...register("danaAmountSangha")}
               sx={styles.input}
             />
@@ -347,14 +497,17 @@ export default function SpiritualInfo({ data, onSubmit, onBack }) {
           ධර්ම ශ්‍රවණය
         </Heading>
         <Label htmlFor="sermonListenTime" style={styles.description}>
-          මාසයක් තුල පැය කිහිපයක් ධර්ම ශ්‍රවණය සඳහා වැය කලේද යන්න ඇතුලත් කරන්න 
+          මාසයක් තුල පැය කිහිපයක් ධර්ම ශ්‍රවණය සඳහා වැය කලේද යන්න ඇතුලත් කරන්න
         </Label>
         <Box sx={styles.row}>
           <Box sx={styles.field}>
-            <Label htmlFor="sermonListenTime">ධර්ම ශ්‍රවණ කාලය (මසකට පැය)</Label>
+            <Label htmlFor="sermonListenTime">
+              ධර්ම ශ්‍රවණ කාලය (මසකට පැය)
+            </Label>
             <Input
               id="sermonListenTime"
               type="number"
+              defaultValue={0}
               {...register("sermonListenTime")}
               sx={styles.input}
             />
